@@ -33,3 +33,10 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 Do not commit or push unless explicitly asked.
+Before committing (or proposing a commit), always invoke the `present-changes-visually` skill (`python3 .agents/skills/present-changes-visually/scripts/generate-split-view-diff.py . HEAD WORKTREE _temp/visual-diff.html`) and link to the generated diff page so changes can be reviewed visually.
+
+## Testing and Quality Assurance
+
+After each code update or increment:
+1. **Update Test Plan**: Ensure `test/ui-test-plan.md` is updated (if needed) with test cases reflecting the new or modified behavior.
+2. **Invoke `test-ui` Skill**: Always invoke the `test-ui` skill (`python3 .agents/skills/test-ui/scripts/run-ui-tests.py`) to execute all UI tests and ensure all test cases pass cleanly before concluding the turn.

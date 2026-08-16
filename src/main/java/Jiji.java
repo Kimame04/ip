@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 /**
  * Main class for the Jiji personal assistant chatbot.
- * Level-3 implementation tracks tasks with completion status,
- * supports marking/unmarking tasks as done, and listing tasks with status indicators.
+ * Level-4 implementation introduces task hierarchy (Todo, Deadline, Event),
+ * supporting task creation with date/time parameters and formatted task counts.
  */
 public class Jiji {
 
@@ -17,7 +17,7 @@ public class Jiji {
 
     /**
      * Entry point of the Jiji application.
-     * Manages greeting, task creation, status updates (mark/unmark), listing, and graceful exit.
+     * Manages greeting, task creation (Todo, Deadline, Event), status updates, listing, and exit.
      *
      * @param args Command line arguments (not used).
      */
@@ -69,13 +69,25 @@ public class Jiji {
                 System.out.println(INDENT + "OK, I've marked this task as not done yet:");
                 System.out.println(INDENT + "  " + task);
                 printDivider();
+            } else if (input.startsWith("todo ")) {
+                String description = input.substring(5).trim();
+                addTask(tasks, new Todo(description));
+            } else if (input.startsWith("deadline ")) {
+                String rest = input.substring(9).trim();
+                String[] parts = rest.split(" /by ", 2);
+                String description = parts[0].trim();
+                String by = parts[1].trim();
+                addTask(tasks, new Deadline(description, by));
+            } else if (input.startsWith("event ")) {
+                String rest = input.substring(6).trim();
+                String[] parts = rest.split(" /from ", 2);
+                String description = parts[0].trim();
+                String[] timeParts = parts[1].split(" /to ", 2);
+                String from = timeParts[0].trim();
+                String to = timeParts[1].trim();
+                addTask(tasks, new Event(description, from, to));
             } else {
-                Task task = new Task(input);
-                tasks.add(task);
-
-                printDivider();
-                System.out.println(INDENT + "added: " + input);
-                printDivider();
+                addTask(tasks, new Task(input));
             }
         }
 
@@ -83,6 +95,21 @@ public class Jiji {
         System.out.println(INDENT + "Bye. Hope to see you again soon!");
         printDivider();
         scanner.close();
+    }
+
+    /**
+     * Adds a task to the task list and prints the standard confirmation message.
+     *
+     * @param tasks The list of tasks.
+     * @param task The task to be added.
+     */
+    private static void addTask(List<Task> tasks, Task task) {
+        tasks.add(task);
+        printDivider();
+        System.out.println(INDENT + "Got it. I've added this task:");
+        System.out.println(INDENT + "  " + task);
+        System.out.println(INDENT + "Now you have " + tasks.size() + " tasks in the list.");
+        printDivider();
     }
 
     /**

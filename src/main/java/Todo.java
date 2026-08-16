@@ -1,0 +1,24 @@
+/**
+ * Represents a todo task without any date or time constraints.
+ */
+public class Todo extends Task {
+
+    /**
+     * Constructs a new Todo task with the specified description.
+     *
+     * @param description Description of the todo item.
+     */
+    public Todo(String description) {
+        super(description);
+    }
+
+    /**
+     * Returns the string representation of the todo task, prefixed with [T].
+     *
+     * @return Formatted todo string representation.
+     */
+    @Override
+    public String toString() {
+        return "[T]" + super.toString();
+    }
+}
