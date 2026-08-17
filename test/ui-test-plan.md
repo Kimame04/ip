@@ -152,18 +152,20 @@ bye
 
 ---
 
-## Test Case 4: Isolated Error Handling with Custom Cat Messages
-- **Aim**: Verify that invalid commands, empty task descriptions, and invalid task indices produce friendly feline error messages without crashing the application.
+## Test Case 4: Delete Tasks and Re-indexing (Level-6 & A-Collections)
+- **Aim**: Verify deleting tasks from the middle, beginning, and end of the list, verifying re-indexing and task count decrement.
 - **Inputs**:
 ```text
-blah
-todo
-deadline return book
-event project meeting /from Mon 2pm
-mark 10
-todo borrow book
-mark abc
-mark
+todo read book
+deadline return book /by Sunday
+event project meeting /from Mon 2pm /to 4pm
+list
+delete 2
+list
+delete 1
+list
+delete 1
+list
 bye
 ```
 - **Expected Output**:
@@ -181,30 +183,52 @@ bye
      What can I do for you?
     ____________________________________________________________
     ____________________________________________________________
-     OOPS! ₍^› ꘍ ‹ ^₎⟆ I'm sorry, but I don't know what that means.
-    ____________________________________________________________
-    ____________________________________________________________
-     OOPS! ₍^._.^₎ 𐒡 The description of a todo cannot be empty.
-    ____________________________________________________________
-    ____________________________________________________________
-     OOPS! ^๑_๑^ ੭ A deadline task requires a description and a '/by' time.
-    ____________________________________________________________
-    ____________________________________________________________
-     OOPS! ^๑_๑^ ੭ An event task requires a description, '/from', and '/to' times.
-    ____________________________________________________________
-    ____________________________________________________________
-     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please provide a valid task number.
-    ____________________________________________________________
-    ____________________________________________________________
      Got it. I've added this task:
-       [T][ ] borrow book
+       [T][ ] read book
      Now you have 1 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please provide a valid task number.
+     Got it. I've added this task:
+       [D][ ] return book (by: Sunday)
+     Now you have 2 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please specify a task number to mark.
+     Got it. I've added this task:
+       [E][ ] project meeting (from: Mon 2pm to: 4pm)
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[T][ ] read book
+     2.[D][ ] return book (by: Sunday)
+     3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [D][ ] return book (by: Sunday)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[T][ ] read book
+     2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [T][ ] read book
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [E][ ] project meeting (from: Mon 2pm to: 4pm)
+     Now you have 0 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
     ____________________________________________________________
     ____________________________________________________________
      Bye. Hope to see you again soon!
@@ -213,11 +237,12 @@ bye
 
 ---
 
-## Test Case 5: Interleaved Invalid Inputs and State Integrity
-- **Aim**: Verify that invalid commands, malformed parameters, and out-of-bounds operations do not corrupt the task list, alter indices, or leave partial state.
+## Test Case 5: Error Handling and Interleaved Operations
+- **Aim**: Verify that invalid commands, malformed parameters, and out-of-bounds operations (including delete) do not corrupt the task list or alter state.
 - **Inputs**:
 ```text
 list
+delete 1
 mark 1
 unmark 1
 todo read book
@@ -234,6 +259,11 @@ list
 deadline return book /by Sunday
 event project meeting /from Mon 2pm /to 4pm
 list
+delete 0
+delete -1
+delete 4
+delete abc
+delete
 mark 0
 mark -1
 mark 4
@@ -247,7 +277,7 @@ list
 mark 2
 unknown_cmd
 list
-unmark 2
+delete 2
 list
 bye
 ```
@@ -267,6 +297,9 @@ bye
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please provide a valid task number.
     ____________________________________________________________
     ____________________________________________________________
      OOPS! ₍^› ꘍ ‹ ^₎⟆ Please provide a valid task number.
@@ -339,6 +372,21 @@ bye
      OOPS! ₍^› ꘍ ‹ ^₎⟆ Please provide a valid task number.
     ____________________________________________________________
     ____________________________________________________________
+     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please specify a task number to delete.
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please provide a valid task number.
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please provide a valid task number.
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please provide a valid task number.
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please provide a valid task number.
+    ____________________________________________________________
+    ____________________________________________________________
      OOPS! ₍^› ꘍ ‹ ^₎⟆ Please specify a task number to mark.
     ____________________________________________________________
     ____________________________________________________________
@@ -373,14 +421,14 @@ bye
      3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     OK, I've marked this task as not done yet:
-       [D][ ] return book (by: Sunday)
+     Noted. I've removed this task:
+       [D][X] return book (by: Sunday)
+     Now you have 2 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
      1.[T][ ] read book
-     2.[D][ ] return book (by: Sunday)
-     3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+     2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
      Bye. Hope to see you again soon!

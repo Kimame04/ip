@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 /**
  * Main class for the Jiji personal assistant chatbot.
- * Level-5 implementation introduces an OOP exception hierarchy
- * with customized feline error messages.
+ * Level-6 implementation with Extension A-Collections introduces task deletion,
+ * dynamic collection management via java.util.ArrayList, and OOP exception handling.
  */
 public class Jiji {
 
@@ -17,7 +17,7 @@ public class Jiji {
 
     /**
      * Entry point of the Jiji application.
-     * Manages greeting, error handling, task management, and graceful exit.
+     * Manages greeting, error handling, task management (add, mark, unmark, delete, list), and exit.
      *
      * @param args Command line arguments (not used).
      */
@@ -59,6 +59,8 @@ public class Jiji {
                     handleMark(tasks, input);
                 } else if (input.equals("unmark") || input.startsWith("unmark ")) {
                     handleUnmark(tasks, input);
+                } else if (input.equals("delete") || input.startsWith("delete ")) {
+                    handleDelete(tasks, input);
                 } else if (input.equals("todo") || input.startsWith("todo ")) {
                     handleTodo(tasks, input);
                 } else if (input.equals("deadline") || input.startsWith("deadline ")) {
@@ -122,6 +124,28 @@ public class Jiji {
         printDivider();
         System.out.println(INDENT + "OK, I've marked this task as not done yet:");
         System.out.println(INDENT + "  " + task);
+        printDivider();
+    }
+
+    /**
+     * Handles deleting a task from the list using Java Collections.
+     *
+     * @param tasks The list of tasks.
+     * @param input The raw user command.
+     * @throws JijiException If index is missing or out of valid range.
+     */
+    private static void handleDelete(List<Task> tasks, String input) throws JijiException {
+        String arg = input.length() > 6 ? input.substring(6).trim() : "";
+        if (arg.isEmpty()) {
+            throw JijiInvalidIndexException.forMissingIndex("delete");
+        }
+        int index = parseIndex(arg, tasks.size());
+        Task removedTask = tasks.remove(index);
+
+        printDivider();
+        System.out.println(INDENT + "Noted. I've removed this task:");
+        System.out.println(INDENT + "  " + removedTask);
+        System.out.println(INDENT + "Now you have " + tasks.size() + " tasks in the list.");
         printDivider();
     }
 
