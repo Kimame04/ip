@@ -35,6 +35,11 @@ When proposing or creating a commit message, include enough detail to explain th
 Do not commit or push unless explicitly asked.
 Before committing (or proposing a commit), always invoke the `present-changes-visually` skill (`python3 .agents/skills/present-changes-visually/scripts/generate-split-view-diff.py . HEAD WORKTREE _temp/visual-diff.html`) and link to the generated diff page so changes can be reviewed visually.
 
+## Documentation and User Guide
+
+After each increment or when new features are added (or modified):
+1. **Update User Guide**: Ensure `docs/README.md` is updated to accurately document any new or modified commands, syntax, descriptions, and example outputs.
+
 ## Testing and Quality Assurance
 
 After each code update or increment:
