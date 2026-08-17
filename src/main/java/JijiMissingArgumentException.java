@@ -1,0 +1,41 @@
+/**
+ * Exception thrown when a command is missing required arguments or parameters.
+ */
+public class JijiMissingArgumentException extends JijiException {
+
+    /**
+     * Constructs a JijiMissingArgumentException with a custom detail message.
+     *
+     * @param message The detailed error message.
+     */
+    public JijiMissingArgumentException(String message) {
+        super(message);
+    }
+
+    /**
+     * Creates an exception for an empty Todo description.
+     *
+     * @return A new JijiMissingArgumentException formatted for todo tasks.
+     */
+    public static JijiMissingArgumentException forEmptyTodo() {
+        return new JijiMissingArgumentException("OOPS! ₍^._.^₎ 𐒡 The description of a todo cannot be empty.");
+    }
+
+    /**
+     * Creates an exception for missing Deadline details.
+     *
+     * @return A new JijiMissingArgumentException formatted for deadline tasks.
+     */
+    public static JijiMissingArgumentException forMissingDeadline() {
+        return new JijiMissingArgumentException("OOPS! ^๑_๑^ ੭ A deadline task requires a description and a '/by' time.");
+    }
+
+    /**
+     * Creates an exception for missing Event details.
+     *
+     * @return A new JijiMissingArgumentException formatted for event tasks.
+     */
+    public static JijiMissingArgumentException forMissingEvent() {
+        return new JijiMissingArgumentException("OOPS! ^๑_๑^ ੭ An event task requires a description, '/from', and '/to' times.");
+    }
+}
