@@ -29,8 +29,8 @@ public class Event extends Task {
      */
     @Override
     public String toFileFormat() {
-        return "E | " + super.toFileFormat() + " | " + DateTimeUtil.formatForStorage(from)
-                + " | " + DateTimeUtil.formatForStorage(to);
+        return TaskType.EVENT.getCode() + " | " + super.toFileFormat() + " | "
+                + DateTimeUtil.formatForStorage(from) + " | " + DateTimeUtil.formatForStorage(to);
     }
 
     /**
