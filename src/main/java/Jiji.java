@@ -1,13 +1,22 @@
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 /**
  * Main class for the Jiji personal assistant chatbot.
- * Level-6 implementation with Extension A-Collections introduces task deletion,
- * dynamic collection management via java.util.ArrayList, and OOP exception handling.
+ * Level-7 implementation introduces automatic data persistence (saving tasks to disk
+ * on mutation and loading existing tasks on startup).
  */
 public class Jiji {
+
+    /** Default relative file path for storing tasks on disk. */
+    private static final Path STORAGE_PATH = Paths.get("data", "jiji.txt");
 
     /** Horizontal line divider used to format chatbot responses. */
     private static final String LINE = "    ____________________________________________________________";
@@ -36,7 +45,7 @@ public class Jiji {
         System.out.println(INDENT + "What can I do for you?");
         printDivider();
 
-        List<Task> tasks = new ArrayList<>();
+        List<Task> tasks = loadTasks(STORAGE_PATH);
         Scanner scanner = new Scanner(System.in);
 
         while (scanner.hasNextLine()) {
@@ -98,6 +107,7 @@ public class Jiji {
         int index = parseIndex(arg, tasks.size());
         Task task = tasks.get(index);
         task.markAsDone();
+        saveTasks(tasks, STORAGE_PATH);
 
         printDivider();
         System.out.println(INDENT + "Nice! I've marked this task as done:");
@@ -120,6 +130,7 @@ public class Jiji {
         int index = parseIndex(arg, tasks.size());
         Task task = tasks.get(index);
         task.markAsNotDone();
+        saveTasks(tasks, STORAGE_PATH);
 
         printDivider();
         System.out.println(INDENT + "OK, I've marked this task as not done yet:");
@@ -141,6 +152,7 @@ public class Jiji {
         }
         int index = parseIndex(arg, tasks.size());
         Task removedTask = tasks.remove(index);
+        saveTasks(tasks, STORAGE_PATH);
 
         printDivider();
         System.out.println(INDENT + "Noted. I've removed this task:");
@@ -233,17 +245,113 @@ public class Jiji {
 
     /**
      * Adds a task to the task list and prints the standard confirmation message.
+     * Persists the updated task list to the storage file.
      *
      * @param tasks The list of tasks.
      * @param task The task to be added.
      */
     private static void addTask(List<Task> tasks, Task task) {
         tasks.add(task);
+        saveTasks(tasks, STORAGE_PATH);
         printDivider();
         System.out.println(INDENT + "Got it. I've added this task:");
         System.out.println(INDENT + "  " + task);
         System.out.println(INDENT + "Now you have " + tasks.size() + " tasks in the list.");
         printDivider();
+    }
+
+    /**
+     * Loads tasks from the specified file path.
+     * Creates parent directories if they do not exist. If the data file is missing,
+     * returns an empty list. Corrupted or invalid lines are skipped safely.
+     *
+     * @param filePath The path to the data storage file.
+     * @return The loaded list of tasks.
+     */
+    private static List<Task> loadTasks(Path filePath) {
+        List<Task> tasks = new ArrayList<>();
+        try {
+            if (filePath.getParent() != null && !Files.exists(filePath.getParent())) {
+                Files.createDirectories(filePath.getParent());
+            }
+            if (!Files.exists(filePath)) {
+                return tasks;
+            }
+            List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
+            for (String line : lines) {
+                String trimmed = line.trim();
+                if (trimmed.isEmpty()) {
+                    continue;
+                }
+                String[] parts = trimmed.split(" \\| ");
+                if (parts.length < 3) {
+                    continue;
+                }
+                String type = parts[0].trim();
+                boolean isDone = parts[1].trim().equals("1");
+                String description = parts[2].trim();
+
+                Task task = null;
+                switch (type) {
+                case "T":
+                    task = new Todo(description);
+                    break;
+                case "D":
+                    if (parts.length >= 4) {
+                        String by = parts[3].trim();
+                        task = new Deadline(description, by);
+                    }
+                    break;
+                case "E":
+                    if (parts.length >= 5) {
+                        String from = parts[3].trim();
+                        String to = parts[4].trim();
+                        task = new Event(description, from, to);
+                    }
+                    break;
+                default:
+                    break;
+                }
+
+                if (task != null) {
+                    if (isDone) {
+                        task.markAsDone();
+                    }
+                    tasks.add(task);
+                }
+            }
+        } catch (IOException e) {
+            printDivider();
+            System.out.println(INDENT + "Warning: Could not load tasks from " + filePath + ": " + e.getMessage());
+            printDivider();
+        }
+        return tasks;
+    }
+
+    /**
+     * Saves the current list of tasks to the storage file.
+     *
+     * @param tasks The list of tasks to save.
+     * @param filePath The path to the data storage file.
+     */
+    private static void saveTasks(List<Task> tasks, Path filePath) {
+        try {
+            if (filePath.getParent() != null && !Files.exists(filePath.getParent())) {
+                Files.createDirectories(filePath.getParent());
+            }
+            List<String> lines = new ArrayList<>();
+            for (Task task : tasks) {
+                lines.add(task.toFileFormat());
+            }
+            Files.write(filePath, lines, StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING,
+                    StandardOpenOption.WRITE);
+        } catch (IOException e) {
+            printDivider();
+            System.out.println(INDENT + "Warning: Could not save tasks to " + filePath + ": " + e.getMessage());
+            printDivider();
+        }
     }
 
     /**

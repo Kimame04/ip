@@ -54,6 +54,15 @@ public class Task {
     }
 
     /**
+     * Returns the string representation of the task formatted for storage persistence.
+     *
+     * @return Formatted line representation for saving to file.
+     */
+    public String toFileFormat() {
+        return (isDone ? "1" : "0") + " | " + description;
+    }
+
+    /**
      * Returns the string representation of the task including its status icon.
      *
      * @return Formatted string representation "[status] description".

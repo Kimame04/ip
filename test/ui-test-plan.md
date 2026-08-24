@@ -434,3 +434,113 @@ bye
      Bye. Hope to see you again soon!
     ____________________________________________________________
 ```
+
+---
+
+## Test Case 6: Data Persistence - Save Operations (Level-7)
+- **Aim**: Verify adding, marking, and deleting tasks in an initial session, persisting them to data storage upon modification.
+- **Inputs**:
+```text
+todo read textbook
+deadline submit homework /by tonight
+event team sync /from 3pm /to 4pm
+mark 1
+delete 2
+list
+bye
+```
+- **Expected Output**:
+```text
+    ____________________________________________________________
+         _     _          _     _ 
+        | |   (_)        (_)   (_)
+        | |    _          _     _ 
+     _  | |   | |        | |   | |
+    | |_| |   | |     _  | |   | |
+     \___/    |_|    | |_| |   |_|
+                      \___/       
+
+     Hello! I'm Jiji.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] read textbook
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] submit homework (by: tonight)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [E][ ] team sync (from: 3pm to: 4pm)
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [T][X] read textbook
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [D][ ] submit homework (by: tonight)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[T][X] read textbook
+     2.[E][ ] team sync (from: 3pm to: 4pm)
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
+---
+
+## Test Case 7: Data Persistence - Load Saved Tasks in New Session (Level-7)
+- **Aim**: Verify that launching a new session loads previously saved tasks and preserves their completion state.
+- **Preserve Data**: true
+- **Inputs**:
+```text
+list
+todo sleep early
+list
+bye
+```
+- **Expected Output**:
+```text
+    ____________________________________________________________
+         _     _          _     _ 
+        | |   (_)        (_)   (_)
+        | |    _          _     _ 
+     _  | |   | |        | |   | |
+    | |_| |   | |     _  | |   | |
+     \___/    |_|    | |_| |   |_|
+                      \___/       
+
+     Hello! I'm Jiji.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[T][X] read textbook
+     2.[E][ ] team sync (from: 3pm to: 4pm)
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] sleep early
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[T][X] read textbook
+     2.[E][ ] team sync (from: 3pm to: 4pm)
+     3.[T][ ] sleep early
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
