@@ -18,22 +18,22 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the storage text representation for a Deadline task.
+     * Returns the storage text representation for a Deadline task with standardized date formatting.
      *
      * @return Formatted string for file storage: "D | <isDone> | <description> | <by>".
      */
     @Override
     public String toFileFormat() {
-        return "D | " + super.toFileFormat() + " | " + by;
+        return "D | " + super.toFileFormat() + " | " + DateTimeUtil.formatForStorage(by);
     }
 
     /**
-     * Returns the string representation of the deadline task, prefixed with [D] and suffixing (by: ...).
+     * Returns the string representation of the deadline task, prefixed with [D] and suffixing formatted (by: ...).
      *
      * @return Formatted deadline string representation.
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + DateTimeUtil.formatForDisplay(by) + ")";
     }
 }
