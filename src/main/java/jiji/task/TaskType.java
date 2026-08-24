@@ -1,3 +1,5 @@
+package jiji.task;
+
 /**
  * Represents the different types of tasks supported by Jiji along with their storage type codes.
  */

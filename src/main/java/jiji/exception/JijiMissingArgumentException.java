@@ -1,3 +1,5 @@
+package jiji.exception;
+
 /**
  * Exception thrown when a command is missing required arguments or parameters.
  */

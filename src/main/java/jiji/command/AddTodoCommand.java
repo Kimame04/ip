@@ -1,3 +1,12 @@
+package jiji.command;
+
+import jiji.exception.JijiStorageException;
+import jiji.storage.Storage;
+import jiji.task.Task;
+import jiji.task.TaskList;
+import jiji.task.Todo;
+import jiji.ui.Ui;
+
 /**
  * Command that adds a new {@link Todo} task to the task list.
  */

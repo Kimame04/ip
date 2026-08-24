@@ -1,3 +1,13 @@
+package jiji;
+
+import jiji.command.Command;
+import jiji.exception.JijiException;
+import jiji.exception.JijiStorageException;
+import jiji.parser.Parser;
+import jiji.storage.Storage;
+import jiji.task.TaskList;
+import jiji.ui.Ui;
+
 /**
  * Main entry point for the Jiji personal assistant chatbot.
  * Coordinates the Ui, Storage, TaskList, and Parser components to execute user commands.

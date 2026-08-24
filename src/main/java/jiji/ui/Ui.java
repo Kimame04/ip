@@ -1,4 +1,9 @@
+package jiji.ui;
+
 import java.util.Scanner;
+
+import jiji.task.Task;
+import jiji.task.TaskList;
 
 /**
  * Handles all user interactions with the Jiji chatbot, including reading user commands

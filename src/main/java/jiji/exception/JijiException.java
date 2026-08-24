@@ -1,3 +1,5 @@
+package jiji.exception;
+
 /**
  * Base checked exception class for all domain-specific exceptions in Jiji.
  */

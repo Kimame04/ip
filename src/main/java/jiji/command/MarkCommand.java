@@ -1,21 +1,30 @@
+package jiji.command;
+
+import jiji.exception.JijiException;
+import jiji.exception.JijiInvalidIndexException;
+import jiji.storage.Storage;
+import jiji.task.Task;
+import jiji.task.TaskList;
+import jiji.ui.Ui;
+
 /**
- * Command that marks a task at a specific index as not completed.
+ * Command that marks a task at a specific index as completed.
  */
-public class UnmarkCommand extends Command {
+public class MarkCommand extends Command {
 
     private final int targetIndex;
 
     /**
-     * Constructs an UnmarkCommand targeting the specified 0-based task index.
+     * Constructs a MarkCommand targeting the specified 0-based task index.
      *
-     * @param targetIndex The 0-based index of the task to unmark.
+     * @param targetIndex The 0-based index of the task to mark.
      */
-    public UnmarkCommand(int targetIndex) {
+    public MarkCommand(int targetIndex) {
         this.targetIndex = targetIndex;
     }
 
     /**
-     * Executes the unmark command, updating the task state, saving to storage, and notifying the UI.
+     * Executes the mark command, updating the task state, saving to storage, and notifying the UI.
      *
      * @param tasks The task list.
      * @param ui The UI handler for displaying output.
@@ -28,8 +37,8 @@ public class UnmarkCommand extends Command {
             throw JijiInvalidIndexException.forInvalidNumber();
         }
         Task task = tasks.get(targetIndex);
-        task.markAsNotDone();
+        task.markAsDone();
         storage.save(tasks);
-        ui.showTaskUnmarked(task);
+        ui.showTaskMarked(task);
     }
 }

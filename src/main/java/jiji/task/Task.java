@@ -1,3 +1,5 @@
+package jiji.task;
+
 /**
  * Represents a task in the Jiji chatbot.
  * A task contains a textual description and a completion status.
