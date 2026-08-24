@@ -55,29 +55,45 @@ public class Jiji {
             }
 
             try {
-                if (input.equalsIgnoreCase("bye")) {
+                String[] words = input.split("\\s+", 2);
+                String commandWord = words[0];
+                CommandType commandType = CommandType.from(commandWord);
+
+                switch (commandType) {
+                case BYE:
                     break;
-                } else if (input.equalsIgnoreCase("list")) {
+                case LIST:
                     printDivider();
                     System.out.println(INDENT + "Here are the tasks in your list:");
                     for (int i = 0; i < tasks.size(); i++) {
                         System.out.println(INDENT + (i + 1) + "." + tasks.get(i));
                     }
                     printDivider();
-                } else if (input.equals("mark") || input.startsWith("mark ")) {
+                    break;
+                case MARK:
                     handleMark(tasks, input);
-                } else if (input.equals("unmark") || input.startsWith("unmark ")) {
+                    break;
+                case UNMARK:
                     handleUnmark(tasks, input);
-                } else if (input.equals("delete") || input.startsWith("delete ")) {
+                    break;
+                case DELETE:
                     handleDelete(tasks, input);
-                } else if (input.equals("todo") || input.startsWith("todo ")) {
+                    break;
+                case TODO:
                     handleTodo(tasks, input);
-                } else if (input.equals("deadline") || input.startsWith("deadline ")) {
+                    break;
+                case DEADLINE:
                     handleDeadline(tasks, input);
-                } else if (input.equals("event") || input.startsWith("event ")) {
+                    break;
+                case EVENT:
                     handleEvent(tasks, input);
-                } else {
+                    break;
+                default:
                     throw new JijiUnknownCommandException();
+                }
+
+                if (commandType == CommandType.BYE) {
+                    break;
                 }
             } catch (JijiException e) {
                 printDivider();
@@ -291,18 +307,23 @@ public class Jiji {
                 boolean isDone = parts[1].trim().equals("1");
                 String description = parts[2].trim();
 
+                TaskType taskType = TaskType.fromCode(type);
+                if (taskType == null) {
+                    continue;
+                }
+
                 Task task = null;
-                switch (type) {
-                case "T":
+                switch (taskType) {
+                case TODO:
                     task = new Todo(description);
                     break;
-                case "D":
+                case DEADLINE:
                     if (parts.length >= 4) {
                         String by = parts[3].trim();
                         task = new Deadline(description, by);
                     }
                     break;
-                case "E":
+                case EVENT:
                     if (parts.length >= 5) {
                         String from = parts[3].trim();
                         String to = parts[4].trim();

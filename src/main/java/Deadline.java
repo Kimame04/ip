@@ -24,7 +24,8 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileFormat() {
-        return "D | " + super.toFileFormat() + " | " + DateTimeUtil.formatForStorage(by);
+        return TaskType.DEADLINE.getCode() + " | " + super.toFileFormat() + " | "
+                + DateTimeUtil.formatForStorage(by);
     }
 
     /**
