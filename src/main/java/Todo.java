@@ -13,6 +13,16 @@ public class Todo extends Task {
     }
 
     /**
+     * Returns the storage text representation for a Todo task prefixed with "T | ".
+     *
+     * @return Formatted string for file storage: "T | <isDone> | <description>".
+     */
+    @Override
+    public String toFileFormat() {
+        return "T | " + super.toFileFormat();
+    }
+
+    /**
      * Returns the string representation of the todo task, prefixed with [T].
      *
      * @return Formatted todo string representation.

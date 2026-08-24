@@ -205,3 +205,19 @@ Jiji validates your input and provides helpful, friendly error messages using cu
        OOPS! ₍^› ꘍ ‹ ^₎⟆ I'm sorry, but I don't know what that means.
       ____________________________________________________________
   ```
+
+---
+
+## Data Persistence
+
+Jiji automatically persists your task list so you never lose track of your items:
+
+* **Automatic Saving**: Every time you add, delete, mark, or unmark a task, Jiji immediately updates the storage file on disk.
+* **Storage Location**: Tasks are stored in `data/jiji.txt` relative to the application's root directory. The directory and file are created automatically if they do not exist.
+* **Automatic Loading**: When Jiji starts up, it automatically reads `data/jiji.txt` and populates your task list.
+* **Storage Format**: Pipe-separated text format:
+  ```text
+  T | 1 | read book
+  D | 0 | return book | Sunday
+  E | 0 | project meeting | Mon 2pm | 4pm
+  ```
