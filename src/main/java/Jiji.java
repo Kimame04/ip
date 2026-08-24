@@ -1,384 +1,58 @@
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 /**
- * Main class for the Jiji personal assistant chatbot.
- * Level-7 implementation introduces automatic data persistence (saving tasks to disk
- * on mutation and loading existing tasks on startup).
+ * Main entry point for the Jiji personal assistant chatbot.
+ * Coordinates the Ui, Storage, TaskList, and Parser components to execute user commands.
  */
 public class Jiji {
 
-    /** Default relative file path for storing tasks on disk. */
-    private static final Path STORAGE_PATH = Paths.get("data", "jiji.txt");
-
-    /** Horizontal line divider used to format chatbot responses. */
-    private static final String LINE = "    ____________________________________________________________";
-
-    /** Indentation prefix for chatbot response messages. */
-    private static final String INDENT = "     ";
+    private final Storage storage;
+    private final TaskList tasks;
+    private final Ui ui;
 
     /**
-     * Entry point of the Jiji application.
-     * Manages greeting, error handling, task management (add, mark, unmark, delete, list), and exit.
+     * Constructs a Jiji chatbot instance with the specified file path for persistent data storage.
      *
-     * @param args Command line arguments (not used).
+     * @param filePath The file path for data persistence (e.g. "data/jiji.txt").
      */
-    public static void main(String[] args) {
-        String banner = "         _     _          _     _ \n"
-                + "        | |   (_)        (_)   (_)\n"
-                + "        | |    _          _     _ \n"
-                + "     _  | |   | |        | |   | |\n"
-                + "    | |_| |   | |     _  | |   | |\n"
-                + "     \\___/    |_|    | |_| |   |_|\n"
-                + "                      \\___/       \n";
+    public Jiji(String filePath) {
+        this.ui = new Ui();
+        this.storage = new Storage(filePath);
+        TaskList loadedTasks;
+        try {
+            loadedTasks = new TaskList(storage.load());
+        } catch (JijiStorageException e) {
+            ui.showLoadingError();
+            loadedTasks = new TaskList();
+        }
+        this.tasks = loadedTasks;
+    }
 
-        printDivider();
-        System.out.println(banner);
-        System.out.println(INDENT + "Hello! I'm Jiji.");
-        System.out.println(INDENT + "What can I do for you?");
-        printDivider();
-
-        List<Task> tasks = loadTasks(STORAGE_PATH);
-        Scanner scanner = new Scanner(System.in);
-
-        while (scanner.hasNextLine()) {
-            String input = scanner.nextLine().trim();
-            if (input.isEmpty()) {
+    /**
+     * Starts and executes the main command processing loop of Jiji.
+     */
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit && ui.hasNextCommand()) {
+            String fullCommand = ui.readCommand();
+            if (fullCommand.trim().isEmpty()) {
                 continue;
             }
-
             try {
-                String[] words = input.split("\\s+", 2);
-                String commandWord = words[0];
-                CommandType commandType = CommandType.from(commandWord);
-
-                switch (commandType) {
-                case BYE:
-                    break;
-                case LIST:
-                    printDivider();
-                    System.out.println(INDENT + "Here are the tasks in your list:");
-                    for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println(INDENT + (i + 1) + "." + tasks.get(i));
-                    }
-                    printDivider();
-                    break;
-                case MARK:
-                    handleMark(tasks, input);
-                    break;
-                case UNMARK:
-                    handleUnmark(tasks, input);
-                    break;
-                case DELETE:
-                    handleDelete(tasks, input);
-                    break;
-                case TODO:
-                    handleTodo(tasks, input);
-                    break;
-                case DEADLINE:
-                    handleDeadline(tasks, input);
-                    break;
-                case EVENT:
-                    handleEvent(tasks, input);
-                    break;
-                default:
-                    throw new JijiUnknownCommandException();
-                }
-
-                if (commandType == CommandType.BYE) {
-                    break;
-                }
+                Command command = Parser.parse(fullCommand);
+                command.execute(tasks, ui, storage);
+                isExit = command.isExit();
             } catch (JijiException e) {
-                printDivider();
-                System.out.println(INDENT + e.getMessage());
-                printDivider();
+                ui.showError(e.getMessage());
             }
         }
-
-        printDivider();
-        System.out.println(INDENT + "Bye. Hope to see you again soon!");
-        printDivider();
-        scanner.close();
     }
 
     /**
-     * Handles marking a task as done.
+     * Application entry point.
      *
-     * @param tasks The list of tasks.
-     * @param input The raw user command.
-     * @throws JijiException If index is missing or out of valid range.
+     * @param args Command-line arguments (not used).
      */
-    private static void handleMark(List<Task> tasks, String input) throws JijiException {
-        String arg = input.length() > 4 ? input.substring(4).trim() : "";
-        if (arg.isEmpty()) {
-            throw JijiInvalidIndexException.forMissingIndex("mark");
-        }
-        int index = parseIndex(arg, tasks.size());
-        Task task = tasks.get(index);
-        task.markAsDone();
-        saveTasks(tasks, STORAGE_PATH);
-
-        printDivider();
-        System.out.println(INDENT + "Nice! I've marked this task as done:");
-        System.out.println(INDENT + "  " + task);
-        printDivider();
-    }
-
-    /**
-     * Handles unmarking a task (marking as not done).
-     *
-     * @param tasks The list of tasks.
-     * @param input The raw user command.
-     * @throws JijiException If index is missing or out of valid range.
-     */
-    private static void handleUnmark(List<Task> tasks, String input) throws JijiException {
-        String arg = input.length() > 6 ? input.substring(6).trim() : "";
-        if (arg.isEmpty()) {
-            throw JijiInvalidIndexException.forMissingIndex("unmark");
-        }
-        int index = parseIndex(arg, tasks.size());
-        Task task = tasks.get(index);
-        task.markAsNotDone();
-        saveTasks(tasks, STORAGE_PATH);
-
-        printDivider();
-        System.out.println(INDENT + "OK, I've marked this task as not done yet:");
-        System.out.println(INDENT + "  " + task);
-        printDivider();
-    }
-
-    /**
-     * Handles deleting a task from the list using Java Collections.
-     *
-     * @param tasks The list of tasks.
-     * @param input The raw user command.
-     * @throws JijiException If index is missing or out of valid range.
-     */
-    private static void handleDelete(List<Task> tasks, String input) throws JijiException {
-        String arg = input.length() > 6 ? input.substring(6).trim() : "";
-        if (arg.isEmpty()) {
-            throw JijiInvalidIndexException.forMissingIndex("delete");
-        }
-        int index = parseIndex(arg, tasks.size());
-        Task removedTask = tasks.remove(index);
-        saveTasks(tasks, STORAGE_PATH);
-
-        printDivider();
-        System.out.println(INDENT + "Noted. I've removed this task:");
-        System.out.println(INDENT + "  " + removedTask);
-        System.out.println(INDENT + "Now you have " + tasks.size() + " tasks in the list.");
-        printDivider();
-    }
-
-    /**
-     * Handles creating a Todo task.
-     *
-     * @param tasks The list of tasks.
-     * @param input The raw user command.
-     * @throws JijiException If description is empty.
-     */
-    private static void handleTodo(List<Task> tasks, String input) throws JijiException {
-        String description = input.length() > 4 ? input.substring(4).trim() : "";
-        if (description.isEmpty()) {
-            throw JijiMissingArgumentException.forEmptyTodo();
-        }
-        addTask(tasks, new Todo(description));
-    }
-
-    /**
-     * Handles creating a Deadline task.
-     *
-     * @param tasks The list of tasks.
-     * @param input The raw user command.
-     * @throws JijiException If description or deadline '/by' parameter is missing.
-     */
-    private static void handleDeadline(List<Task> tasks, String input) throws JijiException {
-        String rest = input.length() > 8 ? input.substring(8).trim() : "";
-        if (rest.isEmpty() || !rest.contains(" /by ")) {
-            throw JijiMissingArgumentException.forMissingDeadline();
-        }
-        String[] parts = rest.split(" /by ", 2);
-        String description = parts[0].trim();
-        String by = parts.length > 1 ? parts[1].trim() : "";
-        if (description.isEmpty() || by.isEmpty()) {
-            throw JijiMissingArgumentException.forMissingDeadline();
-        }
-        addTask(tasks, new Deadline(description, by));
-    }
-
-    /**
-     * Handles creating an Event task.
-     *
-     * @param tasks The list of tasks.
-     * @param input The raw user command.
-     * @throws JijiException If description, '/from', or '/to' parameter is missing.
-     */
-    private static void handleEvent(List<Task> tasks, String input) throws JijiException {
-        String rest = input.length() > 5 ? input.substring(5).trim() : "";
-        if (rest.isEmpty() || !rest.contains(" /from ") || !rest.contains(" /to ")) {
-            throw JijiMissingArgumentException.forMissingEvent();
-        }
-        String[] parts = rest.split(" /from ", 2);
-        String description = parts[0].trim();
-        if (description.isEmpty()) {
-            throw JijiMissingArgumentException.forMissingEvent();
-        }
-        String[] timeParts = parts[1].split(" /to ", 2);
-        String from = timeParts[0].trim();
-        String to = timeParts.length > 1 ? timeParts[1].trim() : "";
-        if (from.isEmpty() || to.isEmpty()) {
-            throw JijiMissingArgumentException.forMissingEvent();
-        }
-        addTask(tasks, new Event(description, from, to));
-    }
-
-    /**
-     * Parses a string input into a 0-based task index.
-     *
-     * @param arg The string containing the task number.
-     * @param size The current size of the task list.
-     * @return The 0-based index.
-     * @throws JijiException If the number format is invalid or out of range.
-     */
-    private static int parseIndex(String arg, int size) throws JijiException {
-        try {
-            int index = Integer.parseInt(arg) - 1;
-            if (index < 0 || index >= size) {
-                throw JijiInvalidIndexException.forInvalidNumber();
-            }
-            return index;
-        } catch (NumberFormatException e) {
-            throw JijiInvalidIndexException.forInvalidNumber();
-        }
-    }
-
-    /**
-     * Adds a task to the task list and prints the standard confirmation message.
-     * Persists the updated task list to the storage file.
-     *
-     * @param tasks The list of tasks.
-     * @param task The task to be added.
-     */
-    private static void addTask(List<Task> tasks, Task task) {
-        tasks.add(task);
-        saveTasks(tasks, STORAGE_PATH);
-        printDivider();
-        System.out.println(INDENT + "Got it. I've added this task:");
-        System.out.println(INDENT + "  " + task);
-        System.out.println(INDENT + "Now you have " + tasks.size() + " tasks in the list.");
-        printDivider();
-    }
-
-    /**
-     * Loads tasks from the specified file path.
-     * Creates parent directories if they do not exist. If the data file is missing,
-     * returns an empty list. Corrupted or invalid lines are skipped safely.
-     *
-     * @param filePath The path to the data storage file.
-     * @return The loaded list of tasks.
-     */
-    private static List<Task> loadTasks(Path filePath) {
-        List<Task> tasks = new ArrayList<>();
-        try {
-            if (filePath.getParent() != null && !Files.exists(filePath.getParent())) {
-                Files.createDirectories(filePath.getParent());
-            }
-            if (!Files.exists(filePath)) {
-                return tasks;
-            }
-            List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
-            for (String line : lines) {
-                String trimmed = line.trim();
-                if (trimmed.isEmpty()) {
-                    continue;
-                }
-                String[] parts = trimmed.split(" \\| ");
-                if (parts.length < 3) {
-                    continue;
-                }
-                String type = parts[0].trim();
-                boolean isDone = parts[1].trim().equals("1");
-                String description = parts[2].trim();
-
-                TaskType taskType = TaskType.fromCode(type);
-                if (taskType == null) {
-                    continue;
-                }
-
-                Task task = null;
-                switch (taskType) {
-                case TODO:
-                    task = new Todo(description);
-                    break;
-                case DEADLINE:
-                    if (parts.length >= 4) {
-                        String by = parts[3].trim();
-                        task = new Deadline(description, by);
-                    }
-                    break;
-                case EVENT:
-                    if (parts.length >= 5) {
-                        String from = parts[3].trim();
-                        String to = parts[4].trim();
-                        task = new Event(description, from, to);
-                    }
-                    break;
-                default:
-                    break;
-                }
-
-                if (task != null) {
-                    if (isDone) {
-                        task.markAsDone();
-                    }
-                    tasks.add(task);
-                }
-            }
-        } catch (IOException e) {
-            printDivider();
-            System.out.println(INDENT + "Warning: Could not load tasks from " + filePath + ": " + e.getMessage());
-            printDivider();
-        }
-        return tasks;
-    }
-
-    /**
-     * Saves the current list of tasks to the storage file.
-     *
-     * @param tasks The list of tasks to save.
-     * @param filePath The path to the data storage file.
-     */
-    private static void saveTasks(List<Task> tasks, Path filePath) {
-        try {
-            if (filePath.getParent() != null && !Files.exists(filePath.getParent())) {
-                Files.createDirectories(filePath.getParent());
-            }
-            List<String> lines = new ArrayList<>();
-            for (Task task : tasks) {
-                lines.add(task.toFileFormat());
-            }
-            Files.write(filePath, lines, StandardCharsets.UTF_8,
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.TRUNCATE_EXISTING,
-                    StandardOpenOption.WRITE);
-        } catch (IOException e) {
-            printDivider();
-            System.out.println(INDENT + "Warning: Could not save tasks to " + filePath + ": " + e.getMessage());
-            printDivider();
-        }
-    }
-
-    /**
-     * Prints the horizontal divider line.
-     */
-    private static void printDivider() {
-        System.out.println(LINE);
+    public static void main(String[] args) {
+        new Jiji("data/jiji.txt").run();
     }
 }
