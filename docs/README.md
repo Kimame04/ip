@@ -41,38 +41,54 @@ Adds a task without any date or time constraints.
 ---
 
 ### 2. Adding a Deadline Task: `deadline`
-Adds a task that must be completed by a specific date or time.
+Adds a task that must be completed by a specific date or time. Jiji understands standard date and time formats (e.g. `yyyy-MM-dd`, `d/M/yyyy HHmm`) and displays them in a friendly format (`MMM dd yyyy, h:mma`).
 
 * **Format**: `deadline <description> /by <date/time>`
-* **Example**:
+* **Accepted Formats**:
+  * Date: `yyyy-MM-dd` (e.g. `2026-08-30`), `d/M/yyyy` (e.g. `2/12/2026`)
+  * Date-Time: `yyyy-MM-dd HHmm` (e.g. `2026-08-30 1800`), `d/M/yyyy HHmm` (e.g. `2/12/2026 1800`)
+  * Text descriptions (e.g. `Sunday`) are also supported.
+* **Example (Date)**:
   ```text
-  deadline return book /by Sunday
+  deadline return book /by 2026-08-30
   ```
 * **Expected Output**:
   ```text
       ____________________________________________________________
        Got it. I've added this task:
-         [D][ ] return book (by: Sunday)
+         [D][ ] return book (by: Aug 30 2026)
        Now you have 2 tasks in the list.
+      ____________________________________________________________
+  ```
+* **Example (Date and Time)**:
+  ```text
+  deadline submit project /by 2/12/2026 1800
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Got it. I've added this task:
+         [D][ ] submit project (by: Dec 02 2026, 6:00PM)
+       Now you have 3 tasks in the list.
       ____________________________________________________________
   ```
 
 ---
 
 ### 3. Adding an Event Task: `event`
-Adds an event that occurs over a specific time interval.
+Adds an event that occurs over a specific time interval. Both dates and times are formatted for clarity.
 
 * **Format**: `event <description> /from <start> /to <end>`
 * **Example**:
   ```text
-  event project meeting /from Mon 2pm /to 4pm
+  event orientation camp /from 2026-09-01 0900 /to 2026-09-03 1700
   ```
 * **Expected Output**:
   ```text
       ____________________________________________________________
        Got it. I've added this task:
-         [E][ ] project meeting (from: Mon 2pm to: 4pm)
-       Now you have 3 tasks in the list.
+         [E][ ] orientation camp (from: Sep 01 2026, 9:00AM to: Sep 03 2026, 5:00PM)
+       Now you have 4 tasks in the list.
       ____________________________________________________________
   ```
 

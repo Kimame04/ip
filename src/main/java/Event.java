@@ -23,22 +23,24 @@ public class Event extends Task {
     }
 
     /**
-     * Returns the storage text representation for an Event task.
+     * Returns the storage text representation for an Event task with standardized date formatting.
      *
      * @return Formatted string for file storage: "E | <isDone> | <description> | <from> | <to>".
      */
     @Override
     public String toFileFormat() {
-        return "E | " + super.toFileFormat() + " | " + from + " | " + to;
+        return "E | " + super.toFileFormat() + " | " + DateTimeUtil.formatForStorage(from)
+                + " | " + DateTimeUtil.formatForStorage(to);
     }
 
     /**
-     * Returns the string representation of the event task, prefixed with [E] and suffixing (from: ... to: ...).
+     * Returns the string representation of the event task, prefixed with [E] and suffixing formatted times.
      *
      * @return Formatted event string representation.
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        return "[E]" + super.toString() + " (from: " + DateTimeUtil.formatForDisplay(from)
+                + " to: " + DateTimeUtil.formatForDisplay(to) + ")";
     }
 }

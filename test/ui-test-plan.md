@@ -544,3 +544,91 @@ bye
     ____________________________________________________________
 ```
 
+---
+
+## Test Case 8: Semantic Date and Time Handling (Level-8)
+- **Aim**: Verify parsing of standard date formats (yyyy-MM-dd, d/M/yyyy HHmm) and formatted display output (MMM dd yyyy, h:mma).
+- **Inputs**:
+```text
+deadline return book /by 2026-08-30
+deadline submit project /by 2/12/2026 1800
+event orientation camp /from 2026-09-01 0900 /to 2026-09-03 1700
+list
+bye
+```
+- **Expected Output**:
+```text
+    ____________________________________________________________
+         _     _          _     _ 
+        | |   (_)        (_)   (_)
+        | |    _          _     _ 
+     _  | |   | |        | |   | |
+    | |_| |   | |     _  | |   | |
+     \___/    |_|    | |_| |   |_|
+                      \___/       
+
+     Hello! I'm Jiji.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] return book (by: Aug 30 2026)
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] submit project (by: Dec 02 2026, 6:00PM)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [E][ ] orientation camp (from: Sep 01 2026, 9:00AM to: Sep 03 2026, 5:00PM)
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[D][ ] return book (by: Aug 30 2026)
+     2.[D][ ] submit project (by: Dec 02 2026, 6:00PM)
+     3.[E][ ] orientation camp (from: Sep 01 2026, 9:00AM to: Sep 03 2026, 5:00PM)
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
+---
+
+## Test Case 9: Persistence of Date/Time Objects (Level-8)
+- **Aim**: Verify that dates/times saved in storage are reloaded across sessions and properly formatted upon restart.
+- **Preserve Data**: true
+- **Inputs**:
+```text
+list
+bye
+```
+- **Expected Output**:
+```text
+    ____________________________________________________________
+         _     _          _     _ 
+        | |   (_)        (_)   (_)
+        | |    _          _     _ 
+     _  | |   | |        | |   | |
+    | |_| |   | |     _  | |   | |
+     \___/    |_|    | |_| |   |_|
+                      \___/       
+
+     Hello! I'm Jiji.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[D][ ] return book (by: Aug 30 2026)
+     2.[D][ ] submit project (by: Dec 02 2026, 6:00PM)
+     3.[E][ ] orientation camp (from: Sep 01 2026, 9:00AM to: Sep 03 2026, 5:00PM)
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
+
