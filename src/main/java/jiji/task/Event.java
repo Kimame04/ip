@@ -1,3 +1,7 @@
+package jiji.task;
+
+import jiji.parser.DateTimeUtil;
+
 /**
  * Represents an event task with a start time and an end time.
  */

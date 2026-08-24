@@ -1,3 +1,12 @@
+package jiji.command;
+
+import jiji.exception.JijiStorageException;
+import jiji.storage.Storage;
+import jiji.task.Event;
+import jiji.task.Task;
+import jiji.task.TaskList;
+import jiji.ui.Ui;
+
 /**
  * Command that adds a new {@link Event} task to the task list.
  */

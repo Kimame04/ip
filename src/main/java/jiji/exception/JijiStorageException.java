@@ -1,3 +1,5 @@
+package jiji.exception;
+
 /**
  * Exception thrown when reading from or writing to the data storage file fails.
  */

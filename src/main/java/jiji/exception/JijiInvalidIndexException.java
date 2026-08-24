@@ -1,3 +1,5 @@
+package jiji.exception;
+
 /**
  * Exception thrown when an invalid, out-of-bounds, or omitted task number is supplied.
  */

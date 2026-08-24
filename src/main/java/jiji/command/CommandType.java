@@ -1,3 +1,7 @@
+package jiji.command;
+
+import jiji.exception.JijiUnknownCommandException;
+
 /**
  * Represents the set of valid command types recognized by the Jiji chatbot.
  */

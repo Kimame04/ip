@@ -1,3 +1,10 @@
+package jiji.command;
+
+import jiji.exception.JijiException;
+import jiji.storage.Storage;
+import jiji.task.TaskList;
+import jiji.ui.Ui;
+
 /**
  * Abstract base class for all executable commands in Jiji.
  */

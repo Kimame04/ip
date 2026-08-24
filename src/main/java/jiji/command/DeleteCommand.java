@@ -1,3 +1,12 @@
+package jiji.command;
+
+import jiji.exception.JijiException;
+import jiji.exception.JijiInvalidIndexException;
+import jiji.storage.Storage;
+import jiji.task.Task;
+import jiji.task.TaskList;
+import jiji.ui.Ui;
+
 /**
  * Command that removes a task at a specific index from the task list.
  */
