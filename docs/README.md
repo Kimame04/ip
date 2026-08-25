@@ -237,3 +237,23 @@ Jiji automatically persists your task list so you never lose track of your items
   D | 0 | return book | Sunday
   E | 0 | project meeting | Mon 2pm | 4pm
   ```
+
+---
+
+## Building and Running with Gradle
+
+Jiji uses Gradle for build automation, testing, and packaging:
+
+* **Run Jiji interactively**:
+  ```bash
+  ./gradlew run --console=plain --quiet
+  ```
+* **Build project & assemble distribution**:
+  ```bash
+  ./gradlew build
+  ```
+* **Build executable fat JAR**:
+  ```bash
+  ./gradlew shadowJar
+  ```
+  The generated standalone JAR is saved to `build/libs/jiji.jar`.
