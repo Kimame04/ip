@@ -6,7 +6,11 @@
 # Gradle build files
 /.gradle/
 /build/
+gradle.properties
 src/main/resources/docs/
+
+# Local data files
+data/
 
 # MacOS custom attributes files created by Finder
 .DS_Store

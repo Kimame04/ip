@@ -48,6 +48,12 @@ public class DateTimeUtil {
     };
 
     /**
+     * Prevents instantiation of utility class.
+     */
+    private DateTimeUtil() {
+    }
+
+    /**
      * Attempts to parse an input string as a {@link LocalDateTime}.
      *
      * @param input The raw date-time string.

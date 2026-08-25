@@ -45,3 +45,8 @@ After each increment or when new features are added (or modified):
 After each code update or increment:
 1. **Update Test Plan**: Ensure `test/ui-test-plan.md` is updated (if needed) with test cases reflecting the new or modified behavior.
 2. **Invoke `test-ui` Skill**: Always invoke the `test-ui` skill (`python3 .agents/skills/test-ui/scripts/run-ui-tests.py`) to execute all UI tests and ensure all test cases pass cleanly before concluding the turn.
+
+## Code Style and Standards
+
+Ensure all Java code complies with the SE-EDU Java Coding Standard (Intermediate) detailed in `.agents/skills/seedu-java-coding-standard/SKILL.md` (e.g. 4-space indentation, explicit imports, K&R braces, constant and variable naming conventions).
+
