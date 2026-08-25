@@ -17,7 +17,7 @@ public class Todo extends Task {
     /**
      * Returns the storage text representation for a Todo task prefixed with its task type code.
      *
-     * @return Formatted string for file storage: "T | <isDone> | <description>".
+     * @return Formatted string for file storage: {@code "T | <isDone> | <description>"}.
      */
     @Override
     public String toFileFormat() {

@@ -4,8 +4,11 @@ package jiji.task;
  * Represents the different types of tasks supported by Jiji along with their storage type codes.
  */
 public enum TaskType {
+    /** Todo task type. */
     TODO("T"),
+    /** Deadline task type. */
     DEADLINE("D"),
+    /** Event task type. */
     EVENT("E");
 
     private final String code;

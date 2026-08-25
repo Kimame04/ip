@@ -21,6 +21,12 @@ import jiji.exception.JijiUnknownCommandException;
 public class Parser {
 
     /**
+     * Prevents instantiation of utility class.
+     */
+    private Parser() {
+    }
+
+    /**
      * Parses the full command string entered by the user.
      *
      * @param fullCommand The raw input string.
