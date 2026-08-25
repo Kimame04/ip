@@ -10,6 +10,12 @@ import jiji.ui.Ui;
 public class ExitCommand extends Command {
 
     /**
+     * Constructs a new ExitCommand.
+     */
+    public ExitCommand() {
+    }
+
+    /**
      * Executes the exit command by displaying the farewell message.
      *
      * @param tasks The task list.

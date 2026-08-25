@@ -11,6 +11,12 @@ import jiji.ui.Ui;
 public abstract class Command {
 
     /**
+     * Constructs a new Command.
+     */
+    public Command() {
+    }
+
+    /**
      * Executes the command with the specified task list, UI, and storage dependencies.
      *
      * @param tasks The task list manipulated by the command.

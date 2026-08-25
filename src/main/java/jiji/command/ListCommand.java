@@ -10,6 +10,12 @@ import jiji.ui.Ui;
 public class ListCommand extends Command {
 
     /**
+     * Constructs a new ListCommand.
+     */
+    public ListCommand() {
+    }
+
+    /**
      * Executes the list command by displaying all tasks via the UI.
      *
      * @param tasks The task list.

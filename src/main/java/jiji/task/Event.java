@@ -29,7 +29,7 @@ public class Event extends Task {
     /**
      * Returns the storage text representation for an Event task with standardized date formatting.
      *
-     * @return Formatted string for file storage: "E | <isDone> | <description> | <from> | <to>".
+     * @return Formatted string for file storage: {@code "E | <isDone> | <description> | <from> | <to>"}.
      */
     @Override
     public String toFileFormat() {

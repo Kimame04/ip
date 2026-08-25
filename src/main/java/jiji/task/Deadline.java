@@ -24,7 +24,7 @@ public class Deadline extends Task {
     /**
      * Returns the storage text representation for a Deadline task with standardized date formatting.
      *
-     * @return Formatted string for file storage: "D | <isDone> | <description> | <by>".
+     * @return Formatted string for file storage: {@code "D | <isDone> | <description> | <by>"}.
      */
     @Override
     public String toFileFormat() {
