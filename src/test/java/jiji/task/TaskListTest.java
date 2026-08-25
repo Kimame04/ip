@@ -57,4 +57,35 @@ public class TaskListTest {
     public void get_outOfBoundsIndex_throwsException() {
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.get(0));
     }
+
+    @Test
+    public void findTasks_matchingKeyword_returnsMatchingTasks() {
+        Task t1 = new Todo("read book");
+        Task t2 = new Deadline("return book", "Sunday");
+        Task t3 = new Todo("eat lunch");
+        taskList.add(t1);
+        taskList.add(t2);
+        taskList.add(t3);
+
+        assertEquals(2, taskList.findTasks("book").size());
+        assertEquals(t1, taskList.findTasks("book").get(0));
+        assertEquals(t2, taskList.findTasks("book").get(1));
+    }
+
+    @Test
+    public void findTasks_caseInsensitive_returnsMatchingTasks() {
+        Task t1 = new Todo("Read Book");
+        taskList.add(t1);
+
+        assertEquals(1, taskList.findTasks("read").size());
+        assertEquals(1, taskList.findTasks("BOOK").size());
+    }
+
+    @Test
+    public void findTasks_noMatchOrEmptyKeyword_returnsEmptyList() {
+        taskList.add(new Todo("read book"));
+        assertTrue(taskList.findTasks("swimming").isEmpty());
+        assertTrue(taskList.findTasks("").isEmpty());
+        assertTrue(taskList.findTasks(null).isEmpty());
+    }
 }

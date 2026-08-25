@@ -21,7 +21,9 @@ public enum CommandType {
     /** Command to create a new Deadline task. */
     DEADLINE("deadline"),
     /** Command to create a new Event task. */
-    EVENT("event");
+    EVENT("event"),
+    /** Command to search tasks matching a keyword. */
+    FIND("find");
 
     private final String commandWord;
 

@@ -631,4 +631,76 @@ bye
     ____________________________________________________________
 ```
 
+---
+
+## Test Case 10: Find Tasks by Keyword (Level-9)
+- **Aim**: Verify searching for matching tasks by keyword, empty result handling, and error handling for missing search keyword.
+- **Inputs**:
+```text
+todo read book
+deadline return book /by Sunday
+event project meeting /from Mon 2pm /to 4pm
+todo write book review
+find book
+find meeting
+find swimming
+find
+bye
+```
+- **Expected Output**:
+```text
+    ____________________________________________________________
+         _     _          _     _ 
+        | |   (_)        (_)   (_)
+        | |    _          _     _ 
+     _  | |   | |        | |   | |
+    | |_| |   | |     _  | |   | |
+     \___/    |_|    | |_| |   |_|
+                      \___/       
+
+     Hello! I'm Jiji.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] read book
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] return book (by: Sunday)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [E][ ] project meeting (from: Mon 2pm to: 4pm)
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] write book review
+     Now you have 4 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the matching tasks in your list:
+     1.[T][ ] read book
+     2.[D][ ] return book (by: Sunday)
+     3.[T][ ] write book review
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the matching tasks in your list:
+     1.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the matching tasks in your list:
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please specify a keyword to search for.
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
+
 

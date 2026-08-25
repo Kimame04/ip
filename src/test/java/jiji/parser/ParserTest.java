@@ -89,6 +89,18 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_validFind_returnsFindCommand() throws JijiException {
+        Command find = Parser.parse("find book");
+        assertInstanceOf(jiji.command.FindCommand.class, find);
+    }
+
+    @Test
+    public void parse_emptyFindKeyword_throwsException() {
+        assertThrows(JijiMissingArgumentException.class, () -> Parser.parse("find"));
+        assertThrows(JijiMissingArgumentException.class, () -> Parser.parse("find   "));
+    }
+
+    @Test
     public void parse_unknownCommand_throwsException() {
         assertThrows(JijiUnknownCommandException.class, () -> Parser.parse("unknownCommand"));
         assertThrows(JijiUnknownCommandException.class, () -> Parser.parse(""));

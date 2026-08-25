@@ -7,6 +7,7 @@ import jiji.command.Command;
 import jiji.command.CommandType;
 import jiji.command.DeleteCommand;
 import jiji.command.ExitCommand;
+import jiji.command.FindCommand;
 import jiji.command.ListCommand;
 import jiji.command.MarkCommand;
 import jiji.command.UnmarkCommand;
@@ -67,6 +68,9 @@ public class Parser {
 
         case EVENT:
             return parseEvent(trimmed);
+
+        case FIND:
+            return parseFind(trimmed);
 
         default:
             throw new JijiUnknownCommandException();
@@ -153,5 +157,20 @@ public class Parser {
             throw JijiMissingArgumentException.forMissingEvent();
         }
         return new AddEventCommand(description, from, to);
+    }
+
+    /**
+     * Parses the find command arguments.
+     *
+     * @param input The full find command string.
+     * @return A {@link FindCommand} instance.
+     * @throws JijiException If search keyword is empty.
+     */
+    private static Command parseFind(String input) throws JijiException {
+        String keyword = input.length() > 4 ? input.substring(4).trim() : "";
+        if (keyword.isEmpty()) {
+            throw JijiMissingArgumentException.forEmptyFind();
+        }
+        return new FindCommand(keyword);
     }
 }
