@@ -248,12 +248,36 @@ Jiji uses Gradle for build automation, testing, and packaging:
   ```bash
   ./gradlew run --console=plain --quiet
   ```
+* **Run automated unit tests**:
+  ```bash
+  ./gradlew test
+  ```
 * **Build project & assemble distribution**:
   ```bash
   ./gradlew build
   ```
-* **Build executable fat JAR**:
-  ```bash
-  ./gradlew shadowJar
-  ```
-  The generated standalone JAR is saved to `build/libs/jiji.jar`.
+
+---
+
+## Standalone Executable JAR
+
+You can package and distribute Jiji as a standalone executable fat JAR:
+
+### 1. Generating the JAR File
+Run the following Gradle task:
+```bash
+./gradlew shadowJar
+```
+The generated executable JAR will be located at:
+```text
+build/libs/jiji.jar
+```
+
+### 2. Running the JAR File
+You can run the JAR file on any system with Java 25 installed:
+1. Copy `jiji.jar` into your desired working directory.
+2. Open a terminal in that folder and run:
+   ```bash
+   java -jar "jiji.jar"
+   ```
+3. Jiji will automatically create and persist tasks in `data/jiji.txt` in that folder.
