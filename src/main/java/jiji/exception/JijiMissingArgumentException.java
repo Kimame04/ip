@@ -40,4 +40,13 @@ public class JijiMissingArgumentException extends JijiException {
     public static JijiMissingArgumentException forMissingEvent() {
         return new JijiMissingArgumentException("OOPS! ^๑_๑^ ੭ An event task requires a description, '/from', and '/to' times.");
     }
+
+    /**
+     * Creates an exception when a find command is executed without a keyword.
+     *
+     * @return A new JijiMissingArgumentException formatted for find command.
+     */
+    public static JijiMissingArgumentException forEmptyFind() {
+        return new JijiMissingArgumentException("OOPS! ₍^› ꘍ ‹ ^₎⟆ Please specify a keyword to search for.");
+    }
 }

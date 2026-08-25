@@ -1,5 +1,6 @@
 package jiji.ui;
 
+import java.util.List;
 import java.util.Scanner;
 
 import jiji.task.Task;
@@ -114,6 +115,20 @@ public class Ui {
         System.out.println(INDENT + "Here are the tasks in your list:");
         for (int i = 0; i < taskList.size(); i++) {
             System.out.println(INDENT + (i + 1) + "." + taskList.get(i));
+        }
+        showLine();
+    }
+
+    /**
+     * Displays all matching tasks found from a keyword search.
+     *
+     * @param matchingTasks The list of matching tasks to display.
+     */
+    public void showMatchingTasks(List<Task> matchingTasks) {
+        showLine();
+        System.out.println(INDENT + "Here are the matching tasks in your list:");
+        for (int i = 0; i < matchingTasks.size(); i++) {
+            System.out.println(INDENT + (i + 1) + "." + matchingTasks.get(i));
         }
         showLine();
     }

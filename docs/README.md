@@ -15,6 +15,7 @@
 | **`mark`** | `mark <task_number>` | Marks a task as completed (`[X]`). |
 | **`unmark`** | `unmark <task_number>` | Marks a task as not completed (`[ ]`). |
 | **`delete`** | `delete <task_number>` | Removes a task from the list and re-indexes remaining tasks. |
+| **`find`** | `find <keyword>` | Finds tasks matching a search keyword. |
 | **`bye`** | `bye` | Exits the Jiji application. |
 
 ---
@@ -165,7 +166,26 @@ Removes a task from the list at the specified 1-based index and automatically sh
 
 ---
 
-### 8. Exiting the Application: `bye`
+### 8. Finding Tasks by Keyword: `find`
+Searches for tasks whose descriptions contain the given keyword (case-insensitive) and lists all matches.
+
+* **Format**: `find <keyword>`
+* **Example**:
+  ```text
+  find book
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Here are the matching tasks in your list:
+       1.[T][ ] read book
+       2.[D][ ] return book (by: Sunday)
+      ____________________________________________________________
+  ```
+
+---
+
+### 9. Exiting the Application: `bye`
 Exits Jiji with a farewell message.
 
 * **Format**: `bye`
