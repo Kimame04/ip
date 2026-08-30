@@ -88,4 +88,20 @@ public class TaskListTest {
         assertTrue(taskList.findTasks("").isEmpty());
         assertTrue(taskList.findTasks(null).isEmpty());
     }
+
+    @Test
+    public void addAll_multipleTasks_allAdded() {
+        Task t1 = new Todo("task 1");
+        Task t2 = new Todo("task 2");
+        Task t3 = new Todo("task 3");
+
+        taskList.addAll(t1, t2, t3);
+        assertEquals(3, taskList.size());
+        assertEquals(t1, taskList.get(0));
+        assertEquals(t2, taskList.get(1));
+        assertEquals(t3, taskList.get(2));
+
+        taskList.addAll();
+        assertEquals(3, taskList.size());
+    }
 }

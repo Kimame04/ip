@@ -37,6 +37,19 @@ public class TaskList {
     }
 
     /**
+     * Adds multiple tasks to the list.
+     *
+     * @param tasks Variable number of {@link Task} objects to add.
+     */
+    public void addAll(Task... tasks) {
+        if (tasks != null) {
+            for (Task task : tasks) {
+                this.tasks.add(task);
+            }
+        }
+    }
+
+    /**
      * Removes and returns the task at the specified 0-based index.
      *
      * @param index The 0-based index of the task to remove.
