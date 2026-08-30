@@ -77,12 +77,25 @@ public class Ui {
     }
 
     /**
+     * Displays one or more message lines indented and enclosed within standard divider lines.
+     *
+     * @param messages Variable number of message strings to display.
+     */
+    public void showMessages(String... messages) {
+        showLine();
+        if (messages != null) {
+            for (String message : messages) {
+                System.out.println(INDENT + message);
+            }
+        }
+        showLine();
+    }
+
+    /**
      * Displays the farewell message upon exit.
      */
     public void showGoodbye() {
-        showLine();
-        System.out.println(INDENT + "Bye. Hope to see you again soon!");
-        showLine();
+        showMessages("Bye. Hope to see you again soon!");
     }
 
     /**
@@ -91,18 +104,14 @@ public class Ui {
      * @param message The error message to display.
      */
     public void showError(String message) {
-        showLine();
-        System.out.println(INDENT + message);
-        showLine();
+        showMessages(message);
     }
 
     /**
      * Displays a warning message when existing task data cannot be loaded.
      */
     public void showLoadingError() {
-        showLine();
-        System.out.println(INDENT + "Warning: Could not load tasks from storage. Starting with an empty task list.");
-        showLine();
+        showMessages("Warning: Could not load tasks from storage. Starting with an empty task list.");
     }
 
     /**
@@ -140,11 +149,11 @@ public class Ui {
      * @param totalTasks The total number of tasks currently in the list.
      */
     public void showTaskAdded(Task task, int totalTasks) {
-        showLine();
-        System.out.println(INDENT + "Got it. I've added this task:");
-        System.out.println(INDENT + "  " + task);
-        System.out.println(INDENT + "Now you have " + totalTasks + " tasks in the list.");
-        showLine();
+        showMessages(
+                "Got it. I've added this task:",
+                "  " + task,
+                "Now you have " + totalTasks + " tasks in the list."
+        );
     }
 
     /**
@@ -154,11 +163,11 @@ public class Ui {
      * @param totalTasks The total number of tasks remaining in the list.
      */
     public void showTaskRemoved(Task task, int totalTasks) {
-        showLine();
-        System.out.println(INDENT + "Noted. I've removed this task:");
-        System.out.println(INDENT + "  " + task);
-        System.out.println(INDENT + "Now you have " + totalTasks + " tasks in the list.");
-        showLine();
+        showMessages(
+                "Noted. I've removed this task:",
+                "  " + task,
+                "Now you have " + totalTasks + " tasks in the list."
+        );
     }
 
     /**
@@ -167,10 +176,10 @@ public class Ui {
      * @param task The marked task.
      */
     public void showTaskMarked(Task task) {
-        showLine();
-        System.out.println(INDENT + "Nice! I've marked this task as done:");
-        System.out.println(INDENT + "  " + task);
-        showLine();
+        showMessages(
+                "Nice! I've marked this task as done:",
+                "  " + task
+        );
     }
 
     /**
@@ -179,9 +188,9 @@ public class Ui {
      * @param task The unmarked task.
      */
     public void showTaskUnmarked(Task task) {
-        showLine();
-        System.out.println(INDENT + "OK, I've marked this task as not done yet:");
-        System.out.println(INDENT + "  " + task);
-        showLine();
+        showMessages(
+                "OK, I've marked this task as not done yet:",
+                "  " + task
+        );
     }
 }
