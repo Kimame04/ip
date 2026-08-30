@@ -272,6 +272,10 @@ Jiji uses Gradle for build automation, testing, and packaging:
   ```bash
   ./gradlew test
   ```
+* **Run Checkstyle code style analysis**:
+  ```bash
+  ./gradlew checkstyleMain checkstyleTest
+  ```
 * **Build project & assemble distribution**:
   ```bash
   ./gradlew build

@@ -32,19 +32,19 @@ public class DateTimeUtil {
 
     /** Recognized input patterns for parsing LocalDate. */
     private static final DateTimeFormatter[] DATE_PARSERS = new DateTimeFormatter[] {
-            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-            DateTimeFormatter.ofPattern("d/M/yyyy"),
-            DateTimeFormatter.ofPattern("d-M-yyyy"),
-            DateTimeFormatter.ofPattern("yyyy/M/d")
+        DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+        DateTimeFormatter.ofPattern("d/M/yyyy"),
+        DateTimeFormatter.ofPattern("d-M-yyyy"),
+        DateTimeFormatter.ofPattern("yyyy/M/d")
     };
 
     /** Recognized input patterns for parsing LocalDateTime. */
     private static final DateTimeFormatter[] DATETIME_PARSERS = new DateTimeFormatter[] {
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"),
-            DateTimeFormatter.ofPattern("d/M/yyyy HHmm"),
-            DateTimeFormatter.ofPattern("d/M/yyyy HH:mm"),
-            DateTimeFormatter.ISO_LOCAL_DATE_TIME
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"),
+        DateTimeFormatter.ofPattern("d/M/yyyy HHmm"),
+        DateTimeFormatter.ofPattern("d/M/yyyy HH:mm"),
+        DateTimeFormatter.ISO_LOCAL_DATE_TIME
     };
 
     /**
