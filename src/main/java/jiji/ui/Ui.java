@@ -95,7 +95,16 @@ public class Ui {
      * Displays the farewell message upon exit.
      */
     public void showGoodbye() {
-        showMessages("Bye. Hope to see you again soon!");
+        showMessages(formatGoodbye());
+    }
+
+    /**
+     * Formats the farewell message upon exit.
+     *
+     * @return The formatted farewell string.
+     */
+    public String formatGoodbye() {
+        return "Bye. Hope to see you again soon!";
     }
 
     /**
@@ -129,6 +138,20 @@ public class Ui {
     }
 
     /**
+     * Formats all current tasks in the task list with 1-based indexing.
+     *
+     * @param taskList The task list to format.
+     * @return The formatted task list string.
+     */
+    public String formatTaskList(TaskList taskList) {
+        StringBuilder sb = new StringBuilder("Here are the tasks in your list:");
+        for (int i = 0; i < taskList.size(); i++) {
+            sb.append("\n").append(i + 1).append(".").append(taskList.get(i));
+        }
+        return sb.toString();
+    }
+
+    /**
      * Displays all matching tasks found from a keyword search.
      *
      * @param matchingTasks The list of matching tasks to display.
@@ -140,6 +163,20 @@ public class Ui {
             System.out.println(INDENT + (i + 1) + "." + matchingTasks.get(i));
         }
         showLine();
+    }
+
+    /**
+     * Formats all matching tasks found from a keyword search.
+     *
+     * @param matchingTasks The list of matching tasks to format.
+     * @return The formatted matching tasks string.
+     */
+    public String formatMatchingTasks(List<Task> matchingTasks) {
+        StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:");
+        for (int i = 0; i < matchingTasks.size(); i++) {
+            sb.append("\n").append(i + 1).append(".").append(matchingTasks.get(i));
+        }
+        return sb.toString();
     }
 
     /**
@@ -157,6 +194,18 @@ public class Ui {
     }
 
     /**
+     * Formats a confirmation message after a new task has been added.
+     *
+     * @param task The newly added task.
+     * @param totalTasks The total number of tasks currently in the list.
+     * @return The formatted confirmation string.
+     */
+    public String formatTaskAdded(Task task, int totalTasks) {
+        return "Got it. I've added this task:\n  " + task
+                + "\nNow you have " + totalTasks + " tasks in the list.";
+    }
+
+    /**
      * Displays a confirmation message after a task has been deleted.
      *
      * @param task The deleted task.
@@ -168,6 +217,18 @@ public class Ui {
                 "  " + task,
                 "Now you have " + totalTasks + " tasks in the list."
         );
+    }
+
+    /**
+     * Formats a confirmation message after a task has been deleted.
+     *
+     * @param task The deleted task.
+     * @param totalTasks The total number of tasks remaining in the list.
+     * @return The formatted confirmation string.
+     */
+    public String formatTaskRemoved(Task task, int totalTasks) {
+        return "Noted. I've removed this task:\n  " + task
+                + "\nNow you have " + totalTasks + " tasks in the list.";
     }
 
     /**
@@ -183,6 +244,16 @@ public class Ui {
     }
 
     /**
+     * Formats a confirmation message after a task has been marked as done.
+     *
+     * @param task The marked task.
+     * @return The formatted confirmation string.
+     */
+    public String formatTaskMarked(Task task) {
+        return "Nice! I've marked this task as done:\n  " + task;
+    }
+
+    /**
      * Displays a confirmation message after a task has been marked as not done.
      *
      * @param task The unmarked task.
@@ -192,5 +263,15 @@ public class Ui {
                 "OK, I've marked this task as not done yet:",
                 "  " + task
         );
+    }
+
+    /**
+     * Formats a confirmation message after a task has been marked as not done.
+     *
+     * @param task The unmarked task.
+     * @return The formatted confirmation string.
+     */
+    public String formatTaskUnmarked(Task task) {
+        return "OK, I've marked this task as not done yet:\n  " + task;
     }
 }

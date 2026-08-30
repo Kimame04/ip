@@ -35,10 +35,11 @@ public class AddDeadlineCommand extends Command {
      * @throws JijiStorageException If saving to storage fails.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JijiStorageException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JijiStorageException {
         Task deadline = new Deadline(description, by);
         tasks.add(deadline);
         storage.save(tasks);
         ui.showTaskAdded(deadline, tasks.size());
+        return ui.formatTaskAdded(deadline, tasks.size());
     }
 }

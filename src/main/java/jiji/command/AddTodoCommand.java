@@ -32,10 +32,11 @@ public class AddTodoCommand extends Command {
      * @throws JijiStorageException If saving to storage fails.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JijiStorageException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JijiStorageException {
         Task todo = new Todo(description);
         tasks.add(todo);
         storage.save(tasks);
         ui.showTaskAdded(todo, tasks.size());
+        return ui.formatTaskAdded(todo, tasks.size());
     }
 }

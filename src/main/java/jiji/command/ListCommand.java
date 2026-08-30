@@ -23,7 +23,8 @@ public class ListCommand extends Command {
      * @param storage The storage handler.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         ui.showTaskList(tasks);
+        return ui.formatTaskList(tasks);
     }
 }

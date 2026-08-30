@@ -19,6 +19,13 @@ public class Jiji {
     private final Ui ui;
 
     /**
+     * Constructs a Jiji chatbot instance with default persistent storage at "data/jiji.txt".
+     */
+    public Jiji() {
+        this("data/jiji.txt");
+    }
+
+    /**
      * Constructs a Jiji chatbot instance with the specified file path for persistent data storage.
      *
      * @param filePath The file path for data persistence (e.g. "data/jiji.txt").
@@ -34,6 +41,33 @@ public class Jiji {
             loadedTasks = new TaskList();
         }
         this.tasks = loadedTasks;
+    }
+
+    /**
+     * Returns the welcome greeting string for the chatbot.
+     *
+     * @return Initial greeting message.
+     */
+    public String getGreeting() {
+        return "Hello! I'm Jiji ₍^._.^₎ 𐒡\nWhat can I do for you?";
+    }
+
+    /**
+     * Generates a response string for the given user input command.
+     *
+     * @param input The raw input command string entered by the user.
+     * @return The response text produced by executing the command, or an error message.
+     */
+    public String getResponse(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return "Please enter a valid command!";
+        }
+        try {
+            Command command = Parser.parse(input);
+            return command.execute(tasks, ui, storage);
+        } catch (JijiException e) {
+            return e.getMessage();
+        }
     }
 
     /**

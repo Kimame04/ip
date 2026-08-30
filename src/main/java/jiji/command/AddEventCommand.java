@@ -38,10 +38,11 @@ public class AddEventCommand extends Command {
      * @throws JijiStorageException If saving to storage fails.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JijiStorageException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JijiStorageException {
         Task event = new Event(description, from, to);
         tasks.add(event);
         storage.save(tasks);
         ui.showTaskAdded(event, tasks.size());
+        return ui.formatTaskAdded(event, tasks.size());
     }
 }
