@@ -45,35 +45,35 @@ public class Parser {
         CommandType commandType = CommandType.from(commandWord);
 
         switch (commandType) {
-        case BYE:
-            return new ExitCommand();
+            case BYE:
+                return new ExitCommand();
 
-        case LIST:
-            return new ListCommand();
+            case LIST:
+                return new ListCommand();
 
-        case MARK:
-            return new MarkCommand(parseIndex(trimmed, "mark"));
+            case MARK:
+                return new MarkCommand(parseIndex(trimmed, "mark"));
 
-        case UNMARK:
-            return new UnmarkCommand(parseIndex(trimmed, "unmark"));
+            case UNMARK:
+                return new UnmarkCommand(parseIndex(trimmed, "unmark"));
 
-        case DELETE:
-            return new DeleteCommand(parseIndex(trimmed, "delete"));
+            case DELETE:
+                return new DeleteCommand(parseIndex(trimmed, "delete"));
 
-        case TODO:
-            return parseTodo(trimmed);
+            case TODO:
+                return parseTodo(trimmed);
 
-        case DEADLINE:
-            return parseDeadline(trimmed);
+            case DEADLINE:
+                return parseDeadline(trimmed);
 
-        case EVENT:
-            return parseEvent(trimmed);
+            case EVENT:
+                return parseEvent(trimmed);
 
-        case FIND:
-            return parseFind(trimmed);
+            case FIND:
+                return parseFind(trimmed);
 
-        default:
-            throw new JijiUnknownCommandException();
+            default:
+                throw new JijiUnknownCommandException();
         }
     }
 

@@ -70,24 +70,24 @@ public class Storage {
 
                 Task task = null;
                 switch (taskType) {
-                case TODO:
-                    task = new Todo(description);
-                    break;
-                case DEADLINE:
-                    if (parts.length >= 4) {
-                        String by = parts[3].trim();
-                        task = new Deadline(description, by);
-                    }
-                    break;
-                case EVENT:
-                    if (parts.length >= 5) {
-                        String from = parts[3].trim();
-                        String to = parts[4].trim();
-                        task = new Event(description, from, to);
-                    }
-                    break;
-                default:
-                    break;
+                    case TODO:
+                        task = new Todo(description);
+                        break;
+                    case DEADLINE:
+                        if (parts.length >= 4) {
+                            String by = parts[3].trim();
+                            task = new Deadline(description, by);
+                        }
+                        break;
+                    case EVENT:
+                        if (parts.length >= 5) {
+                            String from = parts[3].trim();
+                            String to = parts[4].trim();
+                            task = new Event(description, from, to);
+                        }
+                        break;
+                    default:
+                        break;
                 }
 
                 if (task != null) {

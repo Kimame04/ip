@@ -29,7 +29,8 @@ public class JijiMissingArgumentException extends JijiException {
      * @return A new JijiMissingArgumentException formatted for deadline tasks.
      */
     public static JijiMissingArgumentException forMissingDeadline() {
-        return new JijiMissingArgumentException("OOPS! ^๑_๑^ ੭ A deadline task requires a description and a '/by' time.");
+        return new JijiMissingArgumentException(
+                "OOPS! ^๑_๑^ ੭ A deadline task requires a description and a '/by' time.");
     }
 
     /**
@@ -38,7 +39,8 @@ public class JijiMissingArgumentException extends JijiException {
      * @return A new JijiMissingArgumentException formatted for event tasks.
      */
     public static JijiMissingArgumentException forMissingEvent() {
-        return new JijiMissingArgumentException("OOPS! ^๑_๑^ ੭ An event task requires a description, '/from', and '/to' times.");
+        return new JijiMissingArgumentException(
+                "OOPS! ^๑_๑^ ੭ An event task requires a description, '/from', and '/to' times.");
     }
 
     /**
