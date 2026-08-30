@@ -32,12 +32,13 @@ public class DeleteCommand extends Command {
      * @throws JijiException If the target index is out of valid task bounds or saving fails.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JijiException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JijiException {
         if (targetIndex < 0 || targetIndex >= tasks.size()) {
             throw JijiInvalidIndexException.forInvalidNumber();
         }
         Task removed = tasks.delete(targetIndex);
         storage.save(tasks);
         ui.showTaskRemoved(removed, tasks.size());
+        return ui.formatTaskRemoved(removed, tasks.size());
     }
 }

@@ -1,0 +1,23 @@
+.label {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #263238;
+    -fx-font: 14px "Segoe UI", "Helvetica Neue", "Arial";
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-background-radius: 16px 16px 2px 16px;
+    -fx-border-radius: 16px 16px 2px 16px;
+    -fx-padding: 10px 14px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.08), 5, 0, 0, 1.5);
+}
+
+.reply-label {
+    -fx-background-color: #ffebee;
+    -fx-text-fill: #b71c1c;
+    -fx-border-color: #ffcdd2;
+    -fx-background-radius: 16px 16px 16px 2px;
+    -fx-border-radius: 16px 16px 16px 2px;
+}
+
+#displayPicture {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 6, 0, 0, 2);
+}

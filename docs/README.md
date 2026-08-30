@@ -260,13 +260,31 @@ Jiji automatically persists your task list so you never lose track of your items
 
 ---
 
+## Graphical User Interface (JavaFX GUI)
+
+Jiji features a modern Graphical User Interface built with JavaFX and FXML:
+* **Interactive Chat Interface**: Displays user commands and Jiji's responses in speech bubbles with avatars.
+* **Auto-Scrolling**: Automatically scrolls to the newest message.
+* **Dual Execution Mode**: Supports both GUI and text-based CLI.
+
+To launch the JavaFX GUI application:
+```bash
+./gradlew run
+```
+
+---
+
 ## Building and Running with Gradle
 
 Jiji uses Gradle for build automation, testing, and packaging:
 
-* **Run Jiji interactively**:
+* **Run Jiji in GUI mode**:
   ```bash
-  ./gradlew run --console=plain --quiet
+  ./gradlew run
+  ```
+* **Run Jiji in CLI mode**:
+  ```bash
+  ./gradlew run --args="--cli" --console=plain --quiet
   ```
 * **Run automated unit tests**:
   ```bash

@@ -32,7 +32,7 @@ public class MarkCommand extends Command {
      * @throws JijiException If the target index is out of valid task bounds or saving fails.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JijiException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JijiException {
         if (targetIndex < 0 || targetIndex >= tasks.size()) {
             throw JijiInvalidIndexException.forInvalidNumber();
         }
@@ -40,5 +40,6 @@ public class MarkCommand extends Command {
         task.markAsDone();
         storage.save(tasks);
         ui.showTaskMarked(task);
+        return ui.formatTaskMarked(task);
     }
 }
