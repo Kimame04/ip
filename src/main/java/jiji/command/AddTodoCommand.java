@@ -33,6 +33,9 @@ public class AddTodoCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws JijiStorageException {
+        assert tasks != null : "TaskList dependency cannot be null";
+        assert ui != null : "Ui dependency cannot be null";
+        assert storage != null : "Storage dependency cannot be null";
         Task todo = new Todo(description);
         tasks.add(todo);
         storage.save(tasks);

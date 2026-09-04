@@ -41,6 +41,9 @@ public class Jiji {
             loadedTasks = new TaskList();
         }
         this.tasks = loadedTasks;
+        assert this.ui != null : "Ui component must be initialized";
+        assert this.storage != null : "Storage component must be initialized";
+        assert this.tasks != null : "TaskList component must be initialized";
     }
 
     /**
@@ -62,12 +65,17 @@ public class Jiji {
         if (input == null || input.trim().isEmpty()) {
             return "Please enter a valid command!";
         }
+        assert input != null && !input.trim().isEmpty() : "Input must be non-empty after check";
+        assert tasks != null && ui != null && storage != null : "Components must be initialized";
+        String response;
         try {
             Command command = Parser.parse(input);
-            return command.execute(tasks, ui, storage);
+            response = command.execute(tasks, ui, storage);
         } catch (JijiException e) {
-            return e.getMessage();
+            response = e.getMessage();
         }
+        assert response != null : "Response should never be null";
+        return response;
     }
 
     /**

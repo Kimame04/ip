@@ -18,6 +18,7 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String by) {
         super(description);
+        assert by != null && !by.isBlank() : "Deadline 'by' date/time cannot be null or blank";
         this.by = by;
     }
 
