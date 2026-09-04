@@ -21,6 +21,10 @@ import jiji.exception.JijiUnknownCommandException;
  */
 public class Parser {
 
+    private static final String DEADLINE_BY_DELIMITER = " /by ";
+    private static final String EVENT_FROM_DELIMITER = " /from ";
+    private static final String EVENT_TO_DELIMITER = " /to ";
+
     /**
      * Prevents instantiation of utility class.
      */
@@ -42,6 +46,7 @@ public class Parser {
         String trimmed = fullCommand.trim();
         String[] words = trimmed.split("\\s+", 2);
         String commandWord = words[0];
+        String arguments = (words.length > 1) ? words[1].trim() : "";
         CommandType commandType = CommandType.from(commandWord);
 
         switch (commandType) {
@@ -52,25 +57,25 @@ public class Parser {
                 return new ListCommand();
 
             case MARK:
-                return new MarkCommand(parseIndex(trimmed, "mark"));
+                return new MarkCommand(parseIndex(arguments, "mark"));
 
             case UNMARK:
-                return new UnmarkCommand(parseIndex(trimmed, "unmark"));
+                return new UnmarkCommand(parseIndex(arguments, "unmark"));
 
             case DELETE:
-                return new DeleteCommand(parseIndex(trimmed, "delete"));
+                return new DeleteCommand(parseIndex(arguments, "delete"));
 
             case TODO:
-                return parseTodo(trimmed);
+                return parseTodo(arguments);
 
             case DEADLINE:
-                return parseDeadline(trimmed);
+                return parseDeadline(arguments);
 
             case EVENT:
-                return parseEvent(trimmed);
+                return parseEvent(arguments);
 
             case FIND:
-                return parseFind(trimmed);
+                return parseFind(arguments);
 
             default:
                 throw new JijiUnknownCommandException();
@@ -80,18 +85,17 @@ public class Parser {
     /**
      * Parses the task index argument for mark, unmark, and delete commands.
      *
-     * @param input The full command string.
+     * @param arguments The command arguments string.
      * @param commandName The name of the command ("mark", "unmark", "delete").
      * @return The 0-based task index.
      * @throws JijiException If index is missing or non-numeric.
      */
-    private static int parseIndex(String input, String commandName) throws JijiException {
-        String arg = input.length() > commandName.length() ? input.substring(commandName.length()).trim() : "";
-        if (arg.isEmpty()) {
+    private static int parseIndex(String arguments, String commandName) throws JijiException {
+        if (arguments.isEmpty()) {
             throw JijiInvalidIndexException.forMissingIndex(commandName);
         }
         try {
-            return Integer.parseInt(arg) - 1;
+            return Integer.parseInt(arguments) - 1;
         } catch (NumberFormatException e) {
             throw JijiInvalidIndexException.forInvalidNumber();
         }
@@ -100,31 +104,29 @@ public class Parser {
     /**
      * Parses the todo command arguments.
      *
-     * @param input The full todo command string.
+     * @param arguments The command arguments string.
      * @return An {@link AddTodoCommand} instance.
      * @throws JijiException If description is empty.
      */
-    private static Command parseTodo(String input) throws JijiException {
-        String description = input.length() > 4 ? input.substring(4).trim() : "";
-        if (description.isEmpty()) {
+    private static Command parseTodo(String arguments) throws JijiException {
+        if (arguments.isEmpty()) {
             throw JijiMissingArgumentException.forEmptyTodo();
         }
-        return new AddTodoCommand(description);
+        return new AddTodoCommand(arguments);
     }
 
     /**
      * Parses the deadline command arguments.
      *
-     * @param input The full deadline command string.
+     * @param arguments The command arguments string.
      * @return An {@link AddDeadlineCommand} instance.
      * @throws JijiException If description or deadline parameter is missing.
      */
-    private static Command parseDeadline(String input) throws JijiException {
-        String rest = input.length() > 8 ? input.substring(8).trim() : "";
-        if (rest.isEmpty() || !rest.contains(" /by ")) {
+    private static Command parseDeadline(String arguments) throws JijiException {
+        if (arguments.isEmpty() || !arguments.contains(DEADLINE_BY_DELIMITER)) {
             throw JijiMissingArgumentException.forMissingDeadline();
         }
-        String[] parts = rest.split(" /by ", 2);
+        String[] parts = arguments.split(DEADLINE_BY_DELIMITER, 2);
         String description = parts[0].trim();
         String by = parts.length > 1 ? parts[1].trim() : "";
         if (description.isEmpty() || by.isEmpty()) {
@@ -136,21 +138,21 @@ public class Parser {
     /**
      * Parses the event command arguments.
      *
-     * @param input The full event command string.
+     * @param arguments The command arguments string.
      * @return An {@link AddEventCommand} instance.
      * @throws JijiException If description, /from, or /to parameter is missing.
      */
-    private static Command parseEvent(String input) throws JijiException {
-        String rest = input.length() > 5 ? input.substring(5).trim() : "";
-        if (rest.isEmpty() || !rest.contains(" /from ") || !rest.contains(" /to ")) {
+    private static Command parseEvent(String arguments) throws JijiException {
+        if (arguments.isEmpty() || !arguments.contains(EVENT_FROM_DELIMITER)
+                || !arguments.contains(EVENT_TO_DELIMITER)) {
             throw JijiMissingArgumentException.forMissingEvent();
         }
-        String[] parts = rest.split(" /from ", 2);
+        String[] parts = arguments.split(EVENT_FROM_DELIMITER, 2);
         String description = parts[0].trim();
         if (description.isEmpty()) {
             throw JijiMissingArgumentException.forMissingEvent();
         }
-        String[] timeParts = parts[1].split(" /to ", 2);
+        String[] timeParts = parts[1].split(EVENT_TO_DELIMITER, 2);
         String from = timeParts[0].trim();
         String to = timeParts.length > 1 ? timeParts[1].trim() : "";
         if (from.isEmpty() || to.isEmpty()) {
@@ -162,15 +164,14 @@ public class Parser {
     /**
      * Parses the find command arguments.
      *
-     * @param input The full find command string.
+     * @param arguments The command arguments string.
      * @return A {@link FindCommand} instance.
      * @throws JijiException If search keyword is empty.
      */
-    private static Command parseFind(String input) throws JijiException {
-        String keyword = input.length() > 4 ? input.substring(4).trim() : "";
-        if (keyword.isEmpty()) {
+    private static Command parseFind(String arguments) throws JijiException {
+        if (arguments.isEmpty()) {
             throw JijiMissingArgumentException.forEmptyFind();
         }
-        return new FindCommand(keyword);
+        return new FindCommand(arguments);
     }
 }
