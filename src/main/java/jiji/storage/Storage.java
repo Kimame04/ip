@@ -22,6 +22,12 @@ import jiji.task.Todo;
  */
 public class Storage {
 
+    private static final String FILE_DELIMITER_REGEX = " \\| ";
+    private static final String STATUS_DONE = "1";
+    private static final int MIN_PARTS_COUNT = 3;
+    private static final int DEADLINE_PARTS_COUNT = 4;
+    private static final int EVENT_PARTS_COUNT = 5;
+
     private final Path filePath;
 
     /**
@@ -51,49 +57,8 @@ public class Storage {
             }
             List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
             for (String line : lines) {
-                String trimmed = line.trim();
-                if (trimmed.isEmpty()) {
-                    continue;
-                }
-                String[] parts = trimmed.split(" \\| ");
-                if (parts.length < 3) {
-                    continue;
-                }
-                String type = parts[0].trim();
-                boolean isDone = parts[1].trim().equals("1");
-                String description = parts[2].trim();
-
-                TaskType taskType = TaskType.fromCode(type);
-                if (taskType == null) {
-                    continue;
-                }
-
-                Task task = null;
-                switch (taskType) {
-                    case TODO:
-                        task = new Todo(description);
-                        break;
-                    case DEADLINE:
-                        if (parts.length >= 4) {
-                            String by = parts[3].trim();
-                            task = new Deadline(description, by);
-                        }
-                        break;
-                    case EVENT:
-                        if (parts.length >= 5) {
-                            String from = parts[3].trim();
-                            String to = parts[4].trim();
-                            task = new Event(description, from, to);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
+                Task task = parseTaskFromLine(line);
                 if (task != null) {
-                    if (isDone) {
-                        task.markAsDone();
-                    }
                     tasks.add(task);
                 }
             }
@@ -101,6 +66,70 @@ public class Storage {
             throw new JijiStorageException("Could not load tasks from storage: " + e.getMessage());
         }
         return tasks;
+    }
+
+    /**
+     * Parses a single serialized task line from the storage file into a {@link Task} object.
+     * Corrupted or unrecognized lines return {@code null}.
+     *
+     * @param line The raw line from the storage file.
+     * @return The deserialized {@link Task}, or {@code null} if the line is invalid.
+     */
+    private Task parseTaskFromLine(String line) {
+        String trimmed = line.trim();
+        if (trimmed.isEmpty()) {
+            return null;
+        }
+
+        String[] parts = trimmed.split(FILE_DELIMITER_REGEX);
+        if (parts.length < MIN_PARTS_COUNT) {
+            return null;
+        }
+
+        String type = parts[0].trim();
+        boolean isDone = parts[1].trim().equals(STATUS_DONE);
+        String description = parts[2].trim();
+
+        TaskType taskType = TaskType.fromCode(type);
+        if (taskType == null) {
+            return null;
+        }
+
+        Task task = createTask(taskType, description, parts);
+        if (task != null && isDone) {
+            task.markAsDone();
+        }
+        return task;
+    }
+
+    /**
+     * Constructs a task instance corresponding to the given task type and arguments.
+     *
+     * @param taskType The recognized task type.
+     * @param description The task description.
+     * @param parts The split line tokens.
+     * @return A new {@link Task} instance, or {@code null} if required arguments are missing.
+     */
+    private Task createTask(TaskType taskType, String description, String[] parts) {
+        switch (taskType) {
+            case TODO:
+                return new Todo(description);
+            case DEADLINE:
+                if (parts.length >= DEADLINE_PARTS_COUNT) {
+                    String by = parts[3].trim();
+                    return new Deadline(description, by);
+                }
+                return null;
+            case EVENT:
+                if (parts.length >= EVENT_PARTS_COUNT) {
+                    String from = parts[3].trim();
+                    String to = parts[4].trim();
+                    return new Event(description, from, to);
+                }
+                return null;
+            default:
+                return null;
+        }
     }
 
     /**
