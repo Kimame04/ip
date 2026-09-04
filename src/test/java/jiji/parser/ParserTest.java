@@ -12,6 +12,8 @@ import jiji.command.AddTodoCommand;
 import jiji.command.Command;
 import jiji.command.DeleteCommand;
 import jiji.command.ExitCommand;
+import jiji.command.FindCommand;
+import jiji.command.HelpCommand;
 import jiji.command.ListCommand;
 import jiji.command.MarkCommand;
 import jiji.command.UnmarkCommand;
@@ -91,7 +93,16 @@ public class ParserTest {
     @Test
     public void parse_validFind_returnsFindCommand() throws JijiException {
         Command find = Parser.parse("find book");
-        assertInstanceOf(jiji.command.FindCommand.class, find);
+        assertInstanceOf(FindCommand.class, find);
+    }
+
+    @Test
+    public void parse_help_returnsHelpCommand() throws JijiException {
+        Command helpGeneral = Parser.parse("help");
+        assertInstanceOf(HelpCommand.class, helpGeneral);
+
+        Command helpSpecific = Parser.parse("help deadline");
+        assertInstanceOf(HelpCommand.class, helpSpecific);
     }
 
     @Test

@@ -16,6 +16,7 @@
 | **`unmark`** | `unmark <task_number>` | Marks a task as not completed (`[ ]`). |
 | **`delete`** | `delete <task_number>` | Removes a task from the list and re-indexes remaining tasks. |
 | **`find`** | `find <keyword>` | Finds tasks matching a search keyword. |
+| **`help`** | `help [command]` | Displays general guidance or details on a specific command. |
 | **`bye`** | `bye` | Exits the Jiji application. |
 
 ---
@@ -185,7 +186,56 @@ Searches for tasks whose descriptions contain the given keyword (case-insensitiv
 
 ---
 
-### 9. Exiting the Application: `bye`
+### 9. Getting Help: `help`
+Displays a guide with all available commands, or detailed syntax and examples for a specified command.
+
+* **Format**: `help [command]`
+* **Example (General Help)**:
+  ```text
+  help
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Available commands in Jiji:
+
+       [Add Tasks]
+       • todo <description>
+       • deadline <description> /by <time>
+       • event <desc> /from <start> /to <end>
+
+       [Manage Tasks]
+       • list - View all tasks
+       • mark <index> - Mark as done
+       • unmark <index> - Mark as not done
+       • delete <index> - Delete a task
+       • find <keyword> - Search by keyword
+
+       [General]
+       • help [command] - View command guide
+       • bye - Exit Jiji
+
+       Tip: Type 'help <command>' (e.g. 'help deadline') for details!
+      ____________________________________________________________
+  ```
+* **Example (Command-Specific Help)**:
+  ```text
+  help deadline
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Command: deadline
+       Syntax: deadline <desc> /by <time>
+       Description: Adds a task due by a specific date/time.
+       Formats: yyyy-MM-dd, d/M/yyyy, HHmm
+       Example: deadline submit report /by 2026-08-30 1800
+      ____________________________________________________________
+  ```
+
+---
+
+### 10. Exiting the Application: `bye`
 Exits Jiji with a farewell message.
 
 * **Format**: `bye`

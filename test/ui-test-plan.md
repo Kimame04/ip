@@ -702,5 +702,64 @@ bye
     ____________________________________________________________
 ```
 
+---
 
+## Test Case 11: Help Command (C-Help)
+- **Aim**: Verify the in-app guidance system for general help overview, specific command details, and unrecognized help topics.
+- **Inputs**:
+```text
+help
+help deadline
+help unknown
+bye
+```
+- **Expected Output**:
+```text
+    ____________________________________________________________
+         _     _          _     _ 
+        | |   (_)        (_)   (_)
+        | |    _          _     _ 
+     _  | |   | |        | |   | |
+    | |_| |   | |     _  | |   | |
+     \___/    |_|    | |_| |   |_|
+                      \___/       
 
+     Hello! I'm Jiji.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Available commands in Jiji:
+
+     [Add Tasks]
+     • todo <description>
+     • deadline <description> /by <time>
+     • event <desc> /from <start> /to <end>
+
+     [Manage Tasks]
+     • list - View all tasks
+     • mark <index> - Mark as done
+     • unmark <index> - Mark as not done
+     • delete <index> - Delete a task
+     • find <keyword> - Search by keyword
+
+     [General]
+     • help [command] - View command guide
+     • bye - Exit Jiji
+
+     Tip: Type 'help <command>' (e.g. 'help deadline') for details!
+    ____________________________________________________________
+    ____________________________________________________________
+     Command: deadline
+     Syntax: deadline <desc> /by <time>
+     Description: Adds a task due by a specific date/time.
+     Formats: yyyy-MM-dd, d/M/yyyy, HHmm
+     Example: deadline submit report /by 2026-08-30 1800
+    ____________________________________________________________
+    ____________________________________________________________
+     Unknown command: unknown.
+     Type 'help' to see the list of all available commands.
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```

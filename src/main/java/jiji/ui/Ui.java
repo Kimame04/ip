@@ -264,4 +264,14 @@ public class Ui {
     public String formatTaskUnmarked(Task task) {
         return "OK, I've marked this task as not done yet:\n  " + task;
     }
+
+    /**
+     * Displays the help guide or command details enclosed in divider lines.
+     *
+     * @param helpMessage The formatted help message to display.
+     */
+    public void showHelp(String helpMessage) {
+        assert helpMessage != null : "Help message cannot be null";
+        showMessages(helpMessage.split("\n"));
+    }
 }

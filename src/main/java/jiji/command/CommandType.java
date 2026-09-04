@@ -25,7 +25,9 @@ public enum CommandType {
     /** Command to create a new Event task. */
     EVENT("event"),
     /** Command to search tasks matching a keyword. */
-    FIND("find");
+    FIND("find"),
+    /** Command to display help information. */
+    HELP("help");
 
     private final String commandWord;
 

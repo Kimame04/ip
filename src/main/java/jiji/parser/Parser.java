@@ -8,6 +8,7 @@ import jiji.command.CommandType;
 import jiji.command.DeleteCommand;
 import jiji.command.ExitCommand;
 import jiji.command.FindCommand;
+import jiji.command.HelpCommand;
 import jiji.command.ListCommand;
 import jiji.command.MarkCommand;
 import jiji.command.UnmarkCommand;
@@ -87,6 +88,10 @@ public class Parser {
 
             case FIND:
                 command = parseFind(arguments);
+                break;
+
+            case HELP:
+                command = parseHelp(arguments);
                 break;
 
             default:
@@ -193,5 +198,16 @@ public class Parser {
         }
         assert !arguments.isEmpty() : "Find keyword must not be empty after check";
         return new FindCommand(arguments);
+    }
+
+    /**
+     * Parses the help command arguments.
+     *
+     * @param arguments The command arguments string.
+     * @return A {@link HelpCommand} instance.
+     */
+    private static Command parseHelp(String arguments) {
+        assert arguments != null : "Arguments string cannot be null";
+        return new HelpCommand(arguments);
     }
 }
