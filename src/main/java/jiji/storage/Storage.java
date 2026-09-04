@@ -36,6 +36,7 @@ public class Storage {
      * @param filePath Path string to the storage file.
      */
     public Storage(String filePath) {
+        assert filePath != null && !filePath.isBlank() : "Storage filePath cannot be null or blank";
         this.filePath = Paths.get(filePath);
     }
 
@@ -65,6 +66,7 @@ public class Storage {
         } catch (IOException e) {
             throw new JijiStorageException("Could not load tasks from storage: " + e.getMessage());
         }
+        assert tasks != null : "Loaded task list cannot be null";
         return tasks;
     }
 
@@ -139,6 +141,8 @@ public class Storage {
      * @throws JijiStorageException If an I/O error occurs while writing to the file.
      */
     public void save(TaskList taskList) throws JijiStorageException {
+        assert taskList != null : "TaskList to save cannot be null";
+        assert filePath != null : "Storage filePath cannot be null";
         try {
             if (filePath.getParent() != null && !Files.exists(filePath.getParent())) {
                 Files.createDirectories(filePath.getParent());

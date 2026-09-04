@@ -43,43 +43,57 @@ public class Parser {
             throw new JijiUnknownCommandException();
         }
 
+        assert fullCommand != null && !fullCommand.trim().isEmpty() : "fullCommand must be non-empty";
         String trimmed = fullCommand.trim();
         String[] words = trimmed.split("\\s+", 2);
         String commandWord = words[0];
+        assert !commandWord.isEmpty() : "commandWord cannot be empty after trimming";
         String arguments = (words.length > 1) ? words[1].trim() : "";
         CommandType commandType = CommandType.from(commandWord);
 
+        Command command;
         switch (commandType) {
             case BYE:
-                return new ExitCommand();
+                command = new ExitCommand();
+                break;
 
             case LIST:
-                return new ListCommand();
+                command = new ListCommand();
+                break;
 
             case MARK:
-                return new MarkCommand(parseIndex(arguments, "mark"));
+                command = new MarkCommand(parseIndex(arguments, "mark"));
+                break;
 
             case UNMARK:
-                return new UnmarkCommand(parseIndex(arguments, "unmark"));
+                command = new UnmarkCommand(parseIndex(arguments, "unmark"));
+                break;
 
             case DELETE:
-                return new DeleteCommand(parseIndex(arguments, "delete"));
+                command = new DeleteCommand(parseIndex(arguments, "delete"));
+                break;
 
             case TODO:
-                return parseTodo(arguments);
+                command = parseTodo(arguments);
+                break;
 
             case DEADLINE:
-                return parseDeadline(arguments);
+                command = parseDeadline(arguments);
+                break;
 
             case EVENT:
-                return parseEvent(arguments);
+                command = parseEvent(arguments);
+                break;
 
             case FIND:
-                return parseFind(arguments);
+                command = parseFind(arguments);
+                break;
 
             default:
                 throw new JijiUnknownCommandException();
         }
+        assert command != null : "Parsed command must not be null";
+        return command;
     }
 
     /**
@@ -91,6 +105,7 @@ public class Parser {
      * @throws JijiException If index is missing or non-numeric.
      */
     private static int parseIndex(String arguments, String commandName) throws JijiException {
+        assert commandName != null && !commandName.isEmpty() : "commandName cannot be empty";
         if (arguments.isEmpty()) {
             throw JijiInvalidIndexException.forMissingIndex(commandName);
         }
@@ -112,6 +127,7 @@ public class Parser {
         if (arguments.isEmpty()) {
             throw JijiMissingArgumentException.forEmptyTodo();
         }
+        assert !arguments.isEmpty() : "Todo description must not be empty after check";
         return new AddTodoCommand(arguments);
     }
 
@@ -132,6 +148,7 @@ public class Parser {
         if (description.isEmpty() || by.isEmpty()) {
             throw JijiMissingArgumentException.forMissingDeadline();
         }
+        assert !description.isEmpty() && !by.isEmpty() : "Deadline description and by must not be empty after check";
         return new AddDeadlineCommand(description, by);
     }
 
@@ -158,6 +175,8 @@ public class Parser {
         if (from.isEmpty() || to.isEmpty()) {
             throw JijiMissingArgumentException.forMissingEvent();
         }
+        assert !description.isEmpty() && !from.isEmpty() && !to.isEmpty()
+                : "Event fields must not be empty after check";
         return new AddEventCommand(description, from, to);
     }
 
@@ -172,6 +191,7 @@ public class Parser {
         if (arguments.isEmpty()) {
             throw JijiMissingArgumentException.forEmptyFind();
         }
+        assert !arguments.isEmpty() : "Find keyword must not be empty after check";
         return new FindCommand(arguments);
     }
 }
