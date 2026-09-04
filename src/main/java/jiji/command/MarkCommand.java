@@ -33,10 +33,15 @@ public class MarkCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws JijiException {
+        assert tasks != null : "TaskList dependency cannot be null";
+        assert ui != null : "Ui dependency cannot be null";
+        assert storage != null : "Storage dependency cannot be null";
         if (targetIndex < 0 || targetIndex >= tasks.size()) {
             throw JijiInvalidIndexException.forInvalidNumber();
         }
+        assert targetIndex >= 0 && targetIndex < tasks.size() : "targetIndex must be valid after bounds check";
         Task task = tasks.get(targetIndex);
+        assert task != null : "Task to mark cannot be null";
         task.markAsDone();
         storage.save(tasks);
         ui.showTaskMarked(task);

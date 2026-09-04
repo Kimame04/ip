@@ -278,15 +278,15 @@ To launch the JavaFX GUI application:
 
 Jiji uses Gradle for build automation, testing, and packaging:
 
-* **Run Jiji in GUI mode**:
+* **Run Jiji in GUI mode (with assertions enabled)**:
   ```bash
   ./gradlew run
   ```
-* **Run Jiji in CLI mode**:
+* **Run Jiji in CLI mode (with assertions enabled)**:
   ```bash
   ./gradlew run --args="--cli" --console=plain --quiet
   ```
-* **Run automated unit tests**:
+* **Run automated unit tests (with assertions enabled)**:
   ```bash
   ./gradlew test
   ```

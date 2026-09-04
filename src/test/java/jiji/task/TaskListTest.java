@@ -26,6 +26,11 @@ public class TaskListTest {
     }
 
     @Test
+    public void add_nullTask_throwsAssertionError() {
+        assertThrows(AssertionError.class, () -> taskList.add(null));
+    }
+
+    @Test
     public void delete_validIndex_taskRemovedAndReturned() {
         Task todo = new Todo("read book");
         Task deadline = new Deadline("submit homework", "tonight");
