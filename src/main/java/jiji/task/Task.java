@@ -6,6 +6,12 @@ package jiji.task;
  */
 public class Task {
 
+    public static final String ICON_DONE = "X";
+    public static final String ICON_NOT_DONE = " ";
+    public static final String STORAGE_DONE = "1";
+    public static final String STORAGE_NOT_DONE = "0";
+    public static final String STORAGE_DELIMITER = " | ";
+
     /** Description of the task. */
     protected String description;
 
@@ -19,6 +25,7 @@ public class Task {
      * @param description The text description of the task.
      */
     public Task(String description) {
+        assert description != null && !description.isBlank() : "Task description cannot be null or blank";
         this.description = description;
         this.isDone = false;
     }
@@ -29,7 +36,7 @@ public class Task {
      * @return "X" if the task is done, or " " (single space) if not done.
      */
     public String getStatusIcon() {
-        return (isDone ? "X" : " ");
+        return isDone ? ICON_DONE : ICON_NOT_DONE;
     }
 
     /**
@@ -61,7 +68,7 @@ public class Task {
      * @return Formatted line representation for saving to file.
      */
     public String toFileFormat() {
-        return (isDone ? "1" : "0") + " | " + description;
+        return (isDone ? STORAGE_DONE : STORAGE_NOT_DONE) + STORAGE_DELIMITER + description;
     }
 
     /**

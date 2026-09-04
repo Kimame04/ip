@@ -1,10 +1,17 @@
 package jiji.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 public class TodoTest {
+
+    @Test
+    public void constructor_nullOrBlankDescription_throwsAssertionError() {
+        assertThrows(AssertionError.class, () -> new Todo(null));
+        assertThrows(AssertionError.class, () -> new Todo("   "));
+    }
 
     @Test
     public void toString_unmarkedTask_formattedCorrectly() {

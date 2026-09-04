@@ -26,6 +26,7 @@ public class TaskList {
      */
     public TaskList(List<Task> tasks) {
         this.tasks = (tasks != null) ? tasks : new ArrayList<>();
+        assert this.tasks != null : "Internal task collection must not be null";
     }
 
     /**
@@ -34,7 +35,9 @@ public class TaskList {
      * @param task The task to be added.
      */
     public void add(Task task) {
+        assert task != null : "Task to add cannot be null";
         tasks.add(task);
+        assert tasks.contains(task) : "TaskList should contain added task";
     }
 
     /**
@@ -45,6 +48,7 @@ public class TaskList {
     public void addAll(Task... tasks) {
         if (tasks != null) {
             for (Task task : tasks) {
+                assert task != null : "Cannot add null task to TaskList";
                 this.tasks.add(task);
             }
         }
@@ -58,7 +62,9 @@ public class TaskList {
      * @throws IndexOutOfBoundsException If the index is out of bounds.
      */
     public Task delete(int index) {
-        return tasks.remove(index);
+        Task removed = tasks.remove(index);
+        assert removed != null : "Removed task should not be null";
+        return removed;
     }
 
     /**
@@ -69,7 +75,9 @@ public class TaskList {
      * @throws IndexOutOfBoundsException If the index is out of bounds.
      */
     public Task get(int index) {
-        return tasks.get(index);
+        Task task = tasks.get(index);
+        assert task != null : "Retrieved task should not be null";
+        return task;
     }
 
     /**
@@ -113,6 +121,7 @@ public class TaskList {
      * @return The list of tasks.
      */
     public List<Task> getAllTasks() {
+        assert tasks != null : "Underlying task list cannot be null";
         return tasks;
     }
 }
