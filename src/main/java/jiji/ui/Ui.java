@@ -129,12 +129,7 @@ public class Ui {
      * @param taskList The task list to display.
      */
     public void showTaskList(TaskList taskList) {
-        showLine();
-        System.out.println(INDENT + "Here are the tasks in your list:");
-        for (int i = 0; i < taskList.size(); i++) {
-            System.out.println(INDENT + (i + 1) + "." + taskList.get(i));
-        }
-        showLine();
+        showMessages(formatTaskList(taskList).split("\n"));
     }
 
     /**
@@ -157,12 +152,7 @@ public class Ui {
      * @param matchingTasks The list of matching tasks to display.
      */
     public void showMatchingTasks(List<Task> matchingTasks) {
-        showLine();
-        System.out.println(INDENT + "Here are the matching tasks in your list:");
-        for (int i = 0; i < matchingTasks.size(); i++) {
-            System.out.println(INDENT + (i + 1) + "." + matchingTasks.get(i));
-        }
-        showLine();
+        showMessages(formatMatchingTasks(matchingTasks).split("\n"));
     }
 
     /**
