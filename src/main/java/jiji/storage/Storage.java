@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jiji.exception.JijiStorageException;
 import jiji.task.Deadline;
@@ -114,10 +115,9 @@ public class Storage {
             if (filePath.getParent() != null && !Files.exists(filePath.getParent())) {
                 Files.createDirectories(filePath.getParent());
             }
-            List<String> lines = new ArrayList<>();
-            for (Task task : taskList.getAllTasks()) {
-                lines.add(task.toFileFormat());
-            }
+            List<String> lines = taskList.getAllTasks().stream()
+                    .map(Task::toFileFormat)
+                    .collect(Collectors.toList());
             Files.write(filePath, lines, StandardCharsets.UTF_8,
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {

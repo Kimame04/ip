@@ -2,6 +2,7 @@ package jiji.task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Encapsulates the collection of tasks and provides operations to add, delete,
@@ -97,17 +98,13 @@ public class TaskList {
      * @return A list of matching tasks.
      */
     public List<Task> findTasks(String keyword) {
-        List<Task> matchingTasks = new ArrayList<>();
         if (keyword == null || keyword.trim().isEmpty()) {
-            return matchingTasks;
+            return new ArrayList<>();
         }
         String lowerKeyword = keyword.toLowerCase();
-        for (Task task : tasks) {
-            if (task.getDescription().toLowerCase().contains(lowerKeyword)) {
-                matchingTasks.add(task);
-            }
-        }
-        return matchingTasks;
+        return tasks.stream()
+                .filter(task -> task.getDescription().toLowerCase().contains(lowerKeyword))
+                .collect(Collectors.toList());
     }
 
     /**

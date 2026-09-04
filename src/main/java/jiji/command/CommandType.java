@@ -1,5 +1,7 @@
 package jiji.command;
 
+import java.util.Arrays;
+
 import jiji.exception.JijiUnknownCommandException;
 
 /**
@@ -56,11 +58,9 @@ public enum CommandType {
         if (word == null) {
             throw new JijiUnknownCommandException();
         }
-        for (CommandType type : values()) {
-            if (type.commandWord.equalsIgnoreCase(word)) {
-                return type;
-            }
-        }
-        throw new JijiUnknownCommandException();
+        return Arrays.stream(values())
+                .filter(type -> type.commandWord.equalsIgnoreCase(word))
+                .findFirst()
+                .orElseThrow(JijiUnknownCommandException::new);
     }
 }
