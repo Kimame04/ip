@@ -1,5 +1,6 @@
 package jiji.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,7 +16,9 @@ import jiji.command.ExitCommand;
 import jiji.command.FindCommand;
 import jiji.command.HelpCommand;
 import jiji.command.ListCommand;
+import jiji.command.ListFilter;
 import jiji.command.MarkCommand;
+import jiji.command.StatsCommand;
 import jiji.command.UnmarkCommand;
 import jiji.exception.JijiException;
 import jiji.exception.JijiInvalidIndexException;
@@ -88,6 +91,35 @@ public class ParserTest {
         Command exit = Parser.parse("bye");
         assertInstanceOf(ExitCommand.class, exit);
         assertTrue(exit.isExit());
+    }
+
+    @Test
+    public void parse_listWithFilters_returnsListCommandWithCorrectFilter() throws JijiException {
+        Command listAll = Parser.parse("list");
+        assertInstanceOf(ListCommand.class, listAll);
+        assertEquals(ListFilter.ALL, ((ListCommand) listAll).getFilter());
+
+        Command listPending = Parser.parse("list pending");
+        assertInstanceOf(ListCommand.class, listPending);
+        assertEquals(ListFilter.PENDING, ((ListCommand) listPending).getFilter());
+
+        Command listDone = Parser.parse("list done");
+        assertInstanceOf(ListCommand.class, listDone);
+        assertEquals(ListFilter.DONE, ((ListCommand) listDone).getFilter());
+    }
+
+    @Test
+    public void parse_listInvalidFilter_throwsException() {
+        assertThrows(JijiUnknownCommandException.class, () -> Parser.parse("list invalidFilter"));
+    }
+
+    @Test
+    public void parse_statsAndStatistics_returnsStatsCommand() throws JijiException {
+        Command stats = Parser.parse("stats");
+        assertInstanceOf(StatsCommand.class, stats);
+
+        Command statistics = Parser.parse("statistics");
+        assertInstanceOf(StatsCommand.class, statistics);
     }
 
     @Test

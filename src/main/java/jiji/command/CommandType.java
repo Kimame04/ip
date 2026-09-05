@@ -27,7 +27,9 @@ public enum CommandType {
     /** Command to search tasks matching a keyword. */
     FIND("find"),
     /** Command to display help information. */
-    HELP("help");
+    HELP("help"),
+    /** Command to display task statistics and insights. */
+    STATS("stats");
 
     private final String commandWord;
 
@@ -60,8 +62,9 @@ public enum CommandType {
         if (word == null) {
             throw new JijiUnknownCommandException();
         }
+        String normalizedWord = word.trim().equalsIgnoreCase("statistics") ? "stats" : word.trim();
         return Arrays.stream(values())
-                .filter(type -> type.commandWord.equalsIgnoreCase(word))
+                .filter(type -> type.commandWord.equalsIgnoreCase(normalizedWord))
                 .findFirst()
                 .orElseThrow(JijiUnknownCommandException::new);
     }

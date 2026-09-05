@@ -10,7 +10,9 @@ import jiji.command.ExitCommand;
 import jiji.command.FindCommand;
 import jiji.command.HelpCommand;
 import jiji.command.ListCommand;
+import jiji.command.ListFilter;
 import jiji.command.MarkCommand;
+import jiji.command.StatsCommand;
 import jiji.command.UnmarkCommand;
 import jiji.exception.JijiException;
 import jiji.exception.JijiInvalidIndexException;
@@ -59,7 +61,7 @@ public class Parser {
                 break;
 
             case LIST:
-                command = new ListCommand();
+                command = parseList(arguments);
                 break;
 
             case MARK:
@@ -92,6 +94,10 @@ public class Parser {
 
             case HELP:
                 command = parseHelp(arguments);
+                break;
+
+            case STATS:
+                command = parseStats(arguments);
                 break;
 
             default:
@@ -209,5 +215,38 @@ public class Parser {
     private static Command parseHelp(String arguments) {
         assert arguments != null : "Arguments string cannot be null";
         return new HelpCommand(arguments);
+    }
+
+    /**
+     * Parses the list command arguments for optional filtering.
+     *
+     * @param arguments The command arguments string.
+     * @return A {@link ListCommand} with the appropriate filter.
+     * @throws JijiException If an unrecognized filter argument is specified.
+     */
+    private static Command parseList(String arguments) throws JijiException {
+        assert arguments != null : "Arguments string cannot be null";
+        if (arguments.isEmpty()) {
+            return new ListCommand(ListFilter.ALL);
+        }
+        String filterWord = arguments.toLowerCase();
+        if (filterWord.equals("pending") || filterWord.equals("uncompleted") || filterWord.equals("todo")) {
+            return new ListCommand(ListFilter.PENDING);
+        }
+        if (filterWord.equals("done") || filterWord.equals("completed")) {
+            return new ListCommand(ListFilter.DONE);
+        }
+        throw new JijiUnknownCommandException();
+    }
+
+    /**
+     * Parses the stats command arguments.
+     *
+     * @param arguments The command arguments string.
+     * @return A {@link StatsCommand} instance.
+     */
+    private static Command parseStats(String arguments) {
+        assert arguments != null : "Arguments string cannot be null";
+        return new StatsCommand();
     }
 }

@@ -67,12 +67,13 @@ public class HelpCommand extends Command {
                 + "• deadline <description> /by <time>\n"
                 + "• event <desc> /from <start> /to <end>\n\n"
                 + "[Manage Tasks]\n"
-                + "• list - View all tasks\n"
+                + "• list [filter] - View tasks (pending/done)\n"
                 + "• mark <index> - Mark as done\n"
                 + "• unmark <index> - Mark as not done\n"
                 + "• delete <index> - Delete a task\n"
                 + "• find <keyword> - Search by keyword\n\n"
                 + "[General]\n"
+                + "• stats - View task statistics\n"
                 + "• help [command] - View command guide\n"
                 + "• bye - Exit Jiji\n\n"
                 + "Tip: Type 'help <command>' (e.g. 'help deadline') for details!";
@@ -108,8 +109,9 @@ public class HelpCommand extends Command {
 
             case "list":
                 return "Command: list\n"
-                        + "Syntax: list\n"
-                        + "Description: Displays all current tasks in the list.";
+                        + "Syntax: list [pending|done]\n"
+                        + "Description: Displays all tasks, or filter by pending/done status.\n"
+                        + "Example: list pending";
 
             case "mark":
                 return "Command: mark\n"
@@ -134,6 +136,13 @@ public class HelpCommand extends Command {
                         + "Syntax: find <keyword>\n"
                         + "Description: Searches tasks containing the keyword.\n"
                         + "Example: find book";
+
+            case "stats":
+            case "statistics":
+                return "Command: stats\n"
+                        + "Syntax: stats\n"
+                        + "Description: Displays overall progress, completion rate, and type breakdown.\n"
+                        + "Example: stats";
 
             case "help":
                 return "Command: help\n"

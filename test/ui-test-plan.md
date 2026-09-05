@@ -736,13 +736,14 @@ bye
      • event <desc> /from <start> /to <end>
 
      [Manage Tasks]
-     • list - View all tasks
+     • list [filter] - View tasks (pending/done)
      • mark <index> - Mark as done
      • unmark <index> - Mark as not done
      • delete <index> - Delete a task
      • find <keyword> - Search by keyword
 
      [General]
+     • stats - View task statistics
      • help [command] - View command guide
      • bye - Exit Jiji
 
@@ -763,3 +764,88 @@ bye
      Bye. Hope to see you again soon!
     ____________________________________________________________
 ```
+
+---
+
+## Test Case 12: Statistics and Filtered List Views (C-Statistics)
+- **Aim**: Verify task statistics calculation and filtered list views (list pending, list done) with master index preservation and completion rates.
+- **Inputs**:
+```text
+stats
+todo read book
+deadline return book /by Sunday
+event project meeting /from Mon 2pm /to 4pm
+mark 1
+list pending
+list done
+stats
+bye
+```
+- **Expected Output**:
+```text
+    ____________________________________________________________
+         _     _          _     _ 
+        | |   (_)        (_)   (_)
+        | |    _          _     _ 
+     _  | |   | |        | |   | |
+    | |_| |   | |     _  | |   | |
+     \___/    |_|    | |_| |   |_|
+                      \___/       
+
+     Hello! I'm Jiji.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Task Statistics & Insights:
+
+     • No tasks in your list yet!
+     • Use 'todo', 'deadline', or 'event' to add tasks.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] read book
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] return book (by: Sunday)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [E][ ] project meeting (from: Mon 2pm to: 4pm)
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [T][X] read book
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the pending tasks in your list:
+     2.[D][ ] return book (by: Sunday)
+     3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the completed tasks in your list:
+     1.[T][X] read book
+    ____________________________________________________________
+    ____________________________________________________________
+     Task Statistics & Insights:
+
+     [Overall Progress]
+     • Total tasks: 3
+     • Completed: 1 (33.3%)
+     • Pending: 2
+
+     [Breakdown by Type]
+     • ToDos: 1 (1 completed)
+     • Deadlines: 1 (0 completed, 0 overdue)
+     • Events: 1 (0 completed)
+
+     Tip: Use 'list pending' to view only incomplete tasks!
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+

@@ -1,5 +1,8 @@
 package jiji.task;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import jiji.parser.DateTimeUtil;
 
 /**
@@ -20,6 +23,38 @@ public class Deadline extends Task {
         super(description);
         assert by != null && !by.isBlank() : "Deadline 'by' date/time cannot be null or blank";
         this.by = by;
+    }
+
+    /**
+     * Checks if this deadline is overdue relative to a given date.
+     * Completed deadlines are not considered overdue.
+     *
+     * @param today The reference date.
+     * @return True if incomplete and the deadline is strictly before the reference date, false otherwise.
+     */
+    public boolean isOverdue(LocalDate today) {
+        if (isDone || today == null) {
+            return false;
+        }
+        LocalDate date = getDeadlineDate();
+        return date != null && date.isBefore(today);
+    }
+
+    /**
+     * Returns the parsed LocalDate of this deadline, or null if not a recognized date.
+     *
+     * @return The deadline LocalDate, or null if not applicable.
+     */
+    public LocalDate getDeadlineDate() {
+        LocalDate parsedDate = DateTimeUtil.parseLocalDate(by);
+        if (parsedDate != null) {
+            return parsedDate;
+        }
+        LocalDateTime parsedDateTime = DateTimeUtil.parseLocalDateTime(by);
+        if (parsedDateTime != null) {
+            return parsedDateTime.toLocalDate();
+        }
+        return null;
     }
 
     /**

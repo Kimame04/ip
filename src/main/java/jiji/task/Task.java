@@ -63,6 +63,15 @@ public class Task {
     }
 
     /**
+     * Returns true if the task is completed.
+     *
+     * @return True if completed, false otherwise.
+     */
+    public boolean isDone() {
+        return this.isDone;
+    }
+
+    /**
      * Returns the string representation of the task formatted for storage persistence.
      *
      * @return Formatted line representation for saving to file.

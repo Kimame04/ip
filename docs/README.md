@@ -11,11 +11,12 @@
 | **`todo`** | `todo <description>` | Adds a to-do task. |
 | **`deadline`** | `deadline <description> /by <time>` | Adds a task with a deadline. |
 | **`event`** | `event <description> /from <start> /to <end>` | Adds an event with start and end times. |
-| **`list`** | `list` | Lists all tasks with their type, status, and indices. |
+| **`list`** | `list [pending\|done]` | Lists all tasks, or filters by pending/done status while preserving indices. |
 | **`mark`** | `mark <task_number>` | Marks a task as completed (`[X]`). |
 | **`unmark`** | `unmark <task_number>` | Marks a task as not completed (`[ ]`). |
 | **`delete`** | `delete <task_number>` | Removes a task from the list and re-indexes remaining tasks. |
 | **`find`** | `find <keyword>` | Finds tasks matching a search keyword. |
+| **`stats`** | `stats` | Displays overall task progress, completion rate, and type breakdown. |
 | **`help`** | `help [command]` | Displays general guidance or details on a specific command. |
 | **`bye`** | `bye` | Exits the Jiji application. |
 
@@ -96,10 +97,14 @@ Adds an event that occurs over a specific time interval. Both dates and times ar
 
 ---
 
-### 4. Listing All Tasks: `list`
-Displays all current tasks along with their 1-based index, type tag (`[T]`, `[D]`, `[E]`), completion status (`[ ]` or `[X]`), and any associated times.
+### 4. Listing Tasks: `list`
+Displays current tasks along with their 1-based index, type tag (`[T]`, `[D]`, `[E]`), completion status (`[ ]` or `[X]`), and any associated times. You can view all tasks, or filter by pending or completed tasks to keep your view uncluttered. Filtered views preserve original task indices so you can directly mark, unmark, or delete them.
 
-* **Format**: `list`
+* **Format**: `list [pending|done]`
+* **Example (All Tasks)**:
+  ```text
+  list
+  ```
 * **Expected Output**:
   ```text
       ____________________________________________________________
@@ -109,7 +114,30 @@ Displays all current tasks along with their 1-based index, type tag (`[T]`, `[D]
        3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
       ____________________________________________________________
   ```
-
+* **Example (Filter Pending Tasks)**:
+  ```text
+  list pending
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Here are the pending tasks in your list:
+       1.[T][ ] read book
+       2.[D][ ] return book (by: Sunday)
+       3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+      ____________________________________________________________
+  ```
+* **Example (Filter Completed Tasks)**:
+  ```text
+  list done
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Here are the completed tasks in your list:
+       (or "You have no completed tasks yet.")
+      ____________________________________________________________
+  ```
 ---
 
 ### 5. Marking a Task as Done: `mark`
@@ -205,13 +233,14 @@ Displays a guide with all available commands, or detailed syntax and examples fo
        • event <desc> /from <start> /to <end>
 
        [Manage Tasks]
-       • list - View all tasks
+       • list [filter] - View tasks (pending/done)
        • mark <index> - Mark as done
        • unmark <index> - Mark as not done
        • delete <index> - Delete a task
        • find <keyword> - Search by keyword
 
        [General]
+       • stats - View task statistics
        • help [command] - View command guide
        • bye - Exit Jiji
 
@@ -235,7 +264,36 @@ Displays a guide with all available commands, or detailed syntax and examples fo
 
 ---
 
-### 10. Exiting the Application: `bye`
+### 10. Viewing Task Statistics: `stats`
+Displays overall task progress, completion rate percentage, and category breakdown across ToDos, Deadlines, and Events, including overdue deadline detection.
+
+* **Format**: `stats` (or `statistics`)
+* **Example**:
+  ```text
+  stats
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Task Statistics & Insights:
+
+       [Overall Progress]
+       • Total tasks: 3
+       • Completed: 1 (33.3%)
+       • Pending: 2
+
+       [Breakdown by Type]
+       • ToDos: 1 (0 completed)
+       • Deadlines: 1 (1 completed, 0 overdue)
+       • Events: 1 (0 completed)
+
+       Tip: Use 'list pending' to view only incomplete tasks!
+      ____________________________________________________________
+  ```
+
+---
+
+### 11. Exiting the Application: `bye`
 Exits Jiji with a farewell message.
 
 * **Format**: `bye`
