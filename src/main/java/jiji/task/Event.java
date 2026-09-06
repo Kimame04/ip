@@ -11,10 +11,10 @@ import jiji.parser.DateTimeUtil;
 public class Event extends Task {
 
     /** Start time or date of the event. */
-    protected String from;
+    private final String from;
 
     /** End time or date of the event. */
-    protected String to;
+    private final String to;
 
     /**
      * Constructs a new Event task with the specified description, start time, and end time.

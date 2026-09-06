@@ -13,10 +13,10 @@ public class Task {
     public static final String STORAGE_DELIMITER = " | ";
 
     /** Description of the task. */
-    protected String description;
+    private final String description;
 
     /** Completion status of the task (true if done, false otherwise). */
-    protected boolean isDone;
+    private boolean isDone;
 
     /**
      * Constructs a new Task with the given description.

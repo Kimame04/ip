@@ -11,7 +11,7 @@ import jiji.parser.DateTimeUtil;
 public class Deadline extends Task {
 
     /** Deadline time or date by which the task must be completed. */
-    protected String by;
+    private final String by;
 
     /**
      * Constructs a new Deadline task with the specified description and deadline time.
@@ -33,7 +33,7 @@ public class Deadline extends Task {
      * @return True if incomplete and the deadline is strictly before the reference date, false otherwise.
      */
     public boolean isOverdue(LocalDate today) {
-        if (isDone || today == null) {
+        if (isDone() || today == null) {
             return false;
         }
         LocalDate date = getDeadlineDate();

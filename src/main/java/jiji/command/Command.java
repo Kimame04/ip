@@ -7,6 +7,14 @@ import jiji.ui.Ui;
 
 /**
  * Abstract base class for all executable commands in Jiji.
+ *
+ * <p>Implements the Gang of Four Command Pattern by encapsulating all actions,
+ * parameters, and execution logic within individual command objects. Rather than
+ * having a central controller execute commands via conditional dispatch, the invoker
+ * (e.g. {@code Jiji}) supplies subsystem dependencies ({@link TaskList}, {@link Ui},
+ * and {@link Storage}) directly to {@link #execute(TaskList, Ui, Storage)}.
+ * This decouples invocation from execution, promotes the Open-Closed Principle (OCP),
+ * and prevents the main controller from becoming a monolithic God Class.</p>
  */
 public abstract class Command {
 

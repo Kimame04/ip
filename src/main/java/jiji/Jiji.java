@@ -79,7 +79,7 @@ public class Jiji {
     }
 
     /**
-     * Starts and executes the main command processing loop of Jiji.
+     * Starts the main command processing loop of Jiji.
      */
     public void run() {
         ui.showWelcome();
