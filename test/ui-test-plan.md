@@ -702,5 +702,226 @@ bye
     ____________________________________________________________
 ```
 
+---
+
+## Test Case 11: Help Command (C-Help)
+- **Aim**: Verify the in-app guidance system for general help overview, specific command details, and unrecognized help topics.
+- **Inputs**:
+```text
+help
+help deadline
+help unknown
+bye
+```
+- **Expected Output**:
+```text
+    ____________________________________________________________
+         _     _          _     _ 
+        | |   (_)        (_)   (_)
+        | |    _          _     _ 
+     _  | |   | |        | |   | |
+    | |_| |   | |     _  | |   | |
+     \___/    |_|    | |_| |   |_|
+                      \___/       
+
+     Hello! I'm Jiji.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Available commands in Jiji:
+
+     [Add Tasks]
+     • todo <description>
+     • deadline <description> /by <time>
+     • event <desc> /from <start> /to <end>
+
+     [Manage Tasks]
+     • list [filter] - View tasks (pending/done)
+     • schedule <date> - View schedule for date
+     • mark <index> - Mark as done
+     • unmark <index> - Mark as not done
+     • delete <index> - Delete a task
+     • find <keyword> - Search by keyword
+
+     [General]
+     • stats - View task statistics
+     • help [command] - View command guide
+     • bye - Exit Jiji
+
+     Tip: Type 'help <command>' (e.g. 'help deadline') for details!
+    ____________________________________________________________
+    ____________________________________________________________
+     Command: deadline
+     Syntax: deadline <desc> /by <time>
+     Description: Adds a task due by a specific date/time.
+     Formats: yyyy-MM-dd, d/M/yyyy, HHmm
+     Example: deadline submit report /by 2026-08-30 1800
+    ____________________________________________________________
+    ____________________________________________________________
+     Unknown command: unknown.
+     Type 'help' to see the list of all available commands.
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
+---
+
+## Test Case 12: Statistics and Filtered List Views (C-Statistics)
+- **Aim**: Verify task statistics calculation and filtered list views (list pending, list done) with master index preservation and completion rates.
+- **Inputs**:
+```text
+stats
+todo read book
+deadline return book /by Sunday
+event project meeting /from Mon 2pm /to 4pm
+mark 1
+list pending
+list done
+stats
+bye
+```
+- **Expected Output**:
+```text
+    ____________________________________________________________
+         _     _          _     _ 
+        | |   (_)        (_)   (_)
+        | |    _          _     _ 
+     _  | |   | |        | |   | |
+    | |_| |   | |     _  | |   | |
+     \___/    |_|    | |_| |   |_|
+                      \___/       
+
+     Hello! I'm Jiji.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Task Statistics & Insights:
+
+     • No tasks in your list yet!
+     • Use 'todo', 'deadline', or 'event' to add tasks.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] read book
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] return book (by: Sunday)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [E][ ] project meeting (from: Mon 2pm to: 4pm)
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [T][X] read book
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the pending tasks in your list:
+     2.[D][ ] return book (by: Sunday)
+     3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the completed tasks in your list:
+     1.[T][X] read book
+    ____________________________________________________________
+    ____________________________________________________________
+     Task Statistics & Insights:
+
+     [Overall Progress]
+     • Total tasks: 3
+     • Completed: 1 (33.3%)
+     • Pending: 2
+
+     [Breakdown by Type]
+     • ToDos: 1 (1 completed)
+     • Deadlines: 1 (0 completed, 0 overdue)
+     • Events: 1 (0 completed)
+
+     Tip: Use 'list pending' to view only incomplete tasks!
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
+---
+
+## Test Case 13: View Schedules by Date (B-ViewSchedules)
+- **Aim**: Verify viewing scheduled tasks (deadlines and events) for a specific date, handling ongoing multi-day events, empty schedules, and input validation.
+- **Inputs**:
+```text
+todo read book
+deadline return book /by 2026-08-30
+event orientation camp /from 2026-08-29 0900 /to 2026-08-31 1700
+deadline submit project /by 2026-09-05
+schedule 2026-08-30
+schedule 2026-08-31
+schedule 2026-12-25
+schedule
+schedule invalid-date
+bye
+```
+- **Expected Output**:
+```text
+    ____________________________________________________________
+         _     _          _     _ 
+        | |   (_)        (_)   (_)
+        | |    _          _     _ 
+     _  | |   | |        | |   | |
+    | |_| |   | |     _  | |   | |
+     \___/    |_|    | |_| |   |_|
+                      \___/       
+
+     Hello! I'm Jiji.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] read book
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] return book (by: Aug 30 2026)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [E][ ] orientation camp (from: Aug 29 2026, 9:00AM to: Aug 31 2026, 5:00PM)
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] submit project (by: Sep 05 2026)
+     Now you have 4 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Schedule for Aug 30 2026:
+     2.[D][ ] return book (by: Aug 30 2026)
+     3.[E][ ] orientation camp (from: Aug 29 2026, 9:00AM to: Aug 31 2026, 5:00PM)
+    ____________________________________________________________
+    ____________________________________________________________
+     Schedule for Aug 31 2026:
+     3.[E][ ] orientation camp (from: Aug 29 2026, 9:00AM to: Aug 31 2026, 5:00PM)
+    ____________________________________________________________
+    ____________________________________________________________
+     No tasks scheduled for Dec 25 2026. Enjoy your free time! ₍^. .^₎
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please specify a date for the schedule (e.g. 'schedule 2026-08-30' or 'schedule today').
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS! ₍^› ꘍ ‹ ^₎⟆ Invalid date format. Please use yyyy-MM-dd (e.g. 2026-08-30) or 'today'.
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
 
 

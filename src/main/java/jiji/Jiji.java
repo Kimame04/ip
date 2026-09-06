@@ -52,7 +52,7 @@ public class Jiji {
      * @return Initial greeting message.
      */
     public String getGreeting() {
-        return "Hello! I'm Jiji ₍^._.^₎ 𐒡\nWhat can I do for you?";
+        return "Hello! I'm Jiji ₍^._.^₎\nWhat can I do for you?";
     }
 
     /**

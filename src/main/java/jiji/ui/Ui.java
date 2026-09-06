@@ -1,8 +1,15 @@
 package jiji.ui;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import jiji.parser.DateTimeUtil;
+import jiji.task.Deadline;
+import jiji.task.Event;
 import jiji.task.Task;
 import jiji.task.TaskList;
 
@@ -139,11 +146,12 @@ public class Ui {
      * @return The formatted task list string.
      */
     public String formatTaskList(TaskList taskList) {
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list:");
-        for (int i = 0; i < taskList.size(); i++) {
-            sb.append("\n").append(i + 1).append(".").append(taskList.get(i));
-        }
-        return sb.toString();
+        String items = IntStream.range(0, taskList.size())
+                .mapToObj(i -> (i + 1) + "." + taskList.get(i))
+                .collect(Collectors.joining("\n"));
+        return items.isEmpty()
+                ? "Here are the tasks in your list:"
+                : "Here are the tasks in your list:\n" + items;
     }
 
     /**
@@ -162,11 +170,12 @@ public class Ui {
      * @return The formatted matching tasks string.
      */
     public String formatMatchingTasks(List<Task> matchingTasks) {
-        StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:");
-        for (int i = 0; i < matchingTasks.size(); i++) {
-            sb.append("\n").append(i + 1).append(".").append(matchingTasks.get(i));
-        }
-        return sb.toString();
+        String items = IntStream.range(0, matchingTasks.size())
+                .mapToObj(i -> (i + 1) + "." + matchingTasks.get(i))
+                .collect(Collectors.joining("\n"));
+        return items.isEmpty()
+                ? "Here are the matching tasks in your list:"
+                : "Here are the matching tasks in your list:\n" + items;
     }
 
     /**
@@ -263,5 +272,130 @@ public class Ui {
      */
     public String formatTaskUnmarked(Task task) {
         return "OK, I've marked this task as not done yet:\n  " + task;
+    }
+
+    /**
+     * Displays the help guide or command details enclosed in divider lines.
+     *
+     * @param helpMessage The formatted help message to display.
+     */
+    public void showHelp(String helpMessage) {
+        assert helpMessage != null : "Help message cannot be null";
+        showMessages(helpMessage.split("\n"));
+    }
+
+    /**
+     * Formats tasks matching a predicate filter, preserving master 1-based indices.
+     *
+     * @param taskList The task list to format.
+     * @param filter The condition a task must meet to be included.
+     * @param header The header message preceding matching tasks.
+     * @param emptyMessage The message to display when no tasks match the filter.
+     * @return The formatted task list string.
+     */
+    private String formatFilteredTasks(TaskList taskList, Predicate<Task> filter,
+            String header, String emptyMessage) {
+        assert taskList != null : "TaskList cannot be null";
+        assert filter != null : "Filter predicate cannot be null";
+        String items = IntStream.range(0, taskList.size())
+                .filter(i -> filter.test(taskList.get(i)))
+                .mapToObj(i -> (i + 1) + "." + taskList.get(i))
+                .collect(Collectors.joining("\n"));
+        return items.isEmpty() ? emptyMessage : header + "\n" + items;
+    }
+
+    /**
+     * Displays all incomplete (pending) tasks in the task list, preserving master indices.
+     *
+     * @param taskList The task list to display.
+     */
+    public void showPendingTasks(TaskList taskList) {
+        showMessages(formatPendingTasks(taskList).split("\n"));
+    }
+
+    /**
+     * Formats all incomplete (pending) tasks in the task list, preserving master indices.
+     *
+     * @param taskList The task list to format.
+     * @return Formatted pending tasks string.
+     */
+    public String formatPendingTasks(TaskList taskList) {
+        return formatFilteredTasks(taskList, t -> !t.isDone(),
+                "Here are the pending tasks in your list:",
+                "You have no pending tasks! Great job! ₍^. .^₎");
+    }
+
+    /**
+     * Displays all completed tasks in the task list, preserving master indices.
+     *
+     * @param taskList The task list to display.
+     */
+    public void showDoneTasks(TaskList taskList) {
+        showMessages(formatDoneTasks(taskList).split("\n"));
+    }
+
+    /**
+     * Formats all completed tasks in the task list, preserving master indices.
+     *
+     * @param taskList The task list to format.
+     * @return Formatted completed tasks string.
+     */
+    public String formatDoneTasks(TaskList taskList) {
+        return formatFilteredTasks(taskList, Task::isDone,
+                "Here are the completed tasks in your list:",
+                "You have no completed tasks yet.");
+    }
+
+    /**
+     * Displays the statistics dashboard within standard divider lines.
+     *
+     * @param statsMessage The formatted statistics message to display.
+     */
+    public void showStats(String statsMessage) {
+        assert statsMessage != null : "Stats message cannot be null";
+        showMessages(statsMessage.split("\n"));
+    }
+
+    /**
+     * Formats the schedule of tasks occurring on or due by the specified date.
+     * Preserves master 1-based indices.
+     *
+     * @param taskList The task list to format from.
+     * @param targetDate The date to inspect.
+     * @return Formatted schedule string.
+     */
+    public String formatSchedule(TaskList taskList, LocalDate targetDate) {
+        assert taskList != null : "TaskList cannot be null";
+        assert targetDate != null : "Target date cannot be null";
+
+        String dateDisplay = DateTimeUtil.formatDateForDisplay(targetDate);
+        String items = IntStream.range(0, taskList.size())
+                .filter(i -> {
+                    Task task = taskList.get(i);
+                    if (task instanceof Deadline) {
+                        LocalDate deadlineDate = ((Deadline) task).getDeadlineDate();
+                        return deadlineDate != null && deadlineDate.equals(targetDate);
+                    } else if (task instanceof Event) {
+                        return ((Event) task).occursOn(targetDate);
+                    }
+                    return false;
+                })
+                .mapToObj(i -> (i + 1) + "." + taskList.get(i))
+                .collect(Collectors.joining("\n"));
+
+        if (items.isEmpty()) {
+            return "No tasks scheduled for " + dateDisplay + ". Enjoy your free time! ₍^. .^₎";
+        }
+        return "Schedule for " + dateDisplay + ":\n" + items;
+    }
+
+    /**
+     * Displays the schedule of tasks occurring on the specified date within standard divider lines.
+     *
+     * @param scheduleText The formatted schedule text to display.
+     */
+    public void showSchedule(String scheduleText) {
+        assert scheduleText != null : "Schedule text cannot be null";
+        showMessages(scheduleText.split("\n"));
     }
 }

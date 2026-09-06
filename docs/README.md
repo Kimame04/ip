@@ -11,11 +11,14 @@
 | **`todo`** | `todo <description>` | Adds a to-do task. |
 | **`deadline`** | `deadline <description> /by <time>` | Adds a task with a deadline. |
 | **`event`** | `event <description> /from <start> /to <end>` | Adds an event with start and end times. |
-| **`list`** | `list` | Lists all tasks with their type, status, and indices. |
+| **`list`** | `list [pending\|done]` | Lists all tasks, or filters by pending/done status while preserving indices. |
+| **`schedule`** | `schedule <date\|today>` | Views tasks scheduled on a specific date while preserving indices. |
 | **`mark`** | `mark <task_number>` | Marks a task as completed (`[X]`). |
 | **`unmark`** | `unmark <task_number>` | Marks a task as not completed (`[ ]`). |
 | **`delete`** | `delete <task_number>` | Removes a task from the list and re-indexes remaining tasks. |
 | **`find`** | `find <keyword>` | Finds tasks matching a search keyword. |
+| **`stats`** | `stats` | Displays overall task progress, completion rate, and type breakdown. |
+| **`help`** | `help [command]` | Displays general guidance or details on a specific command. |
 | **`bye`** | `bye` | Exits the Jiji application. |
 
 ---
@@ -95,10 +98,14 @@ Adds an event that occurs over a specific time interval. Both dates and times ar
 
 ---
 
-### 4. Listing All Tasks: `list`
-Displays all current tasks along with their 1-based index, type tag (`[T]`, `[D]`, `[E]`), completion status (`[ ]` or `[X]`), and any associated times.
+### 4. Listing Tasks: `list`
+Displays current tasks along with their 1-based index, type tag (`[T]`, `[D]`, `[E]`), completion status (`[ ]` or `[X]`), and any associated times. You can view all tasks, or filter by pending or completed tasks to keep your view uncluttered. Filtered views preserve original task indices so you can directly mark, unmark, or delete them.
 
-* **Format**: `list`
+* **Format**: `list [pending|done]`
+* **Example (All Tasks)**:
+  ```text
+  list
+  ```
 * **Expected Output**:
   ```text
       ____________________________________________________________
@@ -108,7 +115,30 @@ Displays all current tasks along with their 1-based index, type tag (`[T]`, `[D]
        3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
       ____________________________________________________________
   ```
-
+* **Example (Filter Pending Tasks)**:
+  ```text
+  list pending
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Here are the pending tasks in your list:
+       1.[T][ ] read book
+       2.[D][ ] return book (by: Sunday)
+       3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+      ____________________________________________________________
+  ```
+* **Example (Filter Completed Tasks)**:
+  ```text
+  list done
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Here are the completed tasks in your list:
+       (or "You have no completed tasks yet.")
+      ____________________________________________________________
+  ```
 ---
 
 ### 5. Marking a Task as Done: `mark`
@@ -185,7 +215,117 @@ Searches for tasks whose descriptions contain the given keyword (case-insensitiv
 
 ---
 
-### 9. Exiting the Application: `bye`
+### 9. Viewing Schedules by Date: `schedule`
+Displays tasks (deadlines and events) occurring on or due by a specified date. You can provide any standard date format (e.g. `yyyy-MM-dd`, `d/M/yyyy`) or use the keyword `today`. Master 1-based task indices are preserved in the output so you can immediately mark, unmark, or delete scheduled tasks.
+
+* **Format**: `schedule <date|today>`
+* **Accepted Formats**: `yyyy-MM-dd` (e.g. `2026-08-30`), `d/M/yyyy` (e.g. `30/8/2026`), or `today`
+* **Example (Scheduled Tasks Found)**:
+  ```text
+  schedule 2026-08-30
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Schedule for Aug 30 2026:
+       2.[D][ ] return book (by: Aug 30 2026)
+       3.[E][ ] hackathon (from: Aug 30 2026, 10:00AM to: Aug 30 2026, 8:00PM)
+      ____________________________________________________________
+  ```
+* **Example (No Tasks Scheduled)**:
+  ```text
+  schedule 2026-12-25
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       No tasks scheduled for Dec 25 2026. Enjoy your free time! ₍^. .^₎
+      ____________________________________________________________
+  ```
+
+---
+
+### 10. Getting Help: `help`
+Displays a guide with all available commands, or detailed syntax and examples for a specified command.
+
+* **Format**: `help [command]`
+* **Example (General Help)**:
+  ```text
+  help
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Available commands in Jiji:
+
+       [Add Tasks]
+       • todo <description>
+       • deadline <description> /by <time>
+       • event <desc> /from <start> /to <end>
+
+       [Manage Tasks]
+       • list [filter] - View tasks (pending/done)
+       • schedule <date> - View schedule for date
+       • mark <index> - Mark as done
+       • unmark <index> - Mark as not done
+       • delete <index> - Delete a task
+       • find <keyword> - Search by keyword
+
+       [General]
+       • stats - View task statistics
+       • help [command] - View command guide
+       • bye - Exit Jiji
+
+       Tip: Type 'help <command>' (e.g. 'help deadline') for details!
+      ____________________________________________________________
+  ```
+* **Example (Command-Specific Help)**:
+  ```text
+  help deadline
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Command: deadline
+       Syntax: deadline <desc> /by <time>
+       Description: Adds a task due by a specific date/time.
+       Formats: yyyy-MM-dd, d/M/yyyy, HHmm
+       Example: deadline submit report /by 2026-08-30 1800
+      ____________________________________________________________
+  ```
+
+---
+
+### 11. Viewing Task Statistics: `stats`
+Displays overall task progress, completion rate percentage, and category breakdown across ToDos, Deadlines, and Events, including overdue deadline detection.
+
+* **Format**: `stats` (or `statistics`)
+* **Example**:
+  ```text
+  stats
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Task Statistics & Insights:
+
+       [Overall Progress]
+       • Total tasks: 3
+       • Completed: 1 (33.3%)
+       • Pending: 2
+
+       [Breakdown by Type]
+       • ToDos: 1 (0 completed)
+       • Deadlines: 1 (1 completed, 0 overdue)
+       • Events: 1 (0 completed)
+
+       Tip: Use 'list pending' to view only incomplete tasks!
+      ____________________________________________________________
+  ```
+
+---
+
+### 12. Exiting the Application: `bye`
 Exits Jiji with a farewell message.
 
 * **Format**: `bye`

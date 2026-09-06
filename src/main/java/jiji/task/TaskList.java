@@ -1,5 +1,6 @@
 package jiji.task;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -123,5 +124,65 @@ public class TaskList {
     public List<Task> getAllTasks() {
         assert tasks != null : "Underlying task list cannot be null";
         return tasks;
+    }
+
+    /**
+     * Counts the number of completed tasks in the list.
+     *
+     * @return Number of tasks marked as completed.
+     */
+    public int countCompleted() {
+        return (int) tasks.stream()
+                .filter(Task::isDone)
+                .count();
+    }
+
+    /**
+     * Counts the number of incomplete (pending) tasks in the list.
+     *
+     * @return Number of pending tasks.
+     */
+    public int countPending() {
+        return size() - countCompleted();
+    }
+
+    /**
+     * Counts the number of tasks matching the specified task subclass.
+     *
+     * @param type The task class type to filter for.
+     * @return Number of tasks of the specified type.
+     */
+    public int countByType(Class<? extends Task> type) {
+        assert type != null : "Task type class cannot be null";
+        return (int) tasks.stream()
+                .filter(type::isInstance)
+                .count();
+    }
+
+    /**
+     * Counts the number of completed tasks matching the specified task subclass.
+     *
+     * @param type The task class type to filter for.
+     * @return Number of completed tasks of the specified type.
+     */
+    public int countCompletedByType(Class<? extends Task> type) {
+        assert type != null : "Task type class cannot be null";
+        return (int) tasks.stream()
+                .filter(task -> type.isInstance(task) && task.isDone())
+                .count();
+    }
+
+    /**
+     * Counts the number of incomplete deadlines that are overdue relative to the given reference date.
+     *
+     * @param today The reference date.
+     * @return Number of overdue, incomplete deadlines.
+     */
+    public int countOverdueDeadlines(LocalDate today) {
+        return (int) tasks.stream()
+                .filter(task -> task instanceof Deadline)
+                .map(task -> (Deadline) task)
+                .filter(deadline -> deadline.isOverdue(today))
+                .count();
     }
 }

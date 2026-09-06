@@ -96,6 +96,19 @@ public class DateTimeUtil {
     }
 
     /**
+     * Formats a LocalDate into a human-readable display representation (e.g. "Aug 30 2026").
+     *
+     * @param date The date to format.
+     * @return Formatted string for UI display.
+     */
+    public static String formatDateForDisplay(LocalDate date) {
+        if (date == null) {
+            return "";
+        }
+        return date.format(DISPLAY_DATE_FORMATTER);
+    }
+
+    /**
      * Formats a date or date-time string into a human-readable display representation.
      * If the input is recognized as a date or date-time, it is formatted nicely (e.g. "Aug 30 2026").
      * Otherwise, the original input string is returned unchanged.

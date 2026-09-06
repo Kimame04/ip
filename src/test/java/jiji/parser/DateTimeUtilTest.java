@@ -57,6 +57,12 @@ public class DateTimeUtilTest {
     }
 
     @Test
+    public void formatDateForDisplay_validLocalDate_formattedString() {
+        assertEquals("Aug 30 2026", DateTimeUtil.formatDateForDisplay(java.time.LocalDate.of(2026, 8, 30)));
+        assertEquals("", DateTimeUtil.formatDateForDisplay(null));
+    }
+
+    @Test
     public void formatForDisplay_validDateTime_formattedString() {
         assertEquals("Aug 30 2026, 6:00PM", DateTimeUtil.formatForDisplay("2026-08-30 1800"));
         assertEquals("Dec 02 2026, 6:00PM", DateTimeUtil.formatForDisplay("2/12/2026 18:00"));

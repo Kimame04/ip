@@ -1,8 +1,11 @@
 package jiji.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +15,13 @@ import jiji.command.AddTodoCommand;
 import jiji.command.Command;
 import jiji.command.DeleteCommand;
 import jiji.command.ExitCommand;
+import jiji.command.FindCommand;
+import jiji.command.HelpCommand;
 import jiji.command.ListCommand;
+import jiji.command.ListFilter;
 import jiji.command.MarkCommand;
+import jiji.command.ScheduleCommand;
+import jiji.command.StatsCommand;
 import jiji.command.UnmarkCommand;
 import jiji.exception.JijiException;
 import jiji.exception.JijiInvalidIndexException;
@@ -89,9 +97,47 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_listWithFilters_returnsListCommandWithCorrectFilter() throws JijiException {
+        Command listAll = Parser.parse("list");
+        assertInstanceOf(ListCommand.class, listAll);
+        assertEquals(ListFilter.ALL, ((ListCommand) listAll).getFilter());
+
+        Command listPending = Parser.parse("list pending");
+        assertInstanceOf(ListCommand.class, listPending);
+        assertEquals(ListFilter.PENDING, ((ListCommand) listPending).getFilter());
+
+        Command listDone = Parser.parse("list done");
+        assertInstanceOf(ListCommand.class, listDone);
+        assertEquals(ListFilter.DONE, ((ListCommand) listDone).getFilter());
+    }
+
+    @Test
+    public void parse_listInvalidFilter_throwsException() {
+        assertThrows(JijiUnknownCommandException.class, () -> Parser.parse("list invalidFilter"));
+    }
+
+    @Test
+    public void parse_statsAndStatistics_returnsStatsCommand() throws JijiException {
+        Command stats = Parser.parse("stats");
+        assertInstanceOf(StatsCommand.class, stats);
+
+        Command statistics = Parser.parse("statistics");
+        assertInstanceOf(StatsCommand.class, statistics);
+    }
+
+    @Test
     public void parse_validFind_returnsFindCommand() throws JijiException {
         Command find = Parser.parse("find book");
-        assertInstanceOf(jiji.command.FindCommand.class, find);
+        assertInstanceOf(FindCommand.class, find);
+    }
+
+    @Test
+    public void parse_help_returnsHelpCommand() throws JijiException {
+        Command helpGeneral = Parser.parse("help");
+        assertInstanceOf(HelpCommand.class, helpGeneral);
+
+        Command helpSpecific = Parser.parse("help deadline");
+        assertInstanceOf(HelpCommand.class, helpSpecific);
     }
 
     @Test
@@ -105,5 +151,33 @@ public class ParserTest {
         assertThrows(JijiUnknownCommandException.class, () -> Parser.parse("unknownCommand"));
         assertThrows(JijiUnknownCommandException.class, () -> Parser.parse(""));
         assertThrows(JijiUnknownCommandException.class, () -> Parser.parse(null));
+    }
+
+    @Test
+    public void parse_validSchedule_returnsScheduleCommand() throws JijiException {
+        Command command = Parser.parse("schedule 2026-08-30");
+        assertInstanceOf(ScheduleCommand.class, command);
+        ScheduleCommand scheduleCommand = (ScheduleCommand) command;
+        assertEquals(LocalDate.of(2026, 8, 30), scheduleCommand.getTargetDate());
+    }
+
+    @Test
+    public void parse_scheduleToday_returnsScheduleCommandWithToday() throws JijiException {
+        Command command = Parser.parse("schedule today");
+        assertInstanceOf(ScheduleCommand.class, command);
+        ScheduleCommand scheduleCommand = (ScheduleCommand) command;
+        assertEquals(LocalDate.now(), scheduleCommand.getTargetDate());
+    }
+
+    @Test
+    public void parse_emptyScheduleDate_throwsException() {
+        assertThrows(JijiMissingArgumentException.class, () -> Parser.parse("schedule"));
+        assertThrows(JijiMissingArgumentException.class, () -> Parser.parse("schedule   "));
+    }
+
+    @Test
+    public void parse_invalidScheduleDate_throwsException() {
+        assertThrows(JijiException.class, () -> Parser.parse("schedule invalid-date"));
+        assertThrows(JijiException.class, () -> Parser.parse("schedule 2026/13/40"));
     }
 }

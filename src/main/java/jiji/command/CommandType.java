@@ -25,7 +25,13 @@ public enum CommandType {
     /** Command to create a new Event task. */
     EVENT("event"),
     /** Command to search tasks matching a keyword. */
-    FIND("find");
+    FIND("find"),
+    /** Command to display help information. */
+    HELP("help"),
+    /** Command to display task statistics and insights. */
+    STATS("stats"),
+    /** Command to view schedule for a specific date. */
+    SCHEDULE("schedule");
 
     private final String commandWord;
 
@@ -58,8 +64,9 @@ public enum CommandType {
         if (word == null) {
             throw new JijiUnknownCommandException();
         }
+        String normalizedWord = word.trim().equalsIgnoreCase("statistics") ? "stats" : word.trim();
         return Arrays.stream(values())
-                .filter(type -> type.commandWord.equalsIgnoreCase(word))
+                .filter(type -> type.commandWord.equalsIgnoreCase(normalizedWord))
                 .findFirst()
                 .orElseThrow(JijiUnknownCommandException::new);
     }
