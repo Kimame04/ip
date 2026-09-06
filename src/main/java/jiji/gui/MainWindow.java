@@ -32,11 +32,13 @@ public class MainWindow extends AnchorPane {
     private final Image jijiImage = new Image(this.getClass().getResourceAsStream("/images/DaJiji.png"));
 
     /**
-     * Initializes the scroll pane property binding.
+     * Initializes auto-scrolling to the latest message whenever new content is added.
      */
     @FXML
     public void initialize() {
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        dialogContainer.heightProperty().addListener((observable, oldValue, newValue) -> {
+            Platform.runLater(() -> scrollPane.setVvalue(1.0));
+        });
     }
 
     /**
