@@ -1,11 +1,15 @@
 package jiji.ui;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import jiji.parser.DateTimeUtil;
+import jiji.task.Deadline;
+import jiji.task.Event;
 import jiji.task.Task;
 import jiji.task.TaskList;
 
@@ -350,5 +354,48 @@ public class Ui {
     public void showStats(String statsMessage) {
         assert statsMessage != null : "Stats message cannot be null";
         showMessages(statsMessage.split("\n"));
+    }
+
+    /**
+     * Formats the schedule of tasks occurring on or due by the specified date.
+     * Preserves master 1-based indices.
+     *
+     * @param taskList The task list to format from.
+     * @param targetDate The date to inspect.
+     * @return Formatted schedule string.
+     */
+    public String formatSchedule(TaskList taskList, LocalDate targetDate) {
+        assert taskList != null : "TaskList cannot be null";
+        assert targetDate != null : "Target date cannot be null";
+
+        String dateDisplay = DateTimeUtil.formatDateForDisplay(targetDate);
+        String items = IntStream.range(0, taskList.size())
+                .filter(i -> {
+                    Task task = taskList.get(i);
+                    if (task instanceof Deadline) {
+                        LocalDate deadlineDate = ((Deadline) task).getDeadlineDate();
+                        return deadlineDate != null && deadlineDate.equals(targetDate);
+                    } else if (task instanceof Event) {
+                        return ((Event) task).occursOn(targetDate);
+                    }
+                    return false;
+                })
+                .mapToObj(i -> (i + 1) + "." + taskList.get(i))
+                .collect(Collectors.joining("\n"));
+
+        if (items.isEmpty()) {
+            return "No tasks scheduled for " + dateDisplay + ". Enjoy your free time! ₍^. .^₎";
+        }
+        return "Schedule for " + dateDisplay + ":\n" + items;
+    }
+
+    /**
+     * Displays the schedule of tasks occurring on the specified date within standard divider lines.
+     *
+     * @param scheduleText The formatted schedule text to display.
+     */
+    public void showSchedule(String scheduleText) {
+        assert scheduleText != null : "Schedule text cannot be null";
+        showMessages(scheduleText.split("\n"));
     }
 }

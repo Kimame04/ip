@@ -51,4 +51,15 @@ public class JijiMissingArgumentException extends JijiException {
     public static JijiMissingArgumentException forEmptyFind() {
         return new JijiMissingArgumentException("OOPS! ₍^› ꘍ ‹ ^₎⟆ Please specify a keyword to search for.");
     }
+
+    /**
+     * Creates an exception when a schedule command is executed without a date.
+     *
+     * @return A new JijiMissingArgumentException formatted for schedule command.
+     */
+    public static JijiMissingArgumentException forEmptySchedule() {
+        return new JijiMissingArgumentException(
+                "OOPS! ₍^› ꘍ ‹ ^₎⟆ Please specify a date for the schedule "
+                + "(e.g. 'schedule 2026-08-30' or 'schedule today').");
+    }
 }

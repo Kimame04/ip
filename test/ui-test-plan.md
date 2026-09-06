@@ -737,6 +737,7 @@ bye
 
      [Manage Tasks]
      • list [filter] - View tasks (pending/done)
+     • schedule <date> - View schedule for date
      • mark <index> - Mark as done
      • unmark <index> - Mark as not done
      • delete <index> - Delete a task
@@ -848,4 +849,79 @@ bye
      Bye. Hope to see you again soon!
     ____________________________________________________________
 ```
+
+---
+
+## Test Case 13: View Schedules by Date (B-ViewSchedules)
+- **Aim**: Verify viewing scheduled tasks (deadlines and events) for a specific date, handling ongoing multi-day events, empty schedules, and input validation.
+- **Inputs**:
+```text
+todo read book
+deadline return book /by 2026-08-30
+event orientation camp /from 2026-08-29 0900 /to 2026-08-31 1700
+deadline submit project /by 2026-09-05
+schedule 2026-08-30
+schedule 2026-08-31
+schedule 2026-12-25
+schedule
+schedule invalid-date
+bye
+```
+- **Expected Output**:
+```text
+    ____________________________________________________________
+         _     _          _     _ 
+        | |   (_)        (_)   (_)
+        | |    _          _     _ 
+     _  | |   | |        | |   | |
+    | |_| |   | |     _  | |   | |
+     \___/    |_|    | |_| |   |_|
+                      \___/       
+
+     Hello! I'm Jiji.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] read book
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] return book (by: Aug 30 2026)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [E][ ] orientation camp (from: Aug 29 2026, 9:00AM to: Aug 31 2026, 5:00PM)
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] submit project (by: Sep 05 2026)
+     Now you have 4 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Schedule for Aug 30 2026:
+     2.[D][ ] return book (by: Aug 30 2026)
+     3.[E][ ] orientation camp (from: Aug 29 2026, 9:00AM to: Aug 31 2026, 5:00PM)
+    ____________________________________________________________
+    ____________________________________________________________
+     Schedule for Aug 31 2026:
+     3.[E][ ] orientation camp (from: Aug 29 2026, 9:00AM to: Aug 31 2026, 5:00PM)
+    ____________________________________________________________
+    ____________________________________________________________
+     No tasks scheduled for Dec 25 2026. Enjoy your free time! ₍^. .^₎
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS! ₍^› ꘍ ‹ ^₎⟆ Please specify a date for the schedule (e.g. 'schedule 2026-08-30' or 'schedule today').
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS! ₍^› ꘍ ‹ ^₎⟆ Invalid date format. Please use yyyy-MM-dd (e.g. 2026-08-30) or 'today'.
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
 

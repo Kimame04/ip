@@ -68,6 +68,7 @@ public class HelpCommand extends Command {
                 + "• event <desc> /from <start> /to <end>\n\n"
                 + "[Manage Tasks]\n"
                 + "• list [filter] - View tasks (pending/done)\n"
+                + "• schedule <date> - View schedule for date\n"
                 + "• mark <index> - Mark as done\n"
                 + "• unmark <index> - Mark as not done\n"
                 + "• delete <index> - Delete a task\n"
@@ -143,6 +144,13 @@ public class HelpCommand extends Command {
                         + "Syntax: stats\n"
                         + "Description: Displays overall progress, completion rate, and type breakdown.\n"
                         + "Example: stats";
+
+            case "schedule":
+                return "Command: schedule\n"
+                        + "Syntax: schedule <date|today>\n"
+                        + "Description: Displays tasks occurring on or due by the specified date.\n"
+                        + "Formats: yyyy-MM-dd, d/M/yyyy, today\n"
+                        + "Example: schedule 2026-08-30";
 
             case "help":
                 return "Command: help\n"

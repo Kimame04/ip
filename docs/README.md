@@ -12,6 +12,7 @@
 | **`deadline`** | `deadline <description> /by <time>` | Adds a task with a deadline. |
 | **`event`** | `event <description> /from <start> /to <end>` | Adds an event with start and end times. |
 | **`list`** | `list [pending\|done]` | Lists all tasks, or filters by pending/done status while preserving indices. |
+| **`schedule`** | `schedule <date\|today>` | Views tasks scheduled on a specific date while preserving indices. |
 | **`mark`** | `mark <task_number>` | Marks a task as completed (`[X]`). |
 | **`unmark`** | `unmark <task_number>` | Marks a task as not completed (`[ ]`). |
 | **`delete`** | `delete <task_number>` | Removes a task from the list and re-indexes remaining tasks. |
@@ -214,7 +215,37 @@ Searches for tasks whose descriptions contain the given keyword (case-insensitiv
 
 ---
 
-### 9. Getting Help: `help`
+### 9. Viewing Schedules by Date: `schedule`
+Displays tasks (deadlines and events) occurring on or due by a specified date. You can provide any standard date format (e.g. `yyyy-MM-dd`, `d/M/yyyy`) or use the keyword `today`. Master 1-based task indices are preserved in the output so you can immediately mark, unmark, or delete scheduled tasks.
+
+* **Format**: `schedule <date|today>`
+* **Accepted Formats**: `yyyy-MM-dd` (e.g. `2026-08-30`), `d/M/yyyy` (e.g. `30/8/2026`), or `today`
+* **Example (Scheduled Tasks Found)**:
+  ```text
+  schedule 2026-08-30
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       Schedule for Aug 30 2026:
+       2.[D][ ] return book (by: Aug 30 2026)
+       3.[E][ ] hackathon (from: Aug 30 2026, 10:00AM to: Aug 30 2026, 8:00PM)
+      ____________________________________________________________
+  ```
+* **Example (No Tasks Scheduled)**:
+  ```text
+  schedule 2026-12-25
+  ```
+* **Expected Output**:
+  ```text
+      ____________________________________________________________
+       No tasks scheduled for Dec 25 2026. Enjoy your free time! ₍^. .^₎
+      ____________________________________________________________
+  ```
+
+---
+
+### 10. Getting Help: `help`
 Displays a guide with all available commands, or detailed syntax and examples for a specified command.
 
 * **Format**: `help [command]`
@@ -234,6 +265,7 @@ Displays a guide with all available commands, or detailed syntax and examples fo
 
        [Manage Tasks]
        • list [filter] - View tasks (pending/done)
+       • schedule <date> - View schedule for date
        • mark <index> - Mark as done
        • unmark <index> - Mark as not done
        • delete <index> - Delete a task
@@ -264,7 +296,7 @@ Displays a guide with all available commands, or detailed syntax and examples fo
 
 ---
 
-### 10. Viewing Task Statistics: `stats`
+### 11. Viewing Task Statistics: `stats`
 Displays overall task progress, completion rate percentage, and category breakdown across ToDos, Deadlines, and Events, including overdue deadline detection.
 
 * **Format**: `stats` (or `statistics`)
@@ -293,7 +325,7 @@ Displays overall task progress, completion rate percentage, and category breakdo
 
 ---
 
-### 11. Exiting the Application: `bye`
+### 12. Exiting the Application: `bye`
 Exits Jiji with a farewell message.
 
 * **Format**: `bye`

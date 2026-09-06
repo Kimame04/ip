@@ -1,5 +1,7 @@
 package jiji.parser;
 
+import java.time.LocalDate;
+
 import jiji.command.AddDeadlineCommand;
 import jiji.command.AddEventCommand;
 import jiji.command.AddTodoCommand;
@@ -12,6 +14,7 @@ import jiji.command.HelpCommand;
 import jiji.command.ListCommand;
 import jiji.command.ListFilter;
 import jiji.command.MarkCommand;
+import jiji.command.ScheduleCommand;
 import jiji.command.StatsCommand;
 import jiji.command.UnmarkCommand;
 import jiji.exception.JijiException;
@@ -98,6 +101,10 @@ public class Parser {
 
             case STATS:
                 command = parseStats(arguments);
+                break;
+
+            case SCHEDULE:
+                command = parseSchedule(arguments);
                 break;
 
             default:
@@ -248,5 +255,31 @@ public class Parser {
     private static Command parseStats(String arguments) {
         assert arguments != null : "Arguments string cannot be null";
         return new StatsCommand();
+    }
+
+    /**
+     * Parses the schedule command arguments.
+     *
+     * @param arguments The command arguments string.
+     * @return A {@link ScheduleCommand} instance.
+     * @throws JijiException If arguments are missing or the date format is invalid.
+     */
+    private static Command parseSchedule(String arguments) throws JijiException {
+        assert arguments != null : "Arguments string cannot be null";
+        if (arguments.isEmpty()) {
+            throw JijiMissingArgumentException.forEmptySchedule();
+        }
+
+        LocalDate targetDate;
+        if (arguments.equalsIgnoreCase("today")) {
+            targetDate = LocalDate.now();
+        } else {
+            targetDate = DateTimeUtil.parseLocalDate(arguments);
+            if (targetDate == null) {
+                throw new JijiException("OOPS! ₍^› ꘍ ‹ ^₎⟆ Invalid date format. "
+                        + "Please use yyyy-MM-dd (e.g. 2026-08-30) or 'today'.");
+            }
+        }
+        return new ScheduleCommand(targetDate);
     }
 }

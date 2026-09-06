@@ -29,7 +29,9 @@ public enum CommandType {
     /** Command to display help information. */
     HELP("help"),
     /** Command to display task statistics and insights. */
-    STATS("stats");
+    STATS("stats"),
+    /** Command to view schedule for a specific date. */
+    SCHEDULE("schedule");
 
     private final String commandWord;
 

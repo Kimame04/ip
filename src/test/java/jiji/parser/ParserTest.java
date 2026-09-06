@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
 import jiji.command.AddDeadlineCommand;
@@ -18,6 +20,7 @@ import jiji.command.HelpCommand;
 import jiji.command.ListCommand;
 import jiji.command.ListFilter;
 import jiji.command.MarkCommand;
+import jiji.command.ScheduleCommand;
 import jiji.command.StatsCommand;
 import jiji.command.UnmarkCommand;
 import jiji.exception.JijiException;
@@ -148,5 +151,33 @@ public class ParserTest {
         assertThrows(JijiUnknownCommandException.class, () -> Parser.parse("unknownCommand"));
         assertThrows(JijiUnknownCommandException.class, () -> Parser.parse(""));
         assertThrows(JijiUnknownCommandException.class, () -> Parser.parse(null));
+    }
+
+    @Test
+    public void parse_validSchedule_returnsScheduleCommand() throws JijiException {
+        Command command = Parser.parse("schedule 2026-08-30");
+        assertInstanceOf(ScheduleCommand.class, command);
+        ScheduleCommand scheduleCommand = (ScheduleCommand) command;
+        assertEquals(LocalDate.of(2026, 8, 30), scheduleCommand.getTargetDate());
+    }
+
+    @Test
+    public void parse_scheduleToday_returnsScheduleCommandWithToday() throws JijiException {
+        Command command = Parser.parse("schedule today");
+        assertInstanceOf(ScheduleCommand.class, command);
+        ScheduleCommand scheduleCommand = (ScheduleCommand) command;
+        assertEquals(LocalDate.now(), scheduleCommand.getTargetDate());
+    }
+
+    @Test
+    public void parse_emptyScheduleDate_throwsException() {
+        assertThrows(JijiMissingArgumentException.class, () -> Parser.parse("schedule"));
+        assertThrows(JijiMissingArgumentException.class, () -> Parser.parse("schedule   "));
+    }
+
+    @Test
+    public void parse_invalidScheduleDate_throwsException() {
+        assertThrows(JijiException.class, () -> Parser.parse("schedule invalid-date"));
+        assertThrows(JijiException.class, () -> Parser.parse("schedule 2026/13/40"));
     }
 }
