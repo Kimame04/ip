@@ -100,6 +100,22 @@ public class TaskList {
     }
 
     /**
+     * Checks if a duplicate of the specified task already exists in the list.
+     *
+     * @param task The task to check.
+     * @return The existing duplicate task, or null if no duplicate is found.
+     */
+    public Task findDuplicate(Task task) {
+        if (task == null) {
+            return null;
+        }
+        return tasks.stream()
+                .filter(existing -> existing.isDuplicateOf(task))
+                .findFirst()
+                .orElse(null);
+    }
+
+    /**
      * Finds and returns all tasks whose descriptions contain the specified keyword.
      * The search is case-insensitive.
      *

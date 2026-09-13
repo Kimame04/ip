@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import jiji.exception.JijiStorageException;
+import jiji.exception.JijiException;
 import jiji.storage.Storage;
 import jiji.task.TaskList;
 import jiji.ui.Ui;
@@ -35,7 +35,7 @@ public class AddDeadlineCommandTest {
     }
 
     @Test
-    public void execute_validDeadline_addsTaskAndPersists() throws JijiStorageException {
+    public void execute_validDeadline_addsTaskAndPersists() throws JijiException {
         AddDeadlineCommand command = new AddDeadlineCommand("return book", "2026-08-30");
         String result = command.execute(tasks, ui, storage);
 
@@ -43,6 +43,18 @@ public class AddDeadlineCommandTest {
         assertEquals("[D][ ] return book (by: Aug 30 2026)", tasks.get(0).toString());
         assertTrue(result.contains("return book"));
         assertEquals(1, storage.load().size());
+    }
+
+    @Test
+    public void execute_duplicateDeadline_throwsException() throws JijiException {
+        AddDeadlineCommand command1 = new AddDeadlineCommand("return book", "2026-08-30");
+        command1.execute(tasks, ui, storage);
+
+        AddDeadlineCommand duplicateCommand = new AddDeadlineCommand("RETURN BOOK", "2026-08-30");
+        JijiException e = assertThrows(JijiException.class, () ->
+                duplicateCommand.execute(tasks, ui, storage));
+        assertTrue(e.getMessage().contains("already in your list"));
+        assertEquals(1, tasks.size());
     }
 
     @Test

@@ -110,4 +110,40 @@ public class Event extends Task {
         return "[E]" + super.toString() + " (from: " + DateTimeUtil.formatForDisplay(from)
                 + " to: " + DateTimeUtil.formatForDisplay(to) + ")";
     }
+
+    /**
+     * Checks if this event is a duplicate of another task (same description, start, and end parameters).
+     *
+     * @param other The other task to compare against.
+     * @return True if both tasks are events with matching description, from, and to parameters.
+     */
+    @Override
+    public boolean isDuplicateOf(Task other) {
+        if (!super.isDuplicateOf(other)) {
+            return false;
+        }
+        Event otherEvent = (Event) other;
+        return this.from.trim().equalsIgnoreCase(otherEvent.from.trim())
+                && this.to.trim().equalsIgnoreCase(otherEvent.to.trim());
+    }
+
+    /**
+     * Checks if the event's end date/time is chronologically before its start date/time.
+     *
+     * @return True if end is before start, or end and start are equal date-times.
+     */
+    public boolean isEndBeforeStart() {
+        LocalDateTime startDateTime = DateTimeUtil.parseLocalDateTime(from);
+        LocalDateTime endDateTime = DateTimeUtil.parseLocalDateTime(to);
+        if (startDateTime != null && endDateTime != null) {
+            return !endDateTime.isAfter(startDateTime);
+        }
+
+        LocalDate startDate = getStartDate();
+        LocalDate endDate = getEndDate();
+        if (startDate != null && endDate != null) {
+            return endDate.isBefore(startDate);
+        }
+        return false;
+    }
 }

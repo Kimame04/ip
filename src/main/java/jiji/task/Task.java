@@ -89,4 +89,18 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
+
+    /**
+     * Checks if this task is considered a duplicate of another task.
+     * Subclasses define specific equality criteria based on their fields.
+     *
+     * @param other The other task to compare against.
+     * @return True if both tasks are considered duplicates, false otherwise.
+     */
+    public boolean isDuplicateOf(Task other) {
+        if (other == null || !this.getClass().equals(other.getClass())) {
+            return false;
+        }
+        return this.description.trim().equalsIgnoreCase(other.description.trim());
+    }
 }

@@ -77,4 +77,19 @@ public class Deadline extends Task {
     public String toString() {
         return "[D]" + super.toString() + " (by: " + DateTimeUtil.formatForDisplay(by) + ")";
     }
+
+    /**
+     * Checks if this deadline is a duplicate of another task (same description and deadline constraint).
+     *
+     * @param other The other task to compare against.
+     * @return True if both tasks are deadlines with matching description and by parameters.
+     */
+    @Override
+    public boolean isDuplicateOf(Task other) {
+        if (!super.isDuplicateOf(other)) {
+            return false;
+        }
+        Deadline otherDeadline = (Deadline) other;
+        return this.by.trim().equalsIgnoreCase(otherDeadline.by.trim());
+    }
 }

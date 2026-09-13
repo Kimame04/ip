@@ -1,6 +1,8 @@
 package jiji.parser;
 
 import java.time.LocalDate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jiji.command.AddDeadlineCommand;
 import jiji.command.AddEventCommand;
@@ -60,6 +62,9 @@ public class Parser {
         Command command;
         switch (commandType) {
             case BYE:
+                if (!arguments.isEmpty()) {
+                    throw new JijiException("OOPS! ₍^› ꘍ ‹ ^₎⟆ The 'bye' command does not take any arguments.");
+                }
                 command = new ExitCommand();
                 break;
 
@@ -135,15 +140,37 @@ public class Parser {
     }
 
     /**
+     * Counts the occurrences of a delimiter token surrounded by whitespace or string boundaries.
+     *
+     * @param text The input text.
+     * @param delimiter The delimiter keyword (e.g. "/by").
+     * @return The number of occurrences found.
+     */
+    private static int countDelimiterOccurrences(String text, String delimiter) {
+        assert text != null && delimiter != null : "Text and delimiter cannot be null";
+        String regex = "(?i)(?:^|\\s)" + Pattern.quote(delimiter) + "(?:\\s|$)";
+        Matcher matcher = Pattern.compile(regex).matcher(text);
+        int count = 0;
+        while (matcher.find()) {
+            count++;
+        }
+        return count;
+    }
+
+    /**
      * Parses the todo command arguments.
      *
      * @param arguments The command arguments string.
      * @return An {@link AddTodoCommand} instance.
-     * @throws JijiException If description is empty.
+     * @throws JijiException If description is empty or contains reserved delimiters.
      */
     private static Command parseTodo(String arguments) throws JijiException {
         if (arguments.isEmpty()) {
             throw JijiMissingArgumentException.forEmptyTodo();
+        }
+        if (arguments.contains("|")) {
+            throw new JijiException(
+                    "OOPS! ₍^› ꘍ ‹ ^₎⟆ Task descriptions and parameters cannot contain the '|' character.");
         }
         assert !arguments.isEmpty() : "Todo description must not be empty after check";
         return new AddTodoCommand(arguments);
@@ -154,9 +181,16 @@ public class Parser {
      *
      * @param arguments The command arguments string.
      * @return An {@link AddDeadlineCommand} instance.
-     * @throws JijiException If description or deadline parameter is missing.
+     * @throws JijiException If description or deadline parameter is missing or invalid.
      */
     private static Command parseDeadline(String arguments) throws JijiException {
+        if (arguments.contains("|")) {
+            throw new JijiException(
+                    "OOPS! ₍^› ꘍ ‹ ^₎⟆ Task descriptions and parameters cannot contain the '|' character.");
+        }
+        if (countDelimiterOccurrences(arguments, "/by") > 1) {
+            throw new JijiException("OOPS! ^๑_๑^ ੭ The parameter '/by' cannot be specified multiple times.");
+        }
         if (arguments.isEmpty() || !arguments.contains(DEADLINE_BY_DELIMITER)) {
             throw JijiMissingArgumentException.forMissingDeadline();
         }
@@ -165,6 +199,10 @@ public class Parser {
         String by = parts.length > 1 ? parts[1].trim() : "";
         if (description.isEmpty() || by.isEmpty()) {
             throw JijiMissingArgumentException.forMissingDeadline();
+        }
+        if (DateTimeUtil.isNonExistentDate(by)) {
+            throw new JijiException("OOPS! ₍^› ꘍ ‹ ^₎⟆ That date does not exist on the calendar (e.g. Feb 30). "
+                    + "Please provide a valid calendar date.");
         }
         assert !description.isEmpty() && !by.isEmpty() : "Deadline description and by must not be empty after check";
         return new AddDeadlineCommand(description, by);
@@ -175,9 +213,19 @@ public class Parser {
      *
      * @param arguments The command arguments string.
      * @return An {@link AddEventCommand} instance.
-     * @throws JijiException If description, /from, or /to parameter is missing.
+     * @throws JijiException If description, /from, or /to parameter is missing or invalid.
      */
     private static Command parseEvent(String arguments) throws JijiException {
+        if (arguments.contains("|")) {
+            throw new JijiException(
+                    "OOPS! ₍^› ꘍ ‹ ^₎⟆ Task descriptions and parameters cannot contain the '|' character.");
+        }
+        if (countDelimiterOccurrences(arguments, "/from") > 1) {
+            throw new JijiException("OOPS! ^๑_๑^ ੭ The parameter '/from' cannot be specified multiple times.");
+        }
+        if (countDelimiterOccurrences(arguments, "/to") > 1) {
+            throw new JijiException("OOPS! ^๑_๑^ ੭ The parameter '/to' cannot be specified multiple times.");
+        }
         if (arguments.isEmpty() || !arguments.contains(EVENT_FROM_DELIMITER)
                 || !arguments.contains(EVENT_TO_DELIMITER)) {
             throw JijiMissingArgumentException.forMissingEvent();
@@ -193,6 +241,10 @@ public class Parser {
         if (from.isEmpty() || to.isEmpty()) {
             throw JijiMissingArgumentException.forMissingEvent();
         }
+        if (DateTimeUtil.isNonExistentDate(from) || DateTimeUtil.isNonExistentDate(to)) {
+            throw new JijiException("OOPS! ₍^› ꘍ ‹ ^₎⟆ That date does not exist on the calendar (e.g. Feb 30). "
+                    + "Please provide a valid calendar date.");
+        }
         assert !description.isEmpty() && !from.isEmpty() && !to.isEmpty()
                 : "Event fields must not be empty after check";
         return new AddEventCommand(description, from, to);
@@ -203,11 +255,15 @@ public class Parser {
      *
      * @param arguments The command arguments string.
      * @return A {@link FindCommand} instance.
-     * @throws JijiException If search keyword is empty.
+     * @throws JijiException If search keyword is empty or contains reserved delimiters.
      */
     private static Command parseFind(String arguments) throws JijiException {
         if (arguments.isEmpty()) {
             throw JijiMissingArgumentException.forEmptyFind();
+        }
+        if (arguments.contains("|")) {
+            throw new JijiException(
+                    "OOPS! ₍^› ꘍ ‹ ^₎⟆ Search keyword cannot contain the '|' character.");
         }
         assert !arguments.isEmpty() : "Find keyword must not be empty after check";
         return new FindCommand(arguments);
@@ -251,9 +307,13 @@ public class Parser {
      *
      * @param arguments The command arguments string.
      * @return A {@link StatsCommand} instance.
+     * @throws JijiException If extra arguments are provided.
      */
-    private static Command parseStats(String arguments) {
+    private static Command parseStats(String arguments) throws JijiException {
         assert arguments != null : "Arguments string cannot be null";
+        if (!arguments.isEmpty()) {
+            throw new JijiException("OOPS! ₍^› ꘍ ‹ ^₎⟆ The 'stats' command does not take any arguments.");
+        }
         return new StatsCommand();
     }
 
@@ -262,7 +322,7 @@ public class Parser {
      *
      * @param arguments The command arguments string.
      * @return A {@link ScheduleCommand} instance.
-     * @throws JijiException If arguments are missing or the date format is invalid.
+     * @throws JijiException If arguments are missing, date is non-existent, or date format is invalid.
      */
     private static Command parseSchedule(String arguments) throws JijiException {
         assert arguments != null : "Arguments string cannot be null";
@@ -274,6 +334,10 @@ public class Parser {
         if (arguments.equalsIgnoreCase("today")) {
             targetDate = LocalDate.now();
         } else {
+            if (DateTimeUtil.isNonExistentDate(arguments)) {
+                throw new JijiException("OOPS! ₍^› ꘍ ‹ ^₎⟆ That date does not exist on the calendar (e.g. Feb 30). "
+                        + "Please provide a valid calendar date.");
+            }
             targetDate = DateTimeUtil.parseLocalDate(arguments);
             if (targetDate == null) {
                 throw new JijiException("OOPS! ₍^› ꘍ ‹ ^₎⟆ Invalid date format. "

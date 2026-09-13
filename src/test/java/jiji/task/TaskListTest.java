@@ -2,6 +2,7 @@ package jiji.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -108,5 +109,27 @@ public class TaskListTest {
 
         taskList.addAll();
         assertEquals(3, taskList.size());
+    }
+
+    @Test
+    public void findDuplicate_matchingTask_returnsTask() {
+        Task t1 = new Todo("read book");
+        Task d1 = new Deadline("return book", "2026-08-30");
+        Task e1 = new Event("camp", "2026-08-29", "2026-08-31");
+        taskList.addAll(t1, d1, e1);
+
+        assertEquals(t1, taskList.findDuplicate(new Todo("READ BOOK")));
+        assertEquals(d1, taskList.findDuplicate(new Deadline("Return Book", "2026-08-30")));
+        assertEquals(e1, taskList.findDuplicate(new Event("CAMP", "2026-08-29", "2026-08-31")));
+    }
+
+    @Test
+    public void findDuplicate_nonMatchingTaskOrNull_returnsNull() {
+        Task t1 = new Todo("read book");
+        taskList.add(t1);
+
+        assertNull(taskList.findDuplicate(new Todo("read magazine")));
+        assertNull(taskList.findDuplicate(new Deadline("read book", "tomorrow")));
+        assertNull(taskList.findDuplicate(null));
     }
 }

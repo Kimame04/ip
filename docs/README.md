@@ -394,6 +394,73 @@ Jiji validates your input and provides helpful, friendly error messages using cu
       ____________________________________________________________
   ```
 
+* **Duplicate Task Detection**:
+  Attempting to add a task identical to an existing entry in your list is prevented:
+  ```text
+  todo read book
+  ```
+  ```text
+      ____________________________________________________________
+       OOPS! ₍^. .^₎ This task is already in your list:
+         [T][ ] read book
+      ____________________________________________________________
+  ```
+
+* **Event Chronological Order Validation**:
+  Event end dates or times cannot precede start dates or times:
+  ```text
+  event camp /from 2026-09-03 /to 2026-09-01
+  ```
+  ```text
+      ____________________________________________________________
+       OOPS! ^๑_๑^ ੭ Event end date/time cannot be earlier than start date/time.
+      ____________________________________________________________
+  ```
+
+* **Non-Existent Calendar Dates**:
+  Calendar dates with impossible days or months (such as February 30 or April 31) are strictly rejected:
+  ```text
+  deadline report /by 2026-02-30
+  ```
+  ```text
+      ____________________________________________________________
+       OOPS! ₍^› ꘍ ‹ ^₎⟆ That date does not exist on the calendar (e.g. Feb 30). Please provide a valid date.
+      ____________________________________________________________
+  ```
+
+* **Duplicate Parameter Rejection**:
+  Commands with duplicate parameter tokens (such as multiple `/by`, `/from`, or `/to` tags) are rejected with clear guidance:
+  ```text
+  deadline book /by tomorrow /by Sunday
+  ```
+  ```text
+      ____________________________________________________________
+       OOPS! ^๑_๑^ ੭ The parameter '/by' cannot be specified multiple times.
+      ____________________________________________________________
+  ```
+
+* **Storage Delimiter Protection**:
+  The pipe character `|` is reserved for task file persistence and cannot be used in descriptions or parameters:
+  ```text
+  todo read | book
+  ```
+  ```text
+      ____________________________________________________________
+       OOPS! ₍^› ꘍ ‹ ^₎⟆ Task descriptions and parameters cannot contain the '|' character.
+      ____________________________________________________________
+  ```
+
+* **Zero-Argument Command Enforcement**:
+  Supplying unexpected arguments to commands that take none (e.g. `bye` or `stats`) is flagged immediately:
+  ```text
+  bye now
+  ```
+  ```text
+      ____________________________________________________________
+       OOPS! ₍^› ꘍ ‹ ^₎⟆ The 'bye' command does not take any arguments.
+      ____________________________________________________________
+  ```
+
 ---
 
 ## Data Persistence
