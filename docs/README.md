@@ -8,6 +8,84 @@
 
 ---
 
+## Table of Contents
+* [Quick Start](#quick-start)
+* [Command Syntax Conventions](#command-syntax-conventions)
+* [Features Summary](#features-summary)
+* [Command Details](#command-details)
+  * [1. Adding a ToDo Task: `todo`](#1-adding-a-todo-task-todo)
+  * [2. Adding a Deadline Task: `deadline`](#2-adding-a-deadline-task-deadline)
+  * [3. Adding an Event Task: `event`](#3-adding-an-event-task-event)
+  * [4. Listing Tasks: `list`](#4-listing-tasks-list)
+  * [5. Marking a Task as Completed: `mark`](#5-marking-a-task-as-completed-mark)
+  * [6. Re-opening a Task: `unmark`](#6-re-opening-a-task-unmark)
+  * [7. Deleting a Task: `delete`](#7-deleting-a-task-delete)
+  * [8. Finding Tasks by Keyword: `find`](#8-finding-tasks-by-keyword-find)
+  * [9. Viewing Schedules by Date: `schedule`](#9-viewing-schedules-by-date-schedule)
+  * [10. Getting Help: `help`](#10-getting-help-help)
+  * [11. Viewing Task Statistics: `stats`](#11-viewing-task-statistics-stats)
+  * [12. Exiting the Application: `bye`](#12-exiting-the-application-bye)
+* [Cozy Feline Personality & Statement Variety](#cozy-feline-personality--statement-variety)
+* [Error Handling & Feline Feedback](#error-handling--feline-feedback)
+* [Data Persistence](#data-persistence)
+* [Graphical User Interface (JavaFX GUI)](#graphical-user-interface-javafx-gui)
+* [Building and Running with Gradle](#building-and-running-with-gradle)
+* [Standalone Executable JAR](#standalone-executable-jar)
+* [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
+* [Acknowledgments](#acknowledgments)
+
+---
+
+## Quick Start
+
+1. **Prerequisites**: Ensure you have **Java 25** (or later) installed on your computer.
+   * Verify your version by opening a terminal and running:
+     ```bash
+     java -version
+     ```
+2. **Download**: Grab the latest `jiji.jar` from the [Releases](https://github.com/Kimame04/ip/releases) page.
+3. **Setup**: Copy `jiji.jar` into an empty folder where you want your tasks saved.
+4. **Launch Jiji**:
+   * **GUI Mode** (recommended): Open a terminal in that folder and run:
+     ```bash
+     java -jar jiji.jar
+     ```
+     *(Or simply double-click `jiji.jar` if your operating system associates JAR files with Java).*
+   * **CLI Mode** (fast terminal text mode): Run:
+     ```bash
+     java -jar jiji.jar --cli
+     ```
+5. **Try your first commands** in the input dock:
+   * Type `help` and press **Enter** to see all available commands.
+   * Type `todo read chapter 4 of CS2103T textbook` and press **Enter** to add your first task.
+   * Type `deadline submit project proposal /by 2026-09-20 2359` to schedule a deadline.
+   * Type `list` to view your cozy basket of tasks.
+   * Type `mark 1` to mark the first task completed.
+   * Type `stats` to view your progress metrics and completion percentage.
+   * Type `bye` to exit.
+
+---
+
+## Command Syntax Conventions
+
+To help you use Jiji seamlessly, commands adhere to the following simple notation conventions:
+
+* **Words in lowercase** (e.g. `todo`, `deadline`, `list`) are command keywords.
+* **Words enclosed in angle brackets `<...>`** represent mandatory parameters that you must supply.
+  * *Example*: In `todo <description>`, `<description>` is required (e.g. `todo read book`).
+* **Words enclosed in square brackets `[...]`** represent optional parameters.
+  * *Example*: In `list [pending|done]`, you can run `list` alone or optionally provide a filter (`list pending` or `list done`).
+  * *Example*: In `help [command]`, you can run `help` alone or ask about a specific command (e.g. `help deadline`).
+* **Case-Insensitive Keywords and Parameters**:
+  * Commands such as `LIST`, `List`, and `list` are all recognized identically.
+  * Parameter tags such as `/BY`, `/By`, and `/by` are also recognized identically.
+* **Flexible Parameter Ordering**:
+  * In `event <description> /from <start> /to <end>`, the `/from` and `/to` tags can be supplied in any relative order (e.g. `/to <end> /from <start>`).
+* **Storage Delimiter Protection**:
+  * Task descriptions, dates, and search keywords must not contain the pipe character `|` as it is reserved for data persistence.
+
+---
+
 ## Features Summary
 
 | Command | Syntax | Description |
@@ -550,6 +628,34 @@ You can run the JAR file on any system with Java 25 installed:
    java -jar "jiji.jar"
    ```
 3. Jiji will automatically create and persist tasks in `data/jiji.txt` in that folder.
+
+---
+
+## Frequently Asked Questions (FAQ)
+
+**Q: Where are my tasks saved?**  
+**A:** Jiji automatically persists your task list in `data/jiji.txt` located in the directory where `jiji.jar` was launched. Both the `data/` directory and `jiji.txt` are created automatically if they do not exist.
+
+**Q: Can I edit `data/jiji.txt` manually?**  
+**A:** Yes, but exercise caution! Jiji uses a strict pipe-separated format (e.g. `T | 0 | read book`). If a line is malformed, Jiji will gracefully skip that line rather than crash. For best reliability, manage tasks directly through Jiji.
+
+**Q: Why does Jiji reject task descriptions containing the `|` character?**  
+**A:** Because `|` is the internal storage delimiter in `data/jiji.txt`. Disallowing `|` prevents task data from corrupting your persistence file or breaking field alignment.
+
+**Q: What date formats does Jiji accept?**  
+**A:** Jiji recognizes `yyyy-MM-dd` (e.g. `2026-08-30`), `d/M/yyyy` (e.g. `30/8/2026`), and date-times like `yyyy-MM-dd HHmm` (e.g. `2026-08-30 1800`) or `d/M/yyyy HHmm` (e.g. `2/12/2026 1800`). Natural relative dates like `today` are also supported in the `schedule` command. Freeform text dates (like `Sunday` or `next week`) are also safely preserved.
+
+**Q: Why was my date rejected with "That date does not exist on the calendar"?**  
+**A:** Jiji strictly validates calendar dates to prevent rollover bugs and typos (e.g. `2026-02-30`, `31/04/2026`, or month `13`). Please provide a valid calendar date.
+
+**Q: How do I transfer my tasks to another computer?**  
+**A:** Simply copy the `data/` folder (or just `data/jiji.txt`) to the directory containing `jiji.jar` on your other computer. When Jiji starts up, it will immediately load your tasks.
+
+**Q: How do I run Jiji in terminal CLI mode instead of GUI mode?**  
+**A:** Pass the `--cli` argument when executing the JAR:
+```bash
+java -jar jiji.jar --cli
+```
 
 ---
 
