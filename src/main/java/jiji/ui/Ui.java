@@ -78,8 +78,9 @@ public class Ui {
     public void showWelcome() {
         showLine();
         System.out.println(BANNER);
-        System.out.println(INDENT + "Hello! I'm Jiji.");
-        System.out.println(INDENT + "What can I do for you?");
+        for (String line : PersonalityBank.getWelcomeLines()) {
+            System.out.println(INDENT + line);
+        }
         showLine();
     }
 
@@ -111,7 +112,7 @@ public class Ui {
      * @return The formatted farewell string.
      */
     public String formatGoodbye() {
-        return "Bye. Hope to see you again soon!";
+        return PersonalityBank.formatGoodbye();
     }
 
     /**
@@ -185,11 +186,7 @@ public class Ui {
      * @param totalTasks The total number of tasks currently in the list.
      */
     public void showTaskAdded(Task task, int totalTasks) {
-        showMessages(
-                "Got it. I've added this task:",
-                "  " + task,
-                "Now you have " + totalTasks + " tasks in the list."
-        );
+        showMessages(formatTaskAdded(task, totalTasks).split("\n"));
     }
 
     /**
@@ -200,8 +197,7 @@ public class Ui {
      * @return The formatted confirmation string.
      */
     public String formatTaskAdded(Task task, int totalTasks) {
-        return "Got it. I've added this task:\n  " + task
-                + "\nNow you have " + totalTasks + " tasks in the list.";
+        return PersonalityBank.formatTaskAdded(task, totalTasks);
     }
 
     /**
@@ -211,11 +207,7 @@ public class Ui {
      * @param totalTasks The total number of tasks remaining in the list.
      */
     public void showTaskRemoved(Task task, int totalTasks) {
-        showMessages(
-                "Noted. I've removed this task:",
-                "  " + task,
-                "Now you have " + totalTasks + " tasks in the list."
-        );
+        showMessages(formatTaskRemoved(task, totalTasks).split("\n"));
     }
 
     /**
@@ -226,8 +218,7 @@ public class Ui {
      * @return The formatted confirmation string.
      */
     public String formatTaskRemoved(Task task, int totalTasks) {
-        return "Noted. I've removed this task:\n  " + task
-                + "\nNow you have " + totalTasks + " tasks in the list.";
+        return PersonalityBank.formatTaskRemoved(task, totalTasks);
     }
 
     /**
@@ -236,10 +227,7 @@ public class Ui {
      * @param task The marked task.
      */
     public void showTaskMarked(Task task) {
-        showMessages(
-                "Nice! I've marked this task as done:",
-                "  " + task
-        );
+        showMessages(formatTaskMarked(task).split("\n"));
     }
 
     /**
@@ -249,7 +237,7 @@ public class Ui {
      * @return The formatted confirmation string.
      */
     public String formatTaskMarked(Task task) {
-        return "Nice! I've marked this task as done:\n  " + task;
+        return PersonalityBank.formatTaskMarked(task);
     }
 
     /**
@@ -258,10 +246,7 @@ public class Ui {
      * @param task The unmarked task.
      */
     public void showTaskUnmarked(Task task) {
-        showMessages(
-                "OK, I've marked this task as not done yet:",
-                "  " + task
-        );
+        showMessages(formatTaskUnmarked(task).split("\n"));
     }
 
     /**
@@ -271,7 +256,7 @@ public class Ui {
      * @return The formatted confirmation string.
      */
     public String formatTaskUnmarked(Task task) {
-        return "OK, I've marked this task as not done yet:\n  " + task;
+        return PersonalityBank.formatTaskUnmarked(task);
     }
 
     /**
@@ -384,7 +369,7 @@ public class Ui {
                 .collect(Collectors.joining("\n"));
 
         if (items.isEmpty()) {
-            return "No tasks scheduled for " + dateDisplay + ". Enjoy your free time! ₍^. .^₎";
+            return PersonalityBank.formatEmptySchedule(dateDisplay);
         }
         return "Schedule for " + dateDisplay + ":\n" + items;
     }

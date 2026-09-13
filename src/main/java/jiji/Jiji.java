@@ -7,6 +7,7 @@ import jiji.gui.JijiResponse;
 import jiji.parser.Parser;
 import jiji.storage.Storage;
 import jiji.task.TaskList;
+import jiji.ui.PersonalityBank;
 import jiji.ui.Ui;
 
 /**
@@ -53,7 +54,7 @@ public class Jiji {
      * @return Initial greeting message.
      */
     public String getGreeting() {
-        return "Hello! I'm Jiji ₍^._.^₎\nWhat can I do for you?";
+        return PersonalityBank.getGreeting();
     }
 
     /**

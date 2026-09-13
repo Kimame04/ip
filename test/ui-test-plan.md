@@ -21,11 +21,11 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -52,23 +52,23 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     That makes 1 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [D][ ] return book (by: Sunday)
-     Now you have 2 tasks in the list.
+     That makes 2 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [E][ ] project meeting (from: Mon 2pm to: 4pm)
-     Now you have 3 tasks in the list.
+     That makes 3 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -77,7 +77,7 @@ bye
      3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -107,27 +107,28 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     That makes 1 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [D][ ] return book (by: Sunday)
-     Now you have 2 tasks in the list.
+     That makes 2 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [E][ ] project meeting (from: Mon 2pm to: 4pm)
-     Now you have 3 tasks in the list.
+     That makes 3 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Paws up! Marked this task as done:
        [D][X] return book (by: Sunday)
+     Wonderful job! Time for a gentle stretch. ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -136,8 +137,9 @@ bye
      3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     OK, I've marked this task as not done yet:
+     No hurry at all! I've marked this task as pending again:
        [D][ ] return book (by: Sunday)
+     We'll get back to it when you're ready. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -146,7 +148,7 @@ bye
      3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -179,23 +181,23 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     That makes 1 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [D][ ] return book (by: Sunday)
-     Now you have 2 tasks in the list.
+     That makes 2 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [E][ ] project meeting (from: Mon 2pm to: 4pm)
-     Now you have 3 tasks in the list.
+     That makes 3 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -204,9 +206,9 @@ bye
      3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
+     Gently cleared away! I've removed this task:
        [D][ ] return book (by: Sunday)
-     Now you have 2 tasks in the list.
+     That leaves 2 cozy tasks in your list. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -214,24 +216,24 @@ bye
      2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
+     Gently cleared away! I've removed this task:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     That leaves 1 cozy tasks in your list. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
      1.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
+     Gently cleared away! I've removed this task:
        [E][ ] project meeting (from: Mon 2pm to: 4pm)
-     Now you have 0 tasks in the list.
+     That leaves 0 cozy tasks in your list. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -292,8 +294,8 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -308,9 +310,9 @@ bye
      OOPS! ₍^› ꘍ ‹ ^₎⟆ Please provide a valid task number.
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     That makes 1 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      OOPS! ₍^._.^₎ 𐒡 The description of a todo cannot be empty.
@@ -344,14 +346,14 @@ bye
      1.[T][ ] read book
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [D][ ] return book (by: Sunday)
-     Now you have 2 tasks in the list.
+     That makes 2 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [E][ ] project meeting (from: Mon 2pm to: 4pm)
-     Now you have 3 tasks in the list.
+     That makes 3 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -408,8 +410,9 @@ bye
      3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Paws up! Marked this task as done:
        [D][X] return book (by: Sunday)
+     Wonderful job! Time for a gentle stretch. ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
     ____________________________________________________________
      OOPS! ₍^› ꘍ ‹ ^₎⟆ I'm sorry, but I don't know what that means.
@@ -421,9 +424,9 @@ bye
      3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
+     Gently cleared away! I've removed this task:
        [D][X] return book (by: Sunday)
-     Now you have 2 tasks in the list.
+     That leaves 2 cozy tasks in your list. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -431,7 +434,7 @@ bye
      2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -460,32 +463,33 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [T][ ] read textbook
-     Now you have 1 tasks in the list.
+     That makes 1 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [D][ ] submit homework (by: tonight)
-     Now you have 2 tasks in the list.
+     That makes 2 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [E][ ] team sync (from: 3pm to: 4pm)
-     Now you have 3 tasks in the list.
+     That makes 3 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Paws up! Marked this task as done:
        [T][X] read textbook
+     Wonderful job! Time for a gentle stretch. ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
+     Gently cleared away! I've removed this task:
        [D][ ] submit homework (by: tonight)
-     Now you have 2 tasks in the list.
+     That leaves 2 cozy tasks in your list. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -493,7 +497,7 @@ bye
      2.[E][ ] team sync (from: 3pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -520,8 +524,8 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -529,9 +533,9 @@ bye
      2.[E][ ] team sync (from: 3pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [T][ ] sleep early
-     Now you have 3 tasks in the list.
+     That makes 3 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -540,7 +544,7 @@ bye
      3.[T][ ] sleep early
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -567,23 +571,23 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [D][ ] return book (by: Aug 30 2026)
-     Now you have 1 tasks in the list.
+     That makes 1 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [D][ ] submit project (by: Dec 02 2026, 6:00PM)
-     Now you have 2 tasks in the list.
+     That makes 2 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [E][ ] orientation camp (from: Sep 01 2026, 9:00AM to: Sep 03 2026, 5:00PM)
-     Now you have 3 tasks in the list.
+     That makes 3 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -592,7 +596,7 @@ bye
      3.[E][ ] orientation camp (from: Sep 01 2026, 9:00AM to: Sep 03 2026, 5:00PM)
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -617,8 +621,8 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -627,7 +631,7 @@ bye
      3.[E][ ] orientation camp (from: Sep 01 2026, 9:00AM to: Sep 03 2026, 5:00PM)
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -658,28 +662,28 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     That makes 1 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [D][ ] return book (by: Sunday)
-     Now you have 2 tasks in the list.
+     That makes 2 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [E][ ] project meeting (from: Mon 2pm to: 4pm)
-     Now you have 3 tasks in the list.
+     That makes 3 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [T][ ] write book review
-     Now you have 4 tasks in the list.
+     That makes 4 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Here are the matching tasks in your list:
@@ -698,7 +702,7 @@ bye
      OOPS! ₍^› ꘍ ‹ ^₎⟆ Please specify a keyword to search for.
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -724,8 +728,8 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
      Available commands in Jiji:
@@ -762,7 +766,7 @@ bye
      Type 'help' to see the list of all available commands.
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -793,8 +797,8 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
      Task Statistics & Insights:
@@ -803,23 +807,24 @@ bye
      • Use 'todo', 'deadline', or 'event' to add tasks.
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     That makes 1 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [D][ ] return book (by: Sunday)
-     Now you have 2 tasks in the list.
+     That makes 2 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [E][ ] project meeting (from: Mon 2pm to: 4pm)
-     Now you have 3 tasks in the list.
+     That makes 3 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Paws up! Marked this task as done:
        [T][X] read book
+     Wonderful job! Time for a gentle stretch. ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
     ____________________________________________________________
      Here are the pending tasks in your list:
@@ -846,7 +851,7 @@ bye
      Tip: Use 'list pending' to view only incomplete tasks!
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
@@ -878,28 +883,28 @@ bye
      \___/    |_|    | |_| |   |_|
                       \___/       
 
-     Hello! I'm Jiji.
-     What can I do for you?
+     Purr... Welcome back! Jiji saved a warm spot for you ₍^ ᵕ ᵕ ^₎ฅ
+     What shall we gently tackle together today?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     That makes 1 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [D][ ] return book (by: Aug 30 2026)
-     Now you have 2 tasks in the list.
+     That makes 2 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [E][ ] orientation camp (from: Aug 29 2026, 9:00AM to: Aug 31 2026, 5:00PM)
-     Now you have 3 tasks in the list.
+     That makes 3 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Tucked away safely! I've nestled this task into your list:
        [D][ ] submit project (by: Sep 05 2026)
-     Now you have 4 tasks in the list.
+     That makes 4 tasks in our cozy bundle. ₍^. .^₎
     ____________________________________________________________
     ____________________________________________________________
      Schedule for Aug 30 2026:
@@ -911,7 +916,7 @@ bye
      3.[E][ ] orientation camp (from: Aug 29 2026, 9:00AM to: Aug 31 2026, 5:00PM)
     ____________________________________________________________
     ____________________________________________________________
-     No tasks scheduled for Dec 25 2026. Enjoy your free time! ₍^. .^₎
+     No tasks scheduled for Dec 25 2026. A purr-fectly peaceful day to rest! ₍^ ᵕ ᵕ ^₎
     ____________________________________________________________
     ____________________________________________________________
      OOPS! ₍^› ꘍ ‹ ^₎⟆ Please specify a date for the schedule (e.g. 'schedule 2026-08-30' or 'schedule today').
@@ -920,7 +925,7 @@ bye
      OOPS! ₍^› ꘍ ‹ ^₎⟆ Invalid date format. Please use yyyy-MM-dd (e.g. 2026-08-30) or 'today'.
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
     ____________________________________________________________
 ```
 
