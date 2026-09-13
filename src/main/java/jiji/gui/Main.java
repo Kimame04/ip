@@ -13,6 +13,9 @@ import jiji.ui.PersonalityBank;
 
 /**
  * A GUI for Jiji using FXML.
+ * <p>
+ * Adapted and enhanced from the SE-EDU JavaFX Tutorial:
+ * https://se-education.org/guides/tutorials/javaFxPart4.html
  */
 public class Main extends Application {
 

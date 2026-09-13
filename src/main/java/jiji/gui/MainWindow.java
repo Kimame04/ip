@@ -14,6 +14,9 @@ import jiji.Jiji;
 
 /**
  * Controller for the main GUI window.
+ * <p>
+ * Adapted and enhanced from the SE-EDU JavaFX Tutorial:
+ * https://se-education.org/guides/tutorials/javaFxPart4.html
  */
 public class MainWindow extends AnchorPane {
 

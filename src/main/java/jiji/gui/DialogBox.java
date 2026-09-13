@@ -19,6 +19,9 @@ import javafx.scene.shape.Circle;
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's avatar
  * and a label containing text from the speaker.
+ * <p>
+ * Adapted and enhanced from the SE-EDU JavaFX Tutorial:
+ * https://se-education.org/guides/tutorials/javaFxPart4.html
  */
 public class DialogBox extends HBox {
 

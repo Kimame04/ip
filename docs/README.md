@@ -546,3 +546,11 @@ You can run the JAR file on any system with Java 25 installed:
    java -jar "jiji.jar"
    ```
 3. Jiji will automatically create and persist tasks in `data/jiji.txt` in that folder.
+
+---
+
+## Acknowledgments
+
+* **SE-EDU Initiative**: The foundational JavaFX architecture, FXML controllers, and dialog layout were adapted and extended from the [SE-EDU JavaFX 4 Tutorial](https://se-education.org/guides/tutorials/javaFxPart4.html).
+* **CS2103/T Teaching Team**: For the starter codebase template, software engineering guidelines, and automated testing framework.
+* **Studio Ghibli**: Inspiration for Jiji's cozy feline personality, character charm, and warmth from *Kiki's Delivery Service*.

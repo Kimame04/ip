@@ -5,6 +5,8 @@ import jiji.gui.Main;
 
 /**
  * A launcher class to workaround classpath and module issues when launching JavaFX.
+ * <p>
+ * Follows the standard JavaFX packaging workaround documented in SE-EDU guides.
  */
 public class Launcher {
 
