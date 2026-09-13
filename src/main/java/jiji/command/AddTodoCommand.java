@@ -1,6 +1,6 @@
 package jiji.command;
 
-import jiji.exception.JijiStorageException;
+import jiji.exception.JijiException;
 import jiji.storage.Storage;
 import jiji.task.Task;
 import jiji.task.TaskList;
@@ -29,14 +29,18 @@ public class AddTodoCommand extends Command {
      * @param tasks The task list.
      * @param ui The UI handler for displaying output.
      * @param storage The storage handler for saving tasks.
-     * @throws JijiStorageException If saving to storage fails.
+     * @throws JijiException If saving to storage fails or duplicate task exists.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws JijiStorageException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JijiException {
         assert tasks != null : "TaskList dependency cannot be null";
         assert ui != null : "Ui dependency cannot be null";
         assert storage != null : "Storage dependency cannot be null";
         Task todo = new Todo(description);
+        Task duplicate = tasks.findDuplicate(todo);
+        if (duplicate != null) {
+            throw new JijiException("OOPS! ₍^. .^₎ This task is already in your list:\n  " + duplicate);
+        }
         tasks.add(todo);
         storage.save(tasks);
         ui.showTaskAdded(todo, tasks.size());

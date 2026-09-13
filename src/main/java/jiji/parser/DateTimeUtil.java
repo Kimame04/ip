@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Locale;
 
 /**
@@ -30,20 +31,24 @@ public class DateTimeUtil {
     private static final DateTimeFormatter STORAGE_DATETIME_FORMATTER =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
-    /** Recognized input patterns for parsing LocalDate. */
+    /** Recognized input patterns for parsing LocalDate strictly. */
     private static final DateTimeFormatter[] DATE_PARSERS = new DateTimeFormatter[] {
-        DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-        DateTimeFormatter.ofPattern("d/M/yyyy"),
-        DateTimeFormatter.ofPattern("d-M-yyyy"),
-        DateTimeFormatter.ofPattern("yyyy/M/d")
+        DateTimeFormatter.ofPattern("uuuu-M-d").withResolverStyle(ResolverStyle.STRICT),
+        DateTimeFormatter.ofPattern("d/M/uuuu").withResolverStyle(ResolverStyle.STRICT),
+        DateTimeFormatter.ofPattern("d-M-uuuu").withResolverStyle(ResolverStyle.STRICT),
+        DateTimeFormatter.ofPattern("uuuu/M/d").withResolverStyle(ResolverStyle.STRICT)
     };
 
-    /** Recognized input patterns for parsing LocalDateTime. */
+    /** Recognized input patterns for parsing LocalDateTime strictly. */
     private static final DateTimeFormatter[] DATETIME_PARSERS = new DateTimeFormatter[] {
-        DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
-        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"),
-        DateTimeFormatter.ofPattern("d/M/yyyy HHmm"),
-        DateTimeFormatter.ofPattern("d/M/yyyy HH:mm"),
+        DateTimeFormatter.ofPattern("uuuu-M-d HHmm").withResolverStyle(ResolverStyle.STRICT),
+        DateTimeFormatter.ofPattern("uuuu-M-d HH:mm").withResolverStyle(ResolverStyle.STRICT),
+        DateTimeFormatter.ofPattern("d/M/uuuu HHmm").withResolverStyle(ResolverStyle.STRICT),
+        DateTimeFormatter.ofPattern("d/M/uuuu HH:mm").withResolverStyle(ResolverStyle.STRICT),
+        DateTimeFormatter.ofPattern("d-M-uuuu HHmm").withResolverStyle(ResolverStyle.STRICT),
+        DateTimeFormatter.ofPattern("d-M-uuuu HH:mm").withResolverStyle(ResolverStyle.STRICT),
+        DateTimeFormatter.ofPattern("uuuu/M/d HHmm").withResolverStyle(ResolverStyle.STRICT),
+        DateTimeFormatter.ofPattern("uuuu/M/d HH:mm").withResolverStyle(ResolverStyle.STRICT),
         DateTimeFormatter.ISO_LOCAL_DATE_TIME
     };
 
@@ -51,6 +56,26 @@ public class DateTimeUtil {
      * Prevents instantiation of utility class.
      */
     private DateTimeUtil() {
+    }
+
+    /**
+     * Checks if an input string resembles a supported numeric date or date-time format
+     * but represents a non-existent calendar date (e.g. Feb 30, April 31, or month 13).
+     *
+     * @param input The raw date or date-time string.
+     * @return True if the string is numeric date-like but fails strict calendar validation.
+     */
+    public static boolean isNonExistentDate(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return false;
+        }
+        String trimmed = input.trim();
+        boolean looksLikeDate = trimmed.matches("^\\d{4}[-/]\\d{1,2}[-/]\\d{1,2}(?:\\s+\\d{1,2}:?\\d{2})?$")
+                || trimmed.matches("^\\d{1,2}[-/]\\d{1,2}[-/]\\d{4}(?:\\s+\\d{1,2}:?\\d{2})?$");
+        if (!looksLikeDate) {
+            return false;
+        }
+        return parseLocalDate(trimmed) == null && parseLocalDateTime(trimmed) == null;
     }
 
     /**

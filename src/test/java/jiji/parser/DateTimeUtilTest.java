@@ -1,8 +1,10 @@
 package jiji.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -91,5 +93,20 @@ public class DateTimeUtilTest {
     public void formatForStorage_nonDateString_returnsOriginal() {
         assertEquals("Sunday", DateTimeUtil.formatForStorage("Sunday"));
         assertEquals("", DateTimeUtil.formatForStorage(null));
+    }
+
+    @Test
+    public void isNonExistentDate_evaluatesCalendarDatesCorrectly() {
+        assertTrue(DateTimeUtil.isNonExistentDate("2026-02-30"));
+        assertTrue(DateTimeUtil.isNonExistentDate("31/4/2026"));
+        assertTrue(DateTimeUtil.isNonExistentDate("2026-13-45"));
+        assertTrue(DateTimeUtil.isNonExistentDate("2025-02-29"));
+
+        assertFalse(DateTimeUtil.isNonExistentDate("2024-02-29"));
+        assertFalse(DateTimeUtil.isNonExistentDate("2026-08-30"));
+        assertFalse(DateTimeUtil.isNonExistentDate("2/12/2026 1800"));
+        assertFalse(DateTimeUtil.isNonExistentDate("Sunday"));
+        assertFalse(DateTimeUtil.isNonExistentDate(""));
+        assertFalse(DateTimeUtil.isNonExistentDate(null));
     }
 }

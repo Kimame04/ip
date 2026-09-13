@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import jiji.exception.JijiStorageException;
+import jiji.exception.JijiException;
 import jiji.storage.Storage;
 import jiji.task.TaskList;
 import jiji.ui.Ui;
@@ -35,7 +35,7 @@ public class AddTodoCommandTest {
     }
 
     @Test
-    public void execute_validTodo_addsTaskAndPersists() throws JijiStorageException {
+    public void execute_validTodo_addsTaskAndPersists() throws JijiException {
         AddTodoCommand command = new AddTodoCommand("read book");
         String result = command.execute(tasks, ui, storage);
 
@@ -44,6 +44,18 @@ public class AddTodoCommandTest {
         assertTrue(result.contains("read book"));
         assertTrue(result.contains("1 tasks"));
         assertEquals(1, storage.load().size());
+    }
+
+    @Test
+    public void execute_duplicateTodo_throwsException() throws JijiException {
+        AddTodoCommand command1 = new AddTodoCommand("read book");
+        command1.execute(tasks, ui, storage);
+
+        AddTodoCommand duplicateCommand = new AddTodoCommand("READ BOOK");
+        JijiException e = assertThrows(JijiException.class, () ->
+                duplicateCommand.execute(tasks, ui, storage));
+        assertTrue(e.getMessage().contains("already in your list"));
+        assertEquals(1, tasks.size());
     }
 
     @Test

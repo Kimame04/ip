@@ -180,4 +180,66 @@ public class ParserTest {
         assertThrows(JijiException.class, () -> Parser.parse("schedule invalid-date"));
         assertThrows(JijiException.class, () -> Parser.parse("schedule 2026/13/40"));
     }
+
+    @Test
+    public void parse_nonExistentDate_throwsException() {
+        JijiException e1 = assertThrows(JijiException.class, () -> Parser.parse("schedule 2026-02-30"));
+        assertTrue(e1.getMessage().contains("does not exist on the calendar"));
+
+        JijiException e2 = assertThrows(JijiException.class, () ->
+                Parser.parse("deadline return book /by 2026-02-30"));
+        assertTrue(e2.getMessage().contains("does not exist on the calendar"));
+
+        JijiException e3 = assertThrows(JijiException.class, () ->
+                Parser.parse("event camp /from 2026-02-30 /to 2026-03-02"));
+        assertTrue(e3.getMessage().contains("does not exist on the calendar"));
+
+        JijiException e4 = assertThrows(JijiException.class, () ->
+                Parser.parse("event camp /from 2026-02-28 /to 2026-04-31"));
+        assertTrue(e4.getMessage().contains("does not exist on the calendar"));
+    }
+
+    @Test
+    public void parse_pipeCharacterInInput_throwsException() {
+        JijiException e1 = assertThrows(JijiException.class, () -> Parser.parse("todo read|book"));
+        assertTrue(e1.getMessage().contains("'|' character"));
+
+        JijiException e2 = assertThrows(JijiException.class, () ->
+                Parser.parse("deadline return book /by 2026-08-30|evening"));
+        assertTrue(e2.getMessage().contains("'|' character"));
+
+        JijiException e3 = assertThrows(JijiException.class, () ->
+                Parser.parse("event camp /from 2026-08-30|am /to 2026-08-31"));
+        assertTrue(e3.getMessage().contains("'|' character"));
+
+        JijiException e4 = assertThrows(JijiException.class, () -> Parser.parse("find book|page"));
+        assertTrue(e4.getMessage().contains("'|' character"));
+    }
+
+    @Test
+    public void parse_duplicateParameters_throwsException() {
+        JijiException e1 = assertThrows(JijiException.class, () ->
+                Parser.parse("deadline return book /by Sunday /by Monday"));
+        assertTrue(e1.getMessage().contains("cannot be specified multiple times"));
+
+        JijiException e2 = assertThrows(JijiException.class, () ->
+                Parser.parse("event camp /from Mon /from Tue /to Wed"));
+        assertTrue(e2.getMessage().contains("cannot be specified multiple times"));
+
+        JijiException e3 = assertThrows(JijiException.class, () ->
+                Parser.parse("event camp /from Mon /to Tue /to Wed"));
+        assertTrue(e3.getMessage().contains("cannot be specified multiple times"));
+    }
+
+    @Test
+    public void parse_zeroArgCommandsWithArgs_throwsException() {
+        JijiException e1 = assertThrows(JijiException.class, () -> Parser.parse("bye now"));
+        assertTrue(e1.getMessage().contains("does not take any arguments"));
+
+        JijiException e2 = assertThrows(JijiException.class, () -> Parser.parse("stats today"));
+        assertTrue(e2.getMessage().contains("does not take any arguments"));
+
+        JijiException e3 = assertThrows(JijiException.class, () -> Parser.parse("statistics extra"));
+        assertTrue(e3.getMessage().contains("does not take any arguments"));
+    }
 }
