@@ -34,7 +34,8 @@ public class ScheduleCommandTest {
         ScheduleCommand command = new ScheduleCommand(date);
         String result = command.execute(tasks, ui, null);
 
-        assertEquals("No tasks scheduled for Aug 30 2026. Enjoy your free time! ₍^. .^₎", result);
+        assertEquals("No tasks scheduled for Aug 30 2026. A purr-fectly peaceful day to rest! ₍^ ᵕ ᵕ ^₎",
+                result);
     }
 
     @Test

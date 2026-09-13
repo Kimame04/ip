@@ -1,6 +1,6 @@
 # Jiji User Guide
 
-**Jiji** is a lightweight, friendly command-line personal assistant chatbot that helps you organize and manage tasks (ToDos, Deadlines, and Events) with feline charm ₍^._.^₎ 𐒡.
+**Jiji** is a cozy, comforting personal assistant chatbot (featuring both a modern JavaFX GUI and a fast CLI) that helps you organize and manage tasks (ToDos, Deadlines, and Events) with warm feline charm ₍^ ᵕ ᵕ ^₎ฅ.
 
 ---
 
@@ -11,8 +11,8 @@
 | **`todo`** | `todo <description>` | Adds a to-do task. |
 | **`deadline`** | `deadline <description> /by <time>` | Adds a task with a deadline. |
 | **`event`** | `event <description> /from <start> /to <end>` | Adds an event with start and end times. |
-| **`list`** | `list [pending\|done]` | Lists all tasks, or filters by pending/done status while preserving indices. |
-| **`schedule`** | `schedule <date\|today>` | Views tasks scheduled on a specific date while preserving indices. |
+| **`list`** | `list [pending|done]` | Lists all tasks, or filters by pending/done status while preserving indices. |
+| **`schedule`** | `schedule <date|today>` | Views tasks scheduled on a specific date while preserving indices. |
 | **`mark`** | `mark <task_number>` | Marks a task as completed (`[X]`). |
 | **`unmark`** | `unmark <task_number>` | Marks a task as not completed (`[ ]`). |
 | **`delete`** | `delete <task_number>` | Removes a task from the list and re-indexes remaining tasks. |
@@ -36,9 +36,9 @@ Adds a task without any date or time constraints.
 * **Expected Output**:
   ```text
       ____________________________________________________________
-       Got it. I've added this task:
+       Tucked away safely! I've nestled this task into your list:
          [T][ ] read book
-       Now you have 1 tasks in the list.
+       That makes 1 tasks in our cozy bundle. ₍^. .^₎
       ____________________________________________________________
   ```
 
@@ -59,9 +59,9 @@ Adds a task that must be completed by a specific date or time. Jiji understands 
 * **Expected Output**:
   ```text
       ____________________________________________________________
-       Got it. I've added this task:
+       Tucked away safely! I've nestled this task into your list:
          [D][ ] return book (by: Aug 30 2026)
-       Now you have 2 tasks in the list.
+       That makes 2 tasks in our cozy bundle. ₍^. .^₎
       ____________________________________________________________
   ```
 * **Example (Date and Time)**:
@@ -71,9 +71,9 @@ Adds a task that must be completed by a specific date or time. Jiji understands 
 * **Expected Output**:
   ```text
       ____________________________________________________________
-       Got it. I've added this task:
+       Tucked away safely! I've nestled this task into your list:
          [D][ ] submit project (by: Dec 02 2026, 6:00PM)
-       Now you have 3 tasks in the list.
+       That makes 3 tasks in our cozy bundle. ₍^. .^₎
       ____________________________________________________________
   ```
 
@@ -90,9 +90,9 @@ Adds an event that occurs over a specific time interval. Both dates and times ar
 * **Expected Output**:
   ```text
       ____________________________________________________________
-       Got it. I've added this task:
+       Tucked away safely! I've nestled this task into your list:
          [E][ ] orientation camp (from: Sep 01 2026, 9:00AM to: Sep 03 2026, 5:00PM)
-       Now you have 4 tasks in the list.
+       That makes 4 tasks in our cozy bundle. ₍^. .^₎
       ____________________________________________________________
   ```
 
@@ -152,8 +152,9 @@ Marks the task at the specified 1-based index as completed.
 * **Expected Output**:
   ```text
       ____________________________________________________________
-       Nice! I've marked this task as done:
+       Paws up! Marked this task as done:
          [D][X] return book (by: Sunday)
+       Wonderful job! Time for a gentle stretch. ₍^ ᵕ ᵕ ^₎ฅ
       ____________________________________________________________
   ```
 
@@ -170,8 +171,9 @@ Marks a previously completed task back as incomplete.
 * **Expected Output**:
   ```text
       ____________________________________________________________
-       OK, I've marked this task as not done yet:
+       No hurry at all! I've marked this task as pending again:
          [D][ ] return book (by: Sunday)
+       We'll get back to it when you're ready. ₍^. .^₎
       ____________________________________________________________
   ```
 
@@ -188,9 +190,9 @@ Removes a task from the list at the specified 1-based index and automatically sh
 * **Expected Output**:
   ```text
       ____________________________________________________________
-       Noted. I've removed this task:
+       Gently cleared away! I've removed this task:
          [D][ ] return book (by: Sunday)
-       Now you have 2 tasks in the list.
+       That leaves 2 cozy tasks in your list. ₍^. .^₎
       ____________________________________________________________
   ```
 
@@ -239,7 +241,7 @@ Displays tasks (deadlines and events) occurring on or due by a specified date. Y
 * **Expected Output**:
   ```text
       ____________________________________________________________
-       No tasks scheduled for Dec 25 2026. Enjoy your free time! ₍^. .^₎
+       No tasks scheduled for Dec 25 2026. A purr-fectly peaceful day to rest! ₍^ ᵕ ᵕ ^₎
       ____________________________________________________________
   ```
 
@@ -332,9 +334,19 @@ Exits Jiji with a farewell message.
 * **Expected Output**:
   ```text
       ____________________________________________________________
-       Bye. Hope to see you again soon!
+       Purrs and gentle head-bumps! Rest well and see you soon! ₍^ ᵕ ᵕ ^₎ฅ
       ____________________________________________________________
   ```
+
+---
+
+## Cozy Feline Personality & Statement Variety
+
+Jiji is crafted to be a warm, comforting feline companion throughout your busy day. Inspired by Jiji from *Kiki's Delivery Service*, the chatbot greets you warmly, encourages gentle breaks, and keeps your tasks organized without pressure:
+
+* **Dynamic Statement Bank**: In GUI mode, Jiji draws from an expressive bank of diverse, randomized responses for greetings, task confirmations, completions, deferrals, removals, and farewells. Every interaction feels fresh, caring, and lively!
+* **Calm & Stress-Free Tone**: Tasks are framed as a "cozy bundle" or "basket", completed tasks are celebrated with gentle stretches and head-bumps, and unmarked tasks are re-opened with "no hurry at all".
+* **Deterministic CLI Mode**: When executing automated test suites or running via CLI, Jiji automatically switches to a canonical statement set to guarantee 100% test reproducibility.
 
 ---
 
