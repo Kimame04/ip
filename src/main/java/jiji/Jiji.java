@@ -3,6 +3,7 @@ package jiji;
 import jiji.command.Command;
 import jiji.exception.JijiException;
 import jiji.exception.JijiStorageException;
+import jiji.gui.JijiResponse;
 import jiji.parser.Parser;
 import jiji.storage.Storage;
 import jiji.task.TaskList;
@@ -56,26 +57,36 @@ public class Jiji {
     }
 
     /**
+     * Generates a detailed response object containing the message text and error status
+     * for the given user input command.
+     *
+     * @param input The raw input command string entered by the user.
+     * @return A {@code JijiResponse} containing the response message and error flag.
+     */
+    public JijiResponse getResponseDetails(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return new JijiResponse("Please enter a valid command!", true);
+        }
+        assert input != null && !input.trim().isEmpty() : "Input must be non-empty after check";
+        assert tasks != null && ui != null && storage != null : "Components must be initialized";
+        try {
+            Command command = Parser.parse(input);
+            String response = command.execute(tasks, ui, storage);
+            assert response != null : "Response should never be null";
+            return new JijiResponse(response, false);
+        } catch (JijiException e) {
+            return new JijiResponse(e.getMessage(), true);
+        }
+    }
+
+    /**
      * Generates a response string for the given user input command.
      *
      * @param input The raw input command string entered by the user.
      * @return The response text produced by executing the command, or an error message.
      */
     public String getResponse(String input) {
-        if (input == null || input.trim().isEmpty()) {
-            return "Please enter a valid command!";
-        }
-        assert input != null && !input.trim().isEmpty() : "Input must be non-empty after check";
-        assert tasks != null && ui != null && storage != null : "Components must be initialized";
-        String response;
-        try {
-            Command command = Parser.parse(input);
-            response = command.execute(tasks, ui, storage);
-        } catch (JijiException e) {
-            response = e.getMessage();
-        }
-        assert response != null : "Response should never be null";
-        return response;
+        return getResponseDetails(input).getMessage();
     }
 
     /**

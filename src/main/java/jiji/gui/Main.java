@@ -23,9 +23,11 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            stage.setTitle("Jiji");
-            stage.setMinHeight(220);
-            stage.setMinWidth(417);
+            stage.setTitle("Jiji - Personal Assistant");
+            stage.setMinHeight(400);
+            stage.setMinWidth(420);
+            stage.setWidth(450);
+            stage.setHeight(650);
             fxmlLoader.<MainWindow>getController().setJiji(jiji);
             stage.show();
         } catch (IOException e) {

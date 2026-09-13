@@ -63,12 +63,13 @@ public class MainWindow extends AnchorPane {
             return;
         }
 
-        String response = jiji.getResponse(input);
+        JijiResponse response = jiji.getResponseDetails(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getJijiDialog(response, jijiImage)
+                DialogBox.getJijiDialog(response.getMessage(), jijiImage, response.isError())
         );
         userInput.clear();
+        userInput.requestFocus();
 
         if (input.trim().equalsIgnoreCase("bye")) {
             PauseTransition delay = new PauseTransition(Duration.seconds(1.0));

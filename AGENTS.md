@@ -31,7 +31,11 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 ## Git
 
 Use lightweight tags unless the user requests an annotated tag.
-When proposing or creating a commit message, include enough detail to explain the rationale for the change.
+When proposing or creating a commit message, follow the SE-EDU Git conventions:
+- Subject line: imperative mood, capitalized, no trailing period, concise (~50 chars).
+- Separate subject from body with a blank line.
+- Commit message body: hard-wrap all lines at 72 characters maximum. Explain the rationale (what and why).
+- Do not edit or rewrite past commits (to preserve milestone detection timestamps).
 Do not commit or push unless explicitly asked.
 Before committing (or proposing a commit), always invoke the `present-changes-visually` skill (`python3 .agents/skills/present-changes-visually/scripts/generate-split-view-diff.py . HEAD WORKTREE _temp/visual-diff.html`) and link to the generated diff page so changes can be reviewed visually.
 

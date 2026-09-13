@@ -402,10 +402,14 @@ Jiji automatically persists your task list so you never lose track of your items
 
 ## Graphical User Interface (JavaFX GUI)
 
-Jiji features a modern Graphical User Interface built with JavaFX and FXML:
-* **Interactive Chat Interface**: Displays user commands and Jiji's responses in speech bubbles with avatars.
-* **Auto-Scrolling**: Automatically scrolls to the newest message.
-* **Dual Execution Mode**: Supports both GUI and text-based CLI.
+Jiji features a modern, responsive Graphical User Interface built with JavaFX and FXML:
+* **Asymmetric Conversation Design**: User inputs and Jiji's replies are styled distinctly. User commands appear on the right in compact dark slate bubbles, while Jiji's responses appear on the left in clean white card bubbles with warm rose accents.
+* **Visual Error Highlighting**: When an unrecognized command or malformed argument is submitted, Jiji's response is styled with a distinct soft rose-red background and crimson border, immediately drawing attention to the issue.
+* **Responsive Layout & Text Wrapping**: Resizing the application window dynamically scales the chat container and automatically wraps text bubbles without clipping or awkward overflow.
+* **Optimized Avatars & Spacing**: Compact 42×42 px circular avatars eliminate vertical dead space on short commands, keeping chat history dense and readable.
+* **Streamlined Input Dock**: Floating pill-shaped text input with active focus retention and hover feedback allows fluid, continuous command entry without re-clicking.
+* **Auto-Scrolling**: Automatically scrolls down to the newest message upon receiving input or responses.
+* **Dual Execution Mode**: Supports both GUI and text-based CLI seamlessly.
 
 To launch the JavaFX GUI application:
 ```bash

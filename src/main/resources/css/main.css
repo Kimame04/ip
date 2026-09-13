@@ -1,44 +1,45 @@
 .root {
-    main-color: #f0f2f5;
-    accent-red: #d32f2f;
-    -fx-background-color: main-color;
+    -fx-background-color: #f8fafc;
 }
 
 .text-field {
     -fx-background-color: #ffffff;
-    -fx-border-color: #cfd8dc;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
     -fx-border-width: 1.5px;
-    -fx-font: 14px "Segoe UI", "Helvetica Neue", "Arial";
-    -fx-text-fill: #263238;
-    -fx-prompt-text-fill: #90a4ae;
-    -fx-padding: 8px 12px;
+    -fx-font: 13.5px "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
+    -fx-text-fill: #1e293b;
+    -fx-prompt-text-fill: #94a3b8;
+    -fx-padding: 9px 16px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.04), 4, 0, 0, 1);
 }
 
 .text-field:focused {
-    -fx-border-color: accent-red;
+    -fx-border-color: #e11d48;
     -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, rgba(225, 29, 72, 0.2), 6, 0, 0, 0);
 }
 
 .button {
-    -fx-background-color: accent-red;
+    -fx-background-color: #e11d48;
     -fx-text-fill: #ffffff;
-    -fx-font: bold 14px "Segoe UI", "Helvetica Neue", "Arial";
-    -fx-background-radius: 8px;
+    -fx-font: bold 13.5px "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(three-pass-box, rgba(211, 47, 47, 0.3), 6, 0, 0, 2);
+    -fx-effect: dropshadow(three-pass-box, rgba(225, 29, 72, 0.3), 5, 0, 0, 2);
 }
 
 .button:hover {
-    -fx-background-color: #b71c1c;
-    -fx-effect: dropshadow(three-pass-box, rgba(183, 28, 28, 0.45), 8, 0, 0, 3);
+    -fx-background-color: #be123c;
+    -fx-effect: dropshadow(three-pass-box, rgba(190, 18, 60, 0.45), 7, 0, 0, 3);
 }
 
 .button:pressed {
-    -fx-background-color: #8e0000;
-    -fx-scale-x: 0.98;
-    -fx-scale-y: 0.98;
+    -fx-background-color: #9f1239;
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
 }
 
 .scroll-pane,
@@ -52,12 +53,12 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #ef9a9a;
+    -fx-background-color: #fecdd3;
     -fx-background-radius: 1em;
 }
 
 .scroll-bar .thumb:hover {
-    -fx-background-color: accent-red;
+    -fx-background-color: #e11d48;
 }
 
 .scroll-bar .increment-button,
