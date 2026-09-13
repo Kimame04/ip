@@ -2,6 +2,10 @@
 
 **Jiji** is a cozy, comforting personal assistant chatbot (featuring both a modern JavaFX GUI and a fast CLI) that helps you organize and manage tasks (ToDos, Deadlines, and Events) with warm feline charm ₍^ ᵕ ᵕ ^₎ฅ.
 
+<p align="center">
+  <img src="Ui.png" alt="Jiji GUI Screenshot" width="450">
+</p>
+
 ---
 
 ## Features Summary
