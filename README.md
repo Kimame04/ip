@@ -1,6 +1,6 @@
-# Jiji project template
+# Jiji
 
-This is a project template for a greenfield Java project. Given below are instructions on how to use it.
+Jiji is a desktop task management application optimized for CLI-focused workflows with a companion-themed graphical interface. Given below are instructions on how to set it up.
 
 ## Setting up in Intellij
 
@@ -31,3 +31,9 @@ Prerequisites: JDK 25, update Intellij to the most recent version.
    ```
 
 **Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+
+## Acknowledgements
+
+### Generative AI
+**Google DeepMind Antigravity** was used as a coding assistant for writing application code, test scripts, and documentation. All AI-assisted suggestions were reviewed, verified, and adapted by the author.
+
